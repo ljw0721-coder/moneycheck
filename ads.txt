@@ -1,0 +1,2 @@
+# 애드센스 연결 시 pub-XXXXXXXXXXXXXXXX 를 본인 ID로 교체
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
