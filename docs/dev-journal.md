@@ -108,3 +108,6 @@
 - 변경: evaluateAdSlot 이 data-ad-status(unfilled/filled) 우선, done+상태없음 은 프레임 존재로 폴백, MutationObserver 로 지연 충전 시 재표시. tests/adslot-collapse.html(하네스)+results.md+lastrun-dom.html 추가.
 - 검증: 4 시나리오 PASS (지연 충전 표시/진짜 미충전 숨김/9초 후 재표시/빈 슬롯 숨김). a101 확인처 문장 미검증 매체명 제거 확인.
 - 머지: 보류 유지. PR 경로 또는 사용자 명시 승인 대기.
+
+## 2026-10-24 20:59 KST - contact-split 베이스 갱신
+- origin/main 0b95532(머니 아카이브 100건 삭제·의도된 정리, 20:30 배포 확인) 위로 fix/contact-split 리베이스. 충돌은 about.html 1건: 상대방의 아카이브 링크 제거 유지 + 사용자 지시 문의 분리(support@/hello@) 병합. 삭제된 경로(a001-a100, money-archive) 미복원 확인, member-comments(tc.js/admin.html) 무접촉. 머지/배포는 PR 경로 확정 전까지 보류.
