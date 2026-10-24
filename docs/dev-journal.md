@@ -111,3 +111,6 @@
 
 ## 2026-10-24 20:59 KST - contact-split 베이스 갱신
 - origin/main 0b95532(머니 아카이브 100건 삭제·의도된 정리, 20:30 배포 확인) 위로 fix/contact-split 리베이스. 충돌은 about.html 1건: 상대방의 아카이브 링크 제거 유지 + 사용자 지시 문의 분리(support@/hello@) 병합. 삭제된 경로(a001-a100, money-archive) 미복원 확인, member-comments(tc.js/admin.html) 무접촉. 머지/배포는 PR 경로 확정 전까지 보류.
+
+## 2026-10-24 20:59 KST - adslot-collapse-sources 베이스 갱신
+- origin/main 0b95532 위로 리베이스(충돌 없음). 삭제된 머니 아카이브 경로 미복원, member-comments 인프라 무접촉 확인. ads.js 슬롯 collapse 변경 + a101 출처 URL + tests/ 하네스 유지. 머지/배포 보류.
