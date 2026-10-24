@@ -2,7 +2,7 @@
 // ===== 멀티 광고 네트워크 설정: 가입한 회사의 ID만 채우면 해당 위치에 자동 게재 =====
 // 위치 분리 원칙(정책 충돌 방지): 상단=애드센스 / 중단=애드핏(없으면 애드센스) / 하단=데이블·쿠팡(없으면 애드센스)
 const NET = {
-  adsense: "pub-XXXXXXXXXXXXXXXX",      // Google AdSense ca-pub 번호
+  adsense: "pub-3867118796714043",      // Google AdSense ca-pub 번호
   adfitTop: "", adfitMid: "", adfitBottom: "", // Kakao AdFit 광고단위 ID (DAN-...)
   dableWidget: "",                       // Dable 위젯 ID
   coupangId: "", coupangTracking: ""     // Coupang Partners ID / 추적코드
