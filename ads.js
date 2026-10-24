@@ -5,12 +5,31 @@ const NET = {
   adsense: "pub-3867118796714043",      // Google AdSense ca-pub 번호
   adfitTop: "", adfitMid: "", adfitBottom: "", // Kakao AdFit 광고단위 ID (DAN-...)
   dableWidget: "",                       // Dable 위젯 ID
-  coupangId: "", coupangTracking: ""     // Coupang Partners ID / 추적코드
+  coupangId: "", coupangTracking: "",     // Coupang Partners ID / 추적코드
+  adsterra728: "b61c7f2fdfbde805f657a61c2e331461",   // Adsterra Banner 728x90 (mid 슬롯, AdFit 없을 때)
+  adsterraNative: "412f35644e8c3b2c34d8f262f6819385" // Adsterra Native Banner (bottom 슬롯, Dable/Coupang 없을 때)
 };
 function loadScript(src){const s=document.createElement('script');s.async=true;s.src=src;document.head.appendChild(s);return s;}
 function fillAdsense(el){
   el.innerHTML='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-'+NET.adsense+'" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>';
   (window.adsbygoogle=window.adsbygoogle||[]).push({});
+}
+function fillAdsterra728(el){
+  const o=document.createElement('script');
+  o.text="atOptions = { 'key' : '"+NET.adsterra728+"', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };";
+  el.appendChild(o);
+  const s=document.createElement('script');
+  s.src='https://bauval.org/22/'+NET.adsterra728;
+  el.appendChild(s);
+}
+function fillAdsterraNative(el){
+  const s=document.createElement('script');
+  s.async=true; s.setAttribute('data-cfasync','false');
+  s.src='https://bauval.org/21/'+NET.adsterraNative;
+  el.appendChild(s);
+  const d=document.createElement('div');
+  d.id='container-'+NET.adsterraNative;
+  el.appendChild(d);
 }
 document.addEventListener('DOMContentLoaded',()=>{
   const hasAdsense = NET.adsense.startsWith("pub-");
@@ -22,9 +41,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(t==='mid' && NET.adfitMid){
       el.innerHTML='<ins class="kakao_ad_area" style="display:none" data-ad-unit="'+NET.adfitMid+'" data-ad-width="728" data-ad-height="90"></ins>';return;
     }
+    if(t==='mid' && NET.adsterra728){ fillAdsterra728(el); return; }
     if(t==='bottom' && NET.dableWidget){
       el.innerHTML='<div data-widget-id="'+NET.dableWidget+'" data-widget-name="dable"></div>';return;
     }
+    if(t==='bottom' && !NET.dableWidget && !NET.coupangId && NET.adsterraNative){ fillAdsterraNative(el); return; }
     if(t==='bottom' && NET.coupangId){
       const d=document.createElement('div');el.replaceWith(d);
       new PartnersCoupang.G({id:parseInt(NET.coupangId),template:'carousel',trackingCode:NET.coupangTracking,width:'680',height:'140',tsource:''});return;

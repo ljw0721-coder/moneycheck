@@ -27,3 +27,9 @@
 
 ### (기록 누락분) 이날 다른 변경들
 - 다른 작성자 커밋(be49995, 30796e6, 3387abb 등)은 해당 작성자 환경에서 푸시됐으며 이 일지에 기록되지 않았다. 상대 환경의 일지 작성 여부는 확인할 수 없다.
+
+## 2026-10-24 - Adsterra 광고 네트워크 연동 (사용자 지시: 뭐든 다 붙여줘)
+- 이유: 사용자가 트렌드체크에 여러 광고업체 연동 요청. Adsterra 퍼블리셔 가입(이메일 인증 완료), 사이트 심사 Approved, 광고단위 3개 Active.
+- 변경: ads.js 에 NET.adsterra728 / NET.adsterraNative 추가. mid 슬롯 = AdFit 우선, 없으면 Adsterra 728x90. bottom 슬롯 = Dable/Coupang 우선, 없으면 Adsterra Native. top 슬롯은 애드센스 유지(기존 위치분리 원칙). atOptions 전역 충돌로 클래식 배너는 페이지당 1개만.
+- 검증: node --check 통과. 로컬 서빙 + headless chrome: a101.html DOM에 atOptions/728 스크립트/native container 주입 확인, 레이아웃 스크린샷 정상. 라이브 광고 렌더는 배포 후 확인 예정.
+- 참고: Adsterra ads.txt 항목은 계정별 공식 포맷 미확인으로 미추가(지어내지 않음). Popunder/Social Bar 등 본문 가림 포맷과 성인 광고는 정책상 제외.
