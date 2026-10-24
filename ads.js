@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(NET.adfitMid||NET.adfitTop||NET.adfitBottom) loadScript('https://t1.daumcdn.net/kas/static/ba.min.js');
   if(NET.coupangId) loadScript('https://ads-partners.coupang.com/g.js');
   document.querySelectorAll('.ad-slot').forEach(el=>{
-    const t=el.textContent;
-    if(t.includes('중단') && NET.adfitMid){
+    const t=el.dataset.pos||'';
+    if(t==='mid' && NET.adfitMid){
       el.innerHTML='<ins class="kakao_ad_area" style="display:none" data-ad-unit="'+NET.adfitMid+'" data-ad-width="728" data-ad-height="90"></ins>';return;
     }
-    if(t.includes('하단') && NET.dableWidget){
+    if(t==='bottom' && NET.dableWidget){
       el.innerHTML='<div data-widget-id="'+NET.dableWidget+'" data-widget-name="dable"></div>';return;
     }
-    if(t.includes('하단') && NET.coupangId){
+    if(t==='bottom' && NET.coupangId){
       const d=document.createElement('div');el.replaceWith(d);
       new PartnersCoupang.G({id:parseInt(NET.coupangId),template:'carousel',trackingCode:NET.coupangTracking,width:'680',height:'140',tsource:''});return;
     }
