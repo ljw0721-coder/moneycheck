@@ -1,16 +1,39 @@
-/* TrendCheck client: view counting + comments. No cookies, no personal data.
+/* TrendCheck client: view counting + member comments.
    View counts: POST /api/view (IP is hashed per-day on the server, never stored raw).
-   Visitors: counted once per day per browser (server-side hash). */
+   Visitors: counted once per day per browser (server-side hash).
+   Comments: members only. Signup/login use an HttpOnly session cookie;
+   passwords are PBKDF2-hashed on the server and never stored in plain text. */
 (function () {
   var lang = (document.documentElement.lang || "ko").slice(0, 2);
   var L = {
-    ko: { views: "조회수", comments: "댓글", name: "이름", write: "댓글 쓰기", send: "등록", pending: "댓글이 등록되었습니다. 관리자 승인 후 표시됩니다.", empty: "아직 댓글이 없습니다.", loadFail: "댓글을 불러오지 못했습니다." },
-    en: { views: "Views", comments: "Comments", name: "Name", write: "Write a comment", send: "Post", pending: "Your comment was received and will appear after approval.", empty: "No comments yet.", loadFail: "Could not load comments." },
-    ja: { views: "閲覧数", comments: "コメント", name: "名前", write: "コメントを書く", send: "投稿", pending: "コメントを受け付けました。承認後に表示されます。", empty: "まだコメントがありません。", loadFail: "コメントを読み込めませんでした。" },
-    zh: { views: "浏览量", comments: "评论", name: "姓名", write: "写评论", send: "发布", pending: "评论已收到，审核通过后显示。", empty: "暂无评论。", loadFail: "无法加载评论。" },
-    es: { views: "Vistas", comments: "Comentarios", name: "Nombre", write: "Escribe un comentario", send: "Publicar", pending: "Tu comentario fue recibido y aparecerá tras su aprobación.", empty: "Aún no hay comentarios.", loadFail: "No se pudieron cargar los comentarios." },
-    ar: { views: "المشاهدات", comments: "التعليقات", name: "الاسم", write: "اكتب تعليقًا", send: "نشر", pending: "تم استلام تعليقك وسيظهر بعد الموافقة.", empty: "لا توجد تعليقات بعد.", loadFail: "تعذر تحميل التعليقات." }
-  }[lang] || { views: "Views", comments: "Comments", name: "Name", write: "Write a comment", send: "Post", pending: "Received; will appear after approval.", empty: "No comments yet.", loadFail: "Could not load comments." };
+    ko: { views: "조회수", comments: "댓글", name: "이름", write: "댓글 쓰기", send: "등록", pending: "댓글이 등록되었습니다. 관리자 승인 후 표시됩니다.", empty: "아직 댓글이 없습니다.", loadFail: "댓글을 불러오지 못했습니다.",
+      needLogin: "댓글을 쓰려면 로그인하세요.", email: "이메일", password: "비밀번호", password8: "비밀번호 (8자 이상)", login: "로그인", signup: "회원가입",
+      noAccount: "아직 회원이 아니신가요? 회원가입", hasAccount: "이미 회원이신가요? 로그인", signedAs: "{n}님으로 로그인됨", logout: "로그아웃",
+      badLogin: "이메일 또는 비밀번호가 맞지 않습니다.", usedEmail: "이미 가입된 이메일입니다.", fillAll: "이름·이메일·8자 이상 비밀번호를 입력하세요." },
+    en: { views: "Views", comments: "Comments", name: "Name", write: "Write a comment", send: "Post", pending: "Your comment was received and will appear after approval.", empty: "No comments yet.", loadFail: "Could not load comments.",
+      needLogin: "Log in to comment.", email: "Email", password: "Password", password8: "Password (8+ characters)", login: "Log in", signup: "Sign up",
+      noAccount: "New here? Sign up", hasAccount: "Already a member? Log in", signedAs: "Signed in as {n}", logout: "Log out",
+      badLogin: "Wrong email or password.", usedEmail: "This email is already registered.", fillAll: "Please fill in name, email, and a password of 8+ characters." },
+    ja: { views: "閲覧数", comments: "コメント", name: "名前", write: "コメントを書く", send: "投稿", pending: "コメントを受け付けました。承認後に表示されます。", empty: "まだコメントがありません。", loadFail: "コメントを読み込めませんでした。",
+      needLogin: "コメントするにはログインしてください。", email: "メールアドレス", password: "パスワード", password8: "パスワード（8文字以上）", login: "ログイン", signup: "会員登録",
+      noAccount: "初めての方はこちら：会員登録", hasAccount: "会員の方はこちら：ログイン", signedAs: "{n}としてログイン中", logout: "ログアウト",
+      badLogin: "メールアドレスまたはパスワードが違います。", usedEmail: "このメールアドレスは既に登録されています。", fillAll: "名前・メールアドレス・8文字以上のパスワードを入力してください。" },
+    zh: { views: "浏览量", comments: "评论", name: "姓名", write: "写评论", send: "发布", pending: "评论已收到，审核通过后显示。", empty: "暂无评论。", loadFail: "无法加载评论。",
+      needLogin: "请登录后发表评论。", email: "邮箱", password: "密码", password8: "密码（至少8位）", login: "登录", signup: "注册",
+      noAccount: "还没有账号？注册", hasAccount: "已有账号？登录", signedAs: "已登录：{n}", logout: "退出登录",
+      badLogin: "邮箱或密码不正确。", usedEmail: "该邮箱已被注册。", fillAll: "请填写姓名、邮箱和至少8位密码。" },
+    es: { views: "Vistas", comments: "Comentarios", name: "Nombre", write: "Escribe un comentario", send: "Publicar", pending: "Tu comentario fue recibido y aparecerá tras su aprobación.", empty: "Aún no hay comentarios.", loadFail: "No se pudieron cargar los comentarios.",
+      needLogin: "Inicia sesión para comentar.", email: "Correo electrónico", password: "Contraseña", password8: "Contraseña (8+ caracteres)", login: "Iniciar sesión", signup: "Registrarse",
+      noAccount: "¿Nuevo aquí? Regístrate", hasAccount: "¿Ya eres miembro? Inicia sesión", signedAs: "Sesión iniciada como {n}", logout: "Cerrar sesión",
+      badLogin: "Correo o contraseña incorrectos.", usedEmail: "Este correo ya está registrado.", fillAll: "Escribe nombre, correo y una contraseña de 8+ caracteres." },
+    ar: { views: "المشاهدات", comments: "التعليقات", name: "الاسم", write: "اكتب تعليقًا", send: "نشر", pending: "تم استلام تعليقك وسيظهر بعد الموافقة.", empty: "لا توجد تعليقات بعد.", loadFail: "تعذر تحميل التعليقات.",
+      needLogin: "سجّل الدخول للتعليق.", email: "البريد الإلكتروني", password: "كلمة المرور", password8: "كلمة المرور (8 أحرف على الأقل)", login: "تسجيل الدخول", signup: "إنشاء حساب",
+      noAccount: "جديد هنا؟ أنشئ حسابًا", hasAccount: "عضو بالفعل؟ سجّل الدخول", signedAs: "تم تسجيل الدخول باسم {n}", logout: "تسجيل الخروج",
+      badLogin: "البريد الإلكتروني أو كلمة المرور غير صحيحة.", usedEmail: "هذا البريد الإلكتروني مسجّل بالفعل.", fillAll: "أدخل الاسم والبريد الإلكتروني وكلمة مرور من 8 أحرف على الأقل." }
+  }[lang] || { views: "Views", comments: "Comments", name: "Name", write: "Write a comment", send: "Post", pending: "Received; will appear after approval.", empty: "No comments yet.", loadFail: "Could not load comments.",
+      needLogin: "Log in to comment.", email: "Email", password: "Password", password8: "Password (8+ characters)", login: "Log in", signup: "Sign up",
+      noAccount: "New here? Sign up", hasAccount: "Already a member? Log in", signedAs: "Signed in as {n}", logout: "Log out",
+      badLogin: "Wrong email or password.", usedEmail: "This email is already registered.", fillAll: "Please fill in name, email, and a password of 8+ characters." };
 
   var path = location.pathname.replace(/^\//, "");
   if (!path) path = "index.html";
@@ -39,12 +62,13 @@
       })
       .catch(function () {});
   }
-  /* comments widget */
+  /* comments widget (members only) */
   var box = document.getElementById("tc-comments");
   if (box) {
     var cpath = box.getAttribute("data-path") || path;
     var listEl = box.querySelector(".tc-list");
     var msgEl = box.querySelector(".tc-msg");
+    var form = box.querySelector("form");
     function load() {
       fetch("/api/comments?path=" + encodeURIComponent(cpath))
         .then(function (r) { return r.json(); })
@@ -57,18 +81,80 @@
         .catch(function () { listEl.innerHTML = "<p>" + L.loadFail + "</p>"; });
     }
     load();
-    var form = box.querySelector("form");
+    var authEl = document.createElement("div");
+    authEl.className = "tc-auth";
+    if (form) box.insertBefore(authEl, form);
+    else box.appendChild(authEl);
+
+    function postAuth(url, body, msgTarget, onOk) {
+      fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (j) { return { st: r.status, j: j }; }); })
+        .then(function (res) {
+          if (res.j.ok) onOk();
+          else if (res.st === 401) msgTarget.textContent = L.badLogin;
+          else if (res.st === 409) msgTarget.textContent = L.usedEmail;
+          else msgTarget.textContent = res.j.error || "error";
+        })
+        .catch(function () { msgTarget.textContent = "error"; });
+    }
+    function showLoggedOut() {
+      authEl.innerHTML = "<p>" + L.needLogin + "</p>"
+        + '<form class="tc-login"><p><input name="email" type="email" placeholder="' + esc(L.email) + '" required></p><p><input name="password" type="password" placeholder="' + esc(L.password) + '" required></p><p><button type="submit">' + L.login + "</button></p><p class=\"tc-msg\"></p></form>"
+        + '<p><a href="#" class="tc-toggle-auth">' + L.noAccount + "</a></p>"
+        + '<form class="tc-signup" style="display:none"><p><input name="name" placeholder="' + esc(L.name) + '" maxlength="30" required></p><p><input name="email" type="email" placeholder="' + esc(L.email) + '" required></p><p><input name="password" type="password" placeholder="' + esc(L.password8) + '" required></p><p><button type="submit">' + L.signup + "</button></p><p class=\"tc-msg\"></p></form>";
+      if (form) form.style.display = "none";
+      var loginF = authEl.querySelector(".tc-login");
+      var signupF = authEl.querySelector(".tc-signup");
+      var toggle = authEl.querySelector(".tc-toggle-auth");
+      var showingSignup = false;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        showingSignup = !showingSignup;
+        loginF.style.display = showingSignup ? "none" : "";
+        signupF.style.display = showingSignup ? "" : "none";
+        toggle.textContent = showingSignup ? L.hasAccount : L.noAccount;
+      });
+      loginF.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var m = loginF.querySelector(".tc-msg");
+        postAuth("/api/auth/login", { email: loginF.querySelector('[name="email"]').value.trim(), password: loginF.querySelector('[name="password"]').value }, m, function () { location.reload(); });
+      });
+      signupF.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var m = signupF.querySelector(".tc-msg");
+        var nm = signupF.querySelector('[name="name"]').value.trim();
+        var em = signupF.querySelector('[name="email"]').value.trim();
+        var pw = signupF.querySelector('[name="password"]').value;
+        if (!nm || !em || pw.length < 8) { m.textContent = L.fillAll; return; }
+        postAuth("/api/auth/signup", { name: nm, email: em, password: pw }, m, function () { location.reload(); });
+      });
+    }
+    function showLoggedIn(name) {
+      authEl.innerHTML = "<p>" + L.signedAs.replace("{n}", esc(name)) + ' <button type="button" class="tc-logout">' + L.logout + "</button></p>";
+      authEl.querySelector(".tc-logout").addEventListener("click", function () {
+        fetch("/api/auth/logout", { method: "POST" }).then(function () { location.reload(); });
+      });
+      if (form) {
+        form.style.display = "";
+        var np = form.querySelector('[name="name"]');
+        if (np) { np.removeAttribute("required"); np.value = ""; if (np.parentNode) np.parentNode.style.display = "none"; }
+      }
+    }
+    fetch("/api/auth/me")
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (j.logged_in) showLoggedIn(j.name); else showLoggedOut(); })
+      .catch(function () { showLoggedOut(); });
     if (form) {
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        var name = form.querySelector('[name="name"]').value.trim();
         var text = form.querySelector('[name="text"]').value.trim();
-        if (!name || !text) return;
-        fetch("/api/comments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ path: cpath, name: name, text: text }) })
-          .then(function (r) { return r.json(); })
+        if (!text) return;
+        fetch("/api/comments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ path: cpath, text: text }) })
+          .then(function (r) { return r.json().then(function (j) { return { st: r.status, j: j }; }); })
           .then(function (j) {
-            if (j.ok) { msgEl.textContent = L.pending; form.reset(); }
-            else msgEl.textContent = j.error || "error";
+            if (j.j.ok) { msgEl.textContent = L.pending; form.reset(); load(); }
+            else if (j.st === 401) { msgEl.textContent = L.needLogin; showLoggedOut(); }
+            else msgEl.textContent = j.j.error || "error";
           })
           .catch(function () { msgEl.textContent = "error"; });
       });
