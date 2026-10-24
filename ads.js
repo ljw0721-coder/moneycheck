@@ -31,18 +31,24 @@ function fillAdsterraNative(el){
   d.id='container-'+NET.adsterraNative;
   el.appendChild(d);
 }
-function collapseUnfilledSlots(){
+// 빈 광고 슬롯 접힘: 광고 미충전(애드센스 심사·노필 등) 시 280px 공백 방지.
+// MutationObserver 로 지연 충전 시 다시 보이고, 충전 실패 확정 시 숨긴다 (어느 쪽도 영구 고정 아님).
+function evaluateAdSlot(el){
+  if(el.querySelector('iframe')) { el.style.display=''; return; } // 실제 광고 렌더됨
+  const ins=el.querySelector('ins.adsbygoogle');
+  if(ins){
+    if(ins.getAttribute('data-adsbygoogle-status')==='done' || ins.getAttribute('data-ad-status')==='unfilled') el.style.display='none';
+    return;
+  }
+  if(!el.firstChild) el.style.display='none';
+}
+function watchAdSlots(){
   document.querySelectorAll('.ad-slot').forEach(el=>{
-    if(el.querySelector('iframe')) return; // an ad actually rendered
-    const ins=el.querySelector('ins.adsbygoogle');
-    if(ins){
-      if(ins.getAttribute('data-adsbygoogle-status')==='done' || ins.getAttribute('data-ad-status')==='unfilled') el.style.display='none';
-      return;
-    }
-    if(!el.firstChild) el.style.display='none';
+    new MutationObserver(()=>evaluateAdSlot(el)).observe(el,{childList:true,subtree:true,attributes:true,attributeFilter:['data-adsbygoogle-status','data-ad-status']});
   });
 }
-window.addEventListener('load',()=>{ setTimeout(collapseUnfilledSlots,3500); setTimeout(collapseUnfilledSlots,8000); });
+function evaluateAllAdSlots(){ document.querySelectorAll('.ad-slot').forEach(evaluateAdSlot); }
+window.addEventListener('load',()=>{ watchAdSlots(); setTimeout(evaluateAllAdSlots,3500); setTimeout(evaluateAllAdSlots,8000); });
 document.addEventListener('DOMContentLoaded',()=>{
   const hasAdsense = NET.adsense.startsWith("pub-");
   if(hasAdsense){const s=loadScript('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+NET.adsense);s.crossOrigin='anonymous';}
