@@ -11,7 +11,11 @@ This repo has multiple writers (including automation agents). These rules keep u
 - 푸시·배포 전 필수 검사: `node scripts/verify-ads.mjs` — placeholder ID 나 실제 ID 누락이 하나라도 있으면 실패하며, 그 상태로 푸시/배포 금지. Before every push/deploy run `node scripts/verify-ads.mjs`; a FAIL means do not push or deploy.
 - The approved ad config lives ONLY in `ads.config.json` (`ca-pub-3867118796714043`). `ads.txt`, the IDs in `ads.js`, and the homepage AdSense snippets are GENERATED. After any template/page regeneration, run `node scripts/apply-ads.mjs` (idempotent). Never blank or revert the publisher ID.
 
-## 2. 푸시 규칙 / Push rules
+## 2. 기사 작성 기준 / Article standard
+- 일일 트렌드 기사는 **`ARTICLE-GUIDE.md`** 의 리서치→구조→품질 체크 절차를 따른다. 리서치 없이 쓴 글, 출처 없는 사실, 번역문 업로드 금지.
+- Daily trend articles must follow ARTICLE-GUIDE.md (research, structure, sources). No unresearched posts, no unsourced facts, no translations.
+
+## 3. 푸시 규칙 / Push rules
 - 푸시 전 반드시 `git fetch && git rebase origin/main`. force-push 절대 금지. 상대 커밋(글 포함)은 항상 보존.
 - Always `git fetch && git rebase origin/main` before pushing. Never force-push. Always preserve the other side's commits, including articles.
 
