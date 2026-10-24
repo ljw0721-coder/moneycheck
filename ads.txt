@@ -1,2 +1,2 @@
-# 애드센스 연결됨 (2026-10-24)
+# 애드센스 연결됨 (ads.config.json 에서 생성)
 google.com, pub-3867118796714043, DIRECT, f08c47fec0942fa0

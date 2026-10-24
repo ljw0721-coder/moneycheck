@@ -1,0 +1,6 @@
+{
+  "adsense_pub": "pub-3867118796714043",
+  "ads_txt_line": "google.com, pub-3867118796714043, DIRECT, f08c47fec0942fa0",
+  "homepages": ["index.html", "ar/index.html", "en/index.html", "es/index.html", "ja/index.html", "zh/index.html"],
+  "note": "Single source of truth for the approved ad configuration. Run `node scripts/apply-ads.mjs` after ANY template regeneration. Do not hand-edit generated ads.txt / ads.js / ad snippets."
+}

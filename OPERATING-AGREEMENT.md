@@ -1,0 +1,22 @@
+# 공동 운영 규칙 / Shared Operating Rules
+
+이 저장소는 여러 작성자(자동화 에이전트 포함)가 함께 쓴다. 아래 규칙은 서로의 작업을 덮어쓰지 않기 위한 약속이다.
+This repo has multiple writers (including automation agents). These rules keep us from overwriting each other.
+
+## 1. 광고 설정의 단일 원천 / Single source of truth for ad config
+- 승인된 광고 설정은 **`ads.config.json`** 한 곳에만 있다. AdSense 게시자 ID `ca-pub-3867118796714043` 는 승인된 프로덕션 값이다.
+- `ads.txt`, `ads.js` 의 ID, 각 홈페이지 `<head>` 의 애드센스 스니펫은 **생성물**이다. 손으로 고치거나 템플릿에서 다시 만들지 말 것.
+- 템플릿/페이지를 재생성했다면 반드시 마지막에 실행: `node scripts/apply-ads.mjs` (멱등, placeholder 일괄 치환 + 스니펫 보장).
+- The approved ad config lives ONLY in `ads.config.json` (`ca-pub-3867118796714043`). `ads.txt`, the IDs in `ads.js`, and the homepage AdSense snippets are GENERATED. After any template/page regeneration, run `node scripts/apply-ads.mjs` (idempotent). Never blank or revert the publisher ID.
+
+## 2. 푸시 규칙 / Push rules
+- 푸시 전 반드시 `git fetch && git rebase origin/main`. force-push 절대 금지. 상대 커밋(글 포함)은 항상 보존.
+- Always `git fetch && git rebase origin/main` before pushing. Never force-push. Always preserve the other side's commits, including articles.
+
+## 3. 글 번호 / Article numbering
+- 로케일별 `articles/xxNNN.html` 번호는 해당 로케일 최대 번호 + 1. 기존 글 수정/삭제 금지.
+- Per-locale `articles/xxNNN.html`: next number = locale max + 1. Never edit or delete existing articles.
+
+## 4. 배포 / Deploy
+- Worker 의 D1 바인딩(DB, id a33efe21-ca91-4f78-8feb-5b5e79b9057b)과 API 코드는 반드시 유지. 아카이브(정적) 부분만 교체.
+- Keep the Worker's D1 binding and API code intact; replace only the static archive portion.

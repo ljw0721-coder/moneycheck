@@ -13,7 +13,7 @@ function fillAdsense(el){
   (window.adsbygoogle=window.adsbygoogle||[]).push({});
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  const hasAdsense = NET.adsense!=="pub-XXXXXXXXXXXXXXXX";
+  const hasAdsense = NET.adsense.startsWith("pub-");
   if(hasAdsense){const s=loadScript('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+NET.adsense);s.crossOrigin='anonymous';}
   if(NET.adfitMid||NET.adfitTop||NET.adfitBottom) loadScript('https://t1.daumcdn.net/kas/static/ba.min.js');
   if(NET.coupangId) loadScript('https://ads-partners.coupang.com/g.js');
