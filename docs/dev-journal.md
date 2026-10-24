@@ -97,3 +97,8 @@
 - 변경: about.html 에 두 주소 역할 병기. 나머지 40개 언어별 페이지 푸터 문의 주소를 support@ 로 교체. i18n.js 키에 이메일/문의 문자열 없음 확인(번역 동기화 불필요). 수신 라우팅(CF Email Routing) support@ 생성은 브라우저 대시보드 경로로 별도 처리(API 토큰에 Email Routing 권한 없음).
 - 주의: 다른 작성자 환경의 페이지 템플릿이 hello@ 를 박아 재생성할 수 있음 - 상대 템플릿은 이 저장소에 없어 수정 불가. 재생성 시 support@ 덮어쓰기 감시 필요.
 - 머지: 보류 (PR 경로 대기).
+## 2026-10-24 - 빈 광고 슬롯 접힘 + a101 출처 URL (브랜치, 머지 보류)
+- 이유: 애드센스 심사 중 ins.adsbygoogle 이 data-adsbygoogle-status="done" + height:280px 로 남아 (data-ad-status="unfilled" 아님) 기존 CSS 규칙이 매치되지 않아 슬롯당 280px 공백 발생. 메인 에이전트 지적. a101 에 출처 URL 명시 요구.
+- 변경: ads.js 에 collapseUnfilledSlots 추가 (load 후 3.5s/8s 2회 점검, iframe 없고 status done/unfilled 인 슬롯 display:none). a101 에 검증된 4개 매체 기사 URL 출처 섹션 추가.
+- 검증: node --check 통과. 로컬 서빙 + headless chrome(virtual-time-budget) 스크린샷으로 공백 소거 확인.
+- 머지: PR 생성 권한 부재(토큰 스코프)로 머지 보류. 브랜치 fix/adslot-collapse-sources 푸시, 사용자 PR 또는 머지 승인 대기. 기존 로컬 ff-merge 관행은 이번부터 사용 안 함(메인 지시).

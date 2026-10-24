@@ -52,3 +52,6 @@
 [디자인 리뉴얼] 상태: PR 대기
 - 2026-10-24 style.css 전면 교체안(PR). 마크업 무변경, 광고 무변경. 머지 후 배포·라이브 서체/광고 렌더 확인 필요. 광고 top 슬롯 위치(답 블록 위)는 사용자 결정 대기.
 - 2026-10-25: a101 미검증 네이버 1위 주장 재제거(템플릿 되살림 회수), topic-ent 티저 동기화, 미검증 인용 매체 교체 (fix/a101-naver-claim)
+
+[빈 광고 슬롯 접힘] 상태: 브랜치 완료, 머지 보류
+- 2026-10-24 ads.js collapseUnfilledSlots (status done/unfilled+iframe 없음 → 숨김). a101 출처 URL 4건. 브랜치 fix/adslot-collapse-sources.

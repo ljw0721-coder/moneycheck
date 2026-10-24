@@ -31,6 +31,18 @@ function fillAdsterraNative(el){
   d.id='container-'+NET.adsterraNative;
   el.appendChild(d);
 }
+function collapseUnfilledSlots(){
+  document.querySelectorAll('.ad-slot').forEach(el=>{
+    if(el.querySelector('iframe')) return; // an ad actually rendered
+    const ins=el.querySelector('ins.adsbygoogle');
+    if(ins){
+      if(ins.getAttribute('data-adsbygoogle-status')==='done' || ins.getAttribute('data-ad-status')==='unfilled') el.style.display='none';
+      return;
+    }
+    if(!el.firstChild) el.style.display='none';
+  });
+}
+window.addEventListener('load',()=>{ setTimeout(collapseUnfilledSlots,3500); setTimeout(collapseUnfilledSlots,8000); });
 document.addEventListener('DOMContentLoaded',()=>{
   const hasAdsense = NET.adsense.startsWith("pub-");
   if(hasAdsense){const s=loadScript('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+NET.adsense);s.crossOrigin='anonymous';}
