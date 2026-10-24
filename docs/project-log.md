@@ -56,3 +56,4 @@
 [빈 광고 슬롯 접힘] 상태: 브랜치 완료, 머지 보류
 - 2026-10-24 ads.js collapseUnfilledSlots (status done/unfilled+iframe 없음 → 숨김). a101 출처 URL 4건. 브랜치 fix/adslot-collapse-sources.
 - 2026-10-25: a101 맺음 문단 중복 제거 (fix/a101-dedupe)
+- 2026-10-25: 라이브 선별 반영 상태 정합성 기록 (fix/journal-live-reconcile)
