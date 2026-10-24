@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TrendCheck 관리</title><link rel="stylesheet" href="/style.css">
+<style>table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:6px 8px;text-align:left;font-size:14px}.cards{display:flex;gap:12px;flex-wrap:wrap}.card{border:1px solid #ddd;padding:12px 16px}.card b{font-size:24px}button{margin-right:6px}</style>
+</head><body><header><a href="/">TrendCheck — 오늘의 트렌드, 답부터 확인</a></header>
+<main><h1>TrendCheck 관리</h1>
+<p>조회수, 방문자, 댓글을 확인하고 댓글을 승인·삭제할 수 있습니다. 접속 통계는 쿠키 없이, IP를 당일 해시로만 처리합니다.</p>
+<section id="setup-box" style="display:none"><h2>관리자 키 처음 만들기</h2>
+<p>아직 관리자 키가 없습니다. 아래에 키를 정해 만드세요 (8자 이상). 이 키는 이 브라우저에만 저장되고, 서버에는 해시로만 남습니다. 키를 잊으면 복구할 수 없으니 따로 메모해 두세요.</p>
+<input id="setup-key" type="password" placeholder="관리자 키 (8자 이상)" style="width:280px">
+<button id="setup-btn">키 만들기</button><p id="setup-msg"></p></section>
+<section id="login-box" style="display:none"><h2>관리자 로그인</h2>
+<input id="login-key" type="password" placeholder="관리자 키" style="width:280px">
+<button id="login-btn">들어가기</button><p id="login-msg"></p></section>
+<section id="dash" style="display:none">
+<div class="cards">
+<div class="card">총 조회수<br><b id="total-views">-</b></div>
+<div class="card">오늘 방문자 (KST)<br><b id="today-visitors">-</b></div>
+<div class="card">승인 대기 댓글<br><b id="pending-count">-</b></div>
+</div>
+<button id="refresh-btn">새로고침</button> <button id="logout-btn">로그아웃</button>
+<h2>많이 본 글 Top 20</h2><table id="top-table"><tr><th>글</th><th>조회수</th></tr></table>
+<h2>일별 방문자 (최근 14일, KST)</h2><table id="daily-table"><tr><th>날짜</th><th>방문자</th></tr></table>
+<h2>승인 대기 댓글</h2><div id="pending-list"></div>
+<h2>최근 댓글</h2><div id="recent-list"></div>
+</section>
+<script>
+(function(){
+  var key = localStorage.getItem("tc_admin_key") || "";
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function api(p, opt){
+    opt = opt || {};
+    opt.headers = Object.assign({"Content-Type":"application/json","X-Admin-Key": key}, opt.headers || {});
+    return fetch(p, opt).then(function(r){ if(r.status===401) throw new Error("unauthorized"); return r.json(); });
+  }
+  function show(el){ $(el).style.display = "block"; }
+  function commentRow(c, withApprove){
+    var d = document.createElement("div");
+    d.innerHTML = "<p><b>"+esc(c.name)+"</b> <span class='meta'>"+esc(c.path)+" · "+esc(c.created_at)+"</span><br>"+esc(c.text)+"</p>";
+    if(withApprove){ var b=document.createElement("button"); b.textContent="승인"; b.onclick=function(){ act(c.id,"approve"); }; d.appendChild(b); }
+    var del=document.createElement("button"); del.textContent="삭제"; del.onclick=function(){ act(c.id,"delete"); }; d.appendChild(del);
+    return d;
+  }
+  function act(id, action){
+    api("/api/admin/comment", {method:"POST", body: JSON.stringify({id:id, action:action})}).then(load).catch(function(e){ alert("실패: "+e.message); });
+  }
+  function load(){
+    api("/api/admin/summary").then(function(j){
+      $("total-views").textContent = j.total_views;
+      $("today-visitors").textContent = j.today_visitors;
+      $("pending-count").textContent = j.pending_count;
+      $("top-table").innerHTML = "<tr><th>글</th><th>조회수</th></tr>" + j.top_pages.map(function(r){ return "<tr><td>"+esc(r.path)+"</td><td>"+r.views+"</td></tr>"; }).join("");
+      $("daily-table").innerHTML = "<tr><th>날짜</th><th>방문자</th></tr>" + j.daily_visitors.map(function(r){ return "<tr><td>"+esc(r.day)+"</td><td>"+r.visitors+"</td></tr>"; }).join("");
+      var pend = $("pending-list"); pend.innerHTML = "";
+      j.recent_comments.filter(function(c){ return c.status==="pending"; }).forEach(function(c){ pend.appendChild(commentRow(c, true)); });
+      if(!pend.children.length) pend.innerHTML = "<p>대기 중인 댓글이 없습니다.</p>";
+      var rec = $("recent-list"); rec.innerHTML = "";
+      j.recent_comments.forEach(function(c){ rec.appendChild(commentRow(c, false)); });
+    }).catch(function(e){
+      if(e.message==="unauthorized"){ localStorage.removeItem("tc_admin_key"); key=""; $("dash").style.display="none"; show("login-box"); $("login-msg").textContent="키가 맞지 않습니다. 다시 입력하세요."; }
+      else $("login-msg").textContent = "불러오기 실패: "+e.message;
+    });
+  }
+  $("setup-btn").onclick = function(){
+    var k = $("setup-key").value;
+    if(k.length < 8){ $("setup-msg").textContent = "8자 이상 입력하세요."; return; }
+    fetch("/api/admin/setup", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({key:k})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j.ok){ localStorage.setItem("tc_admin_key", k); key = k; $("setup-box").style.display="none"; show("dash"); load(); }
+        else $("setup-msg").textContent = j.error || "실패";
+      });
+  };
+  $("login-btn").onclick = function(){
+    var k = $("login-key").value; if(!k) return;
+    key = k;
+    api("/api/admin/summary").then(function(){ localStorage.setItem("tc_admin_key", k); $("login-box").style.display="none"; show("dash"); load(); })
+      .catch(function(){ $("login-msg").textContent = "키가 맞지 않습니다."; });
+  };
+  $("refresh-btn").onclick = load;
+  $("logout-btn").onclick = function(){ localStorage.removeItem("tc_admin_key"); key=""; location.reload(); };
+  /* first visit: if summary works with saved key, go to dashboard; else try setup probe */
+  if(key){ show("dash"); load(); }
+  else {
+    fetch("/api/admin/setup-probe").then(function(r){ return r.json(); }).then(function(j){
+      if(j.setup_open) show("setup-box"); else show("login-box");
+    }).catch(function(){ show("login-box"); });
+  }
+})();
+</script>
+</main></body></html>
