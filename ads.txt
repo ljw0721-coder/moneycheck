@@ -1,2 +1,2 @@
-# 애드센스 연결됨 (ads.config.json 에서 생성)
+# 애드센스 연결 시 pub-3867118796714043 를 본인 ID로 교체
 google.com, pub-3867118796714043, DIRECT, f08c47fec0942fa0
