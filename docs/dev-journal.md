@@ -3,6 +3,43 @@
 규칙: 이 레포의 모든 변경은 푸시할 때 이 파일에 항목을 남긴다 (사용자 상시 규칙 2026-09-29: "깃허브 변경을 할때는 다른 모델이 빨리 파악할 수 있도록 변경 사항을 항상 일지를 써서 log를 남길것"). 새 항목을 위에 추가.
 참고: 2026-10-24 이전 커밋들은 일지 없이 푸시됐다 (아래 2026-10-24 항목 중 일부도 사후 기록).
 
+## 2026-10-24 - 캔버스 디자인 → 플랫폼 적용 v2 (사용자 지시: "플랫폼에 적용해")
+
+- 이유: 사용자가 Claude Design Canvas 3개 아트보드(홈 1280px / 기사 1280px / 모바일 390px)에서 설계한 컴포넌트를 실제 trendcheck.today에 배포하도록 지시.
+- 변경 파일: style.css (전면 교체), index.html (마크업 추가)
+
+### style.css 추가 컴포넌트
+- `.tc-chip-strip` + `.tc-chip` + `.tc-chip.active` — 국가 마켓 필터 칩 (가로 스크롤, 스크롤바 숨김)
+- `.tc-verdict-badge` + `.verified` / `.unverified` / `.disputed` — 3-state 판정 배지 (검증 teal / 미검증 ochre / 논란 vermilion, SVG 아이콘 포함)
+- `.tc-card-rank` — 카드 우상단 순위 워터마크 (64px, opacity .06)
+- `.tc-answer-block` / `.tc-answer-pill` — `:has()` 폴백 유지하면서 명시 클래스 추가
+- `.tc-source-chip` — 출처 칩 (기사 하단 링크 배지)
+- `.tc-breadcrumb` + `.tc-breadcrumb-sep` — 기사 페이지 경로 표시
+- `.tc-article-layout` + `.tc-article-aside` + `.tc-aside-card` — 2열 기사 레이아웃 (measure + sticky aside, 900px 이하 1열)
+- `.tc-footer-grid` + `.tc-footer-brand` + `.tc-footer-col` + `.tc-footer-bottom` — 3열 푸터 그리드 (640px 이하 1열)
+- `.tc-bottom-nav` — 모바일 고정 하단 내비 (680px 이하만 표시, safe-area-inset-bottom 대응)
+- `.card` hover: `transform:translateY(-2px)` + `box-shadow` 업그레이드
+- `td.tc-verified` / `.tc-unverified` / `.tc-disputed` — 팩트체크 테이블 셀 색상
+- verdict 토큰 3쌍: `--verified`, `--unverified`, `--disputed` (각 색상+배경+잉크, 다크 재정의 포함)
+- `--shadow-elevated` 토큰 추가 (hover 전용 깊은 그림자)
+
+### index.html 변경
+- `.tc-logo-accent` span: "Trend" 로고 강조 색상 (amber)
+- `.tc-chip-strip` 삽입: ALL/KR/US/JP/TW/MX/SA 7개 칩, 국기 이모지 포함
+- 카드에 `.tc-card-rank` 추가 (순위 워터마크)
+- 카드 meta p 를 `div.card-footer > p.meta` 구조로 변경 (기존 콘텐츠 유지)
+- AR 카드 `dir="rtl"` 추가
+- `footer` 3열 그리드 구조로 교체 (국가별·주제별 링크 목록)
+- `.tc-bottom-nav` 고정 하단 내비 추가 (홈/뉴스/경제/소개 4탭)
+
+### 불변 사항
+- 광고 슬롯: `.ad-slot[data-pos="top/bottom"]` 위치·클래스 유지
+- ads.js / ads.config.json / 광고 스니펫 무변경
+- 기존 기사 HTML 파일(articles/, en/, ja/, zh/, es/, ar/) 무수정
+- `#tc-comments`, `.btn`, `nav a` 등 기존 셀렉터 모두 유지
+
+- 검증: node scripts/verify-ads.mjs 실행 필요 (플랫폼 푸시 전 광고 설정 확인).
+
 ## 2026-10-24
 
 ### ARTICLE-GUIDE 기사 작성 기준 추가 (6341787)
