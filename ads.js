@@ -6,8 +6,8 @@ const NET = {
   adfitTop: "", adfitMid: "", adfitBottom: "", // Kakao AdFit 광고단위 ID (DAN-...)
   dableWidget: "",                       // Dable 위젯 ID
   coupangId: "", coupangTracking: "",     // Coupang Partners ID / 추적코드
-  adsterra728: "b61c7f2fdfbde805f657a61c2e331461",   // Adsterra Banner 728x90 (mid 슬롯, AdFit 없을 때)
-  adsterraNative: "412f35644e8c3b2c34d8f262f6819385" // Adsterra Native Banner (bottom 슬롯, Dable/Coupang 없을 때)
+  adsterra728: "",   // Adsterra 728x90 일시 중지 2026-10-24: 도박 광고(MELBET) 노출 확인 - 카테고리 차단 방법 확보 전까지 비활성
+  adsterraNative: "" // Adsterra Native 일시 중지 2026-10-24: 도박 광고 회전 확인 - 카테고리 차단 방법 확보 전까지 비활성
 };
 function loadScript(src){const s=document.createElement('script');s.async=true;s.src=src;document.head.appendChild(s);return s;}
 function fillAdsense(el){

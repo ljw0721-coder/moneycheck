@@ -33,3 +33,8 @@
 - 변경: ads.js 에 NET.adsterra728 / NET.adsterraNative 추가. mid 슬롯 = AdFit 우선, 없으면 Adsterra 728x90. bottom 슬롯 = Dable/Coupang 우선, 없으면 Adsterra Native. top 슬롯은 애드센스 유지(기존 위치분리 원칙). atOptions 전역 충돌로 클래식 배너는 페이지당 1개만.
 - 검증: node --check 통과. 로컬 서빙 + headless chrome: a101.html DOM에 atOptions/728 스크립트/native container 주입 확인, 레이아웃 스크린샷 정상. 라이브 광고 렌더는 배포 후 확인 예정.
 - 참고: Adsterra ads.txt 항목은 계정별 공식 포맷 미확인으로 미추가(지어내지 않음). Popunder/Social Bar 등 본문 가림 포맷과 성인 광고는 정책상 제외.
+
+## 2026-10-24 - Adsterra 슬롯 일시 중지 (도박 광고 노출)
+- 이유: 라이브 검증 중 mid 728x90 슬롯에 MELBET 도박 광고(100유로 첫입금 보너스, 크립토 결제) 노출 확인. 한국 사용자 대상 도박 광고는 법적·정책적 위험, 애드센스 심사 진행 중이라 브랜드 안전 우선.
+- 변경: ads.js 의 NET.adsterra728/adsterraNative 를 빈 값으로 (코드는 유지, ID만 중지). 카테고리 차단 방법(Adsterra 지원팀 문의 등) 확보 후 재활성 예정. 계정·광고단위는 Active 상태로 남아 있음.
+- 검증: node --check 통과. 배포 후 라이브 DOM 에 bauval 스크립트 부재 확인 예정.
