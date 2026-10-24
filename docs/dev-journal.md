@@ -102,3 +102,9 @@
 - 변경: ads.js 에 collapseUnfilledSlots 추가 (load 후 3.5s/8s 2회 점검, iframe 없고 status done/unfilled 인 슬롯 display:none). a101 에 검증된 4개 매체 기사 URL 출처 섹션 추가.
 - 검증: node --check 통과. 로컬 서빙 + headless chrome(virtual-time-budget) 스크린샷으로 공백 소거 확인.
 - 머지: PR 생성 권한 부재(토큰 스코프)로 머지 보류. 브랜치 fix/adslot-collapse-sources 푸시, 사용자 PR 또는 머지 승인 대기. 기존 로컬 ff-merge 관행은 이번부터 사용 안 함(메인 지시).
+
+## 2026-10-24 - 슬롯 접힘 로직 보강 + 테스트 하네스 보존 (브랜치, 머지 보류 유지)
+- 이유: 미충전 슬롯에도 빈 aswift iframe 이 존재(라이브 DOM 확인)해 iframe 유무 판별은 오류. 메인 지시로 시나리오 테스트와 원시 결과를 저장소에 보존(사용자 원시로그 규칙).
+- 변경: evaluateAdSlot 이 data-ad-status(unfilled/filled) 우선, done+상태없음 은 프레임 존재로 폴백, MutationObserver 로 지연 충전 시 재표시. tests/adslot-collapse.html(하네스)+results.md+lastrun-dom.html 추가.
+- 검증: 4 시나리오 PASS (지연 충전 표시/진짜 미충전 숨김/9초 후 재표시/빈 슬롯 숨김). a101 확인처 문장 미검증 매체명 제거 확인.
+- 머지: 보류 유지. PR 경로 또는 사용자 명시 승인 대기.

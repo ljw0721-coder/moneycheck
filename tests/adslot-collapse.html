@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<!-- 빈 광고 슬롯 접힘 시나리오 테스트 하네스 (2026-10-24). 로컬 서빙 후:
+     google-chrome --headless --disable-gpu --virtual-time-budget=12000 --dump-dom http://localhost:PORT/tests/adslot-collapse.html
+     기대 결과: top=표시(style="") / mid=숨김 / bottom=표시(9초 지연 충전 후 재표시) / blank=숨김 -->
+<link rel="stylesheet" href="/style.css"><script src="/ads.js" defer></script>
+</head><body><main>
+<div class="ad-slot" data-pos="top"></div>
+<div class="ad-slot" data-pos="mid"></div>
+<div class="ad-slot" data-pos="bottom"></div>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{
+    const top=document.querySelector('[data-pos="top"]');
+    const mid=document.querySelector('[data-pos="mid"]');
+    const bot=document.querySelector('[data-pos="bottom"]');
+    const tIns=top.querySelector('ins'), mIns=mid.querySelector('ins'), bIns=bot.querySelector('ins');
+    // mid: 미충전 시뮬레이션 - 실제 애드센스 응답이 data-ad-status="unfilled" + 빈 aswift iframe 을 넣는다 (네트워크 필요)
+    if(mIns) mIns.setAttribute('data-adsbygoogle-status','done');
+    if(bIns) bIns.setAttribute('data-adsbygoogle-status','done');
+    const blank=document.createElement('div'); blank.className='ad-slot'; blank.id='blank'; document.querySelector('main').appendChild(blank);
+    // top: 6초에 충전 (첫 스윕 이후)
+    setTimeout(()=>{ if(tIns){ tIns.setAttribute('data-adsbygoogle-status','done'); tIns.setAttribute('data-ad-status','filled'); const f=document.createElement('iframe'); f.width=728; f.height=90; tIns.appendChild(f);} },6000);
+    // bottom: 9초에 충전 (두 스윕 모두 이후) - observer 가 다시 보이게 해야 함
+    setTimeout(()=>{ if(bIns){ bIns.setAttribute('data-ad-status','filled'); const f=document.createElement('iframe'); f.width=300; f.height=250; bIns.appendChild(f);} },9000);
+  },500);
+});
+</script>
+</main></body></html>
