@@ -7,6 +7,7 @@ This repo has multiple writers (including automation agents). These rules keep u
 - 승인된 광고 설정은 **`ads.config.json`** 한 곳에만 있다. AdSense 게시자 ID `ca-pub-3867118796714043` 는 승인된 프로덕션 값이다.
 - `ads.txt`, `ads.js` 의 ID, 각 홈페이지 `<head>` 의 애드센스 스니펫은 **생성물**이다. 손으로 고치거나 템플릿에서 다시 만들지 말 것.
 - 템플릿/페이지를 재생성했다면 반드시 마지막에 실행: `node scripts/apply-ads.mjs` (멱등, placeholder 일괄 치환 + 스니펫 보장).
+- 홈페이지를 재생성했다면 `node scripts/apply-site-verify.mjs` 도 함께 실행 — 애드센스/네이버 소유권 인증 메타 태그 복원 (If homepage was regenerated, also run apply-site-verify.mjs to restore the AdSense/Naver verification meta tags).
 - 푸시·배포 전 필수 검사: `node scripts/verify-ads.mjs` — placeholder ID 나 실제 ID 누락이 하나라도 있으면 실패하며, 그 상태로 푸시/배포 금지. Before every push/deploy run `node scripts/verify-ads.mjs`; a FAIL means do not push or deploy.
 - The approved ad config lives ONLY in `ads.config.json` (`ca-pub-3867118796714043`). `ads.txt`, the IDs in `ads.js`, and the homepage AdSense snippets are GENERATED. After any template/page regeneration, run `node scripts/apply-ads.mjs` (idempotent). Never blank or revert the publisher ID.
 
