@@ -34,12 +34,18 @@ function fillAdsterraNative(el){
 // 빈 광고 슬롯 접힘: 광고 미충전(애드센스 심사·노필 등) 시 280px 공백 방지.
 // MutationObserver 로 지연 충전 시 다시 보이고, 충전 실패 확정 시 숨긴다 (어느 쪽도 영구 고정 아님).
 function evaluateAdSlot(el){
-  if(el.querySelector('iframe')) { el.style.display=''; return; } // 실제 광고 렌더됨
   const ins=el.querySelector('ins.adsbygoogle');
   if(ins){
-    if(ins.getAttribute('data-adsbygoogle-status')==='done' || ins.getAttribute('data-ad-status')==='unfilled') el.style.display='none';
-    return;
+    const st=ins.getAttribute('data-ad-status');
+    if(st==='unfilled'){ el.style.display='none'; return; } // 노필 확정 (빈 aswift iframe 은 광고 아님)
+    if(st==='filled'){ el.style.display=''; return; }     // 충전 확정
+    if(ins.getAttribute('data-adsbygoogle-status')==='done'){
+      el.style.display = ins.querySelector('iframe') ? '' : 'none'; // ad-status 없는 드문 경우: 프레임 존재로 판별
+      return;
+    }
+    return; // 아직 응답 전: 건드리지 않음
   }
+  if(el.querySelector('iframe')){ el.style.display=''; return; } // 타 네트워크(Adsterra/AdFit/Dable) 실제 렌더
   if(!el.firstChild) el.style.display='none';
 }
 function watchAdSlots(){
