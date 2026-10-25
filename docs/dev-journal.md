@@ -367,3 +367,9 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - nuvystra.com은 "검토 필요"+ads.txt 없음(구 도메인) — 삭제는 사용자 결정 사항으로 보고만.
 
 트래픽: 현재 병목은 발행량이 아니라 인덱싱(기사별 GSC/Naver index 미확정). 10/27 GSC 팔로업 웨이크에서 per-URL 상태 확인 예정. 내부링크(최신글/카테고리//ko/ 집계), hreflang, sitemap 자동 포함, 일 12편(6+6) 발행 리듬은 완비.
+
+## 2026-10-25 12:29 — AdSense qualifiers (main 12:28 corrections)
+
+- ads.txt discrepancy OPEN: live 200 + console "찾을 수 없음" — crawler-lag is a hypothesis, not established cause. Re-check console ads.txt status at the 10/27 GSC follow-up (same checkpoint batch).
+- Indexing bottleneck NOT proven: per-URL index state UNKNOWN + no Performance data → cannot claim indexing is THE traffic constraint. Traffic recommendations wait for actual GSC query/referral data; no volume guarantees.
+- nuvystra.com stays listed (no unrelated account changes).
