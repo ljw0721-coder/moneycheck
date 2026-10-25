@@ -17,6 +17,10 @@ This file is the writing workflow every writer in this repo (including automatio
 4. **독자가 알아둘 것** - 이 이슈가 독자에게 갖는 의미·다음에 볼 것.
 5. **출처** - 기사 하단에 실제 확인한 출처 링크 목록.
 
+
+## 2-1. HTML head·공유 버튼 (사용자 지시 2026-10-25)
+모든 신규 기사는 head에 아래를 기본 포함한다: NewsArticle JSON-LD(제목·발행일·언어·저자/발행인 TrendCheck·canonical), <meta name="robots" content="max-image-preview:large">, OG 태그(og:title·og:description·og:type=article·og:url·og:image=og-default.png·og:site_name=TrendCheck·article:published_time). 본문 하단에 공유 버튼(X/Threads/Facebook/링크복사). 생성은 `node scripts/article-shell.mjs`(로케일별 기존 기사를 --ref로 사용)을 쓴다. 이미지는 라이선스 안전 소스(Unsplash/Pexels/Wikimedia)+출처 표기, 없으면 og-default 폴백, 무단 전재 금지.
+
 ## 3. 언어·품질 / Language & quality
 - 해당 언어로 직접 쓴 오리지널 글. 다른 언어판 기사의 번역 금지.
 - 클릭을 위한 과장·낚시 제목 금지. 제목은 확인된 사실만 담는다.

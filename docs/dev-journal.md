@@ -408,3 +408,10 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - gmail 구독 갱신(waketrigger-01M5RMA4TWVNT1694TDGGE48SD): AdSense 결과 / Adsterra 회신 / Kakao 제안등록 번호 / 도메인 발신 배달 알림 커버.
 - send-domain-mail.mjs mock-transport 테스트 4종 통과: (1) 원본 성공→사본 1건(수신자·[발신 사본] 제목·원본 message_id/본문/queued 메타 포함) exit0, (2) 원본 실패→사본 없음·레코드 없음 exit1, (3) 사본 실패→원본 중복 없이 durable 레코드+retry 경로 출력 exit1, (4) --retry-copy → 사본만 재발송·이미 발송 시 0호출 멱등. 토큰 문자열 출력·레코드 미포함 확인. mail-log/ 는 gitignore(본문 프라이버시).
 - 광고 네트워크 차단 상태 durable 기록: docs/ad-networks-status.md (재개 신호 기반, 재시도 타이머 없음). 프라이버시 점검: PH 지점 번호 실수치는 git 이력·추적 파일에 존재하지 않음 확인(git log -S + 전체 grep), AdFit 신청서 원문에만 존재.
+
+## 2026-10-25 13:54 — 기존 31개 기사 head 메타 일괄 추가 + 신규 기사 셸 스크립트
+- 사용자 요청(13:49, WhatsApp 협업 지시): 31개 전 기사에 NewsArticle JSON-LD + max-image-preview:large + OG 태그 추가, 제목·본문 불변.
+- scripts/apply-article-meta.mjs 신설: </head> 직전 삽입만 허용(삽입 외 바이트 동일·제목 불변 자체 검증), 멱등. 31/31 적용, diff = 순수 추가.
+- 배포: fresh live baseline(124파일) + 31개 교체, allowlist-meta31.txt(MOD: 31건, guard의 title-unchanged 규칙 통과) → guard PASS + smoke PASS + upload success. 라이브 검증: 7개 로케일 대표 기사 메타 확인, 제목·본문·rtl·댓글API·홈/피드/사이트맵/og-default 200 유지.
+- scripts/article-shell.mjs 신설(요청 항목 2·3): 신규 기사 셸 — 같은 로케일 기존 기사 --ref에서 header/footer/댓글/ad-slot 재사용, head 메타 기본 포함, 본문 하단 공유 버튼(X/Threads/Facebook/링크복사, 6개 로케일 라벨). ARTICLE-GUIDE.md §2-1에 필수화 명문화. bin/tpl-*.html 은 구 MoneyCheck 시절 stale 로컬 파일이라 파이프라인이 아님(미사용).
+- 이미지(항목 4)는 라이선스 소스+출처 표기 원칙만 가이드에 반영, 실제 기사별 이미지 적용은 단계적 후속 작업.
