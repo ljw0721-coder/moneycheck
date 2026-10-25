@@ -16,6 +16,8 @@ const SITE = 'https://trendcheck.today';
 
 const [ref, out, title, desc, date, metaLine, canon, bodyFile] =
   ['ref', 'out', 'title', 'desc', 'date', 'meta-line', 'canon', 'body-file'].map(arg);
+const [imgUrl, imgCredit, imgAlt] = ['image-url', 'image-credit', 'image-alt'].map(arg);
+if (imgUrl && (!imgCredit || !imgAlt)) { console.error('--image-url requires --image-credit and --image-alt (license attribution rule)'); process.exit(2); }
 if (!ref || !out || !title || !desc || !date || !metaLine || !canon || !bodyFile) {
   console.error('required: --ref --out --title --desc --date --meta-line --canon --body-file');
   process.exit(2);
@@ -64,12 +66,13 @@ const html = `<!DOCTYPE html><html lang="${lang}" dir="${dir}"><head><meta chars
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="${esc(canon)}">
-<meta property="og:image" content="${SITE}/og-default.png">
+<meta property="og:image" content="${imgUrl || SITE + '/og-default.png'}">
 <meta property="og:site_name" content="TrendCheck">
 <meta property="article:published_time" content="${date}">
 <script type="application/ld+json">${jsonld}</script>
 </head><body>${header}<main><p class="meta">${esc(metaLine)}</p>
 <h1>${esc(title)}</h1>
+${imgUrl ? `<figure class="tc-hero"><img src="${esc(imgUrl)}" alt="${esc(imgAlt)}" width="1200" loading="lazy"><figcaption>${esc(imgCredit)}</figcaption></figure>` : ''}
 ${body}
 ${share}
 <div class="ad-slot" data-pos="bottom"></div>
