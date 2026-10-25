@@ -1,7 +1,7 @@
 /* TrendCheck design system v2: tokens + full component library.
    기존 HTML 셀렉터(header/nav/main/.card/.grid/.meta/.btn/#tc-comments/footer)는
    그대로 유지하고, 캔버스 아트보드의 신규 컴포넌트 클래스만 추가함. */
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Noto+Serif+KR:wght@700;900&family=Noto+Serif+JP:wght@700;900&family=Noto+Serif+TC:wght@700;900&family=Noto+Naskh+Arabic:wght@700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap");
 
 /* ─── Design Tokens ──────────────────────────────────────────────── */
 :root{
@@ -10,7 +10,7 @@
   --surface-100:#fff;--surface-200:#fff;--surface-300:#f5f5f5;
   --surface-inverse:#111;--line:#e5e5e5;--control-border:#999;
   /* ink */
-  --ink:#111;--ink-muted:#666;
+  --ink:#111;--ink-muted:#595959;
   --ink-inverse:#fff;--ink-inverse-muted:#ccc;
   /* brand */
   --accent:#c00;--accent-hover:#a00;--on-accent:#fff;
@@ -33,6 +33,8 @@
   --font-display:"Bricolage Grotesque","Noto Sans KR",system-ui,sans-serif;
   --font-sans:"Noto Sans KR",system-ui,-apple-system,"Malgun Gothic",sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  /* broadsheet theme: serif headlines (per-script below), sans body/chrome */
+  --font-serif:"Noto Serif KR","Noto Serif JP","Noto Serif TC","Noto Naskh Arabic",Georgia,serif;
 }
 @media (prefers-color-scheme:dark){:root{
   --surface-100:#0b1020;--surface-200:#141b30;--surface-300:#070a15;
@@ -63,33 +65,50 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   outline:3px solid var(--focus-ring);outline-offset:2px}
 
 /* ─── Header ─────────────────────────────────────────────────────── */
+/* Broadsheet masthead: language row on top, centered serif wordmark, nav between
+   a hairline and a double rule. Markup unchanged (header > a, #lang-switch, nav). */
 header{
   background:var(--surface-200);color:var(--ink);
-  padding:var(--space-4) max(var(--space-4),calc((100% - var(--container))/2 + var(--space-4)));
-  border-bottom:4px solid var(--ink);
+  padding:var(--space-4) max(var(--space-4),calc((100% - var(--container))/2 + var(--space-4))) 0;
+  display:flex;flex-direction:column;
 }
 header a:focus-visible{outline-color:var(--focus-ring)}
+#lang-switch{float:none!important;order:-1;display:flex;flex-wrap:wrap;justify-content:flex-end;row-gap:6px}
 header>a{
+  display:block;text-align:center;margin:var(--space-4) 0;
   color:var(--ink);text-decoration:none;
-  font-family:var(--font-display);font-weight:800;font-size:22px;
-  letter-spacing:-.01em;line-height:1.4;
+  font-family:var(--font-serif);font-weight:900;font-size:clamp(22px,3.2vw,34px);
+  letter-spacing:-.02em;line-height:1.25;word-break:keep-all;
 }
 header>a .tc-logo-accent{color:var(--accent)}
 
 /* ─── Nav ────────────────────────────────────────────────────────── */
-nav{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-5);margin-top:var(--space-3);clear:both}
-nav a{color:var(--ink-muted);font-size:15px;font-weight:700;text-decoration:none;padding-block:var(--space-1)}
-nav a:hover{color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+nav{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-1) var(--space-6);
+  padding-block:var(--space-2);border-top:1px solid var(--ink);border-bottom:4px double var(--ink);
+}
+nav a{color:var(--ink);font-size:15px;font-weight:700;text-decoration:none;padding-block:var(--space-1)}
+nav a:hover{color:var(--accent)}
+nav a[href$="privacy.html"],nav a[href$="about.html"]{color:var(--ink-muted);font-weight:500}
+@media (max-width:640px){nav{gap:var(--space-1) var(--space-4)}}
 
 /* ─── Main ───────────────────────────────────────────────────────── */
 main{max-width:var(--container);margin:0 auto;padding:var(--space-6) var(--space-4) var(--space-8)}
 main>:is(p,h2,ul,ol,table){max-width:var(--measure)}
 
 /* ─── Headings ───────────────────────────────────────────────────── */
-h1,h2{font-family:var(--font-display);letter-spacing:-.02em}
-h1{font-size:clamp(28px,4.2vw,40px);line-height:1.25;font-weight:800;max-width:860px;margin:var(--space-3) 0 var(--space-4)}
-h2{font-size:24px;line-height:1.4;font-weight:700;margin:var(--space-7) 0 var(--space-3);padding-bottom:var(--space-2);border-bottom:2px solid var(--ink)}
-main>h1:first-child{font-size:clamp(34px,6vw,56px);line-height:1.1;margin-top:var(--space-5)}
+h1,h2{font-family:var(--font-serif);letter-spacing:-.02em}
+h1{font-size:clamp(28px,4.2vw,40px);line-height:1.3;font-weight:900;max-width:860px;margin:var(--space-3) 0 var(--space-4)}
+h2{font-size:24px;line-height:1.4;font-weight:900;margin:var(--space-6) 0 var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--ink)}
+main>h1:first-child{font-size:clamp(32px,4.6vw,44px);line-height:1.2;margin-top:var(--space-2)}
+/* Home/listing section labels (h2 directly before a card grid): small red label on a thick rule */
+h2:has(+.grid),h2:has(+.ad-slot+.grid){
+  font-family:var(--font-sans);font-size:14px;font-weight:700;letter-spacing:.04em;
+  color:var(--accent);margin:var(--space-7) 0 0;padding-top:var(--space-2);border-top:3px solid var(--ink);
+  max-width:none;
+}
+/* Article kicker: the category/date line above the headline */
+main>p.meta:first-child{color:var(--accent);font-weight:700;letter-spacing:.04em;margin:0}
 
 /* ─── Links ──────────────────────────────────────────────────────── */
 main p a,main li a{color:var(--link);text-underline-offset:3px}
@@ -101,22 +120,14 @@ main p a,main li a{color:var(--link);text-underline-offset:3px}
 /* ─── Answer Block (class + :has fallback) ───────────────────────── */
 .tc-answer-block,
 main>p:has(>b:first-child){
-  max-width:var(--measure);margin:var(--space-5) 0;
-  padding:var(--space-6);background:var(--surface-inverse);
-  color:var(--ink-inverse);border-radius:var(--radius-lg);
+  max-width:var(--measure);margin:var(--space-5) 0 var(--space-6);
+  padding:var(--space-5) var(--space-5);background:var(--surface-300);
+  color:var(--ink);border-top:3px solid var(--accent);border-radius:0;
   font-size:19px;line-height:1.75;font-weight:500;
 }
-.tc-answer-block{border-inline-start:4px solid var(--accent)}
 .tc-answer-pill,
 main>p:has(>b:first-child)>b:first-child{
-  display:inline-block;margin-inline-end:var(--space-2);
-  padding:2px var(--space-2);background:var(--accent);color:var(--on-accent);
-  border-radius:var(--radius-pill);font-family:var(--font-mono);
-  font-size:12px;font-weight:700;letter-spacing:.02em;line-height:1.6;vertical-align:2px;
-}
-main>p:has(>b:first-child)>b:first-child:lang(ar),
-:lang(ar) main>p:has(>b:first-child)>b:first-child{
-  letter-spacing:0;font-family:inherit;font-size:13px;
+  margin-inline-end:var(--space-1);color:var(--accent);font-weight:900;
 }
 
 /* ─── Market Chip Strip ──────────────────────────────────────────── */
@@ -170,17 +181,30 @@ main>p:has(>b:first-child)>b:first-child:lang(ar),
 }
 
 /* ─── Card grid ──────────────────────────────────────────────────── */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-4)}
+/* Newspaper columns: hairline column rules drawn in the gap (::before); the grid clips the
+   rule left of the first column, so rules only ever appear between columns. */
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));column-gap:var(--space-7);
+  overflow:clip;overflow-clip-margin:6px;
+}
 .card{
-  position:relative;background:var(--surface-200);border:0;border-bottom:1px solid var(--line);
-  border-radius:0;padding:var(--space-5) 0;
+  position:relative;background:transparent;border:0;border-bottom:1px solid var(--line);
+  border-radius:0;padding:var(--space-4) 0 var(--space-5);
   box-shadow:none;
 }
-.card:hover{
-  border-color:var(--line);
+.card::before{
+  content:"";position:absolute;inset-block:var(--space-4);inset-inline-start:calc(var(--space-7) / -2);
+  border-inline-start:1px solid var(--line);
 }
-.card a{color:var(--ink);text-decoration:none;font-weight:800;font-size:18px;line-height:1.55}
+.card:hover a{color:var(--accent)}
+.card a{color:var(--ink);text-decoration:none;font-family:var(--font-serif);font-weight:700;font-size:19px;line-height:1.5}
 .card a::after{content:"";position:absolute;inset:0;border-radius:0}
+/* Lead story: first card of the first section on a home page spans 2×2 */
+@media (min-width:900px){
+  main>h2:first-of-type+.grid>.card:first-child{grid-column:span 2;grid-row:span 2;padding-inline-end:var(--space-2)}
+  main>h2:first-of-type+.grid>.card:first-child a{font-size:34px;font-weight:900;line-height:1.3;letter-spacing:-.02em}
+  main>h2:first-of-type+.grid>.card:first-child p{margin-top:var(--space-3)}
+}
 .card p{margin:var(--space-2) 0 0}
 .card .tc-card-footer{
   display:flex;align-items:center;justify-content:space-between;
@@ -230,8 +254,9 @@ main>p:has(>b:first-child)>b:first-child:lang(ar),
 /* ─── Footer ─────────────────────────────────────────────────────── */
 footer{
   background:var(--surface-300);color:var(--ink-muted);
-  padding:var(--space-6) var(--space-4);font-size:13px;line-height:1.8;
-  border-top:4px solid var(--ink);
+  padding:var(--space-6) max(var(--space-4),calc((100% - var(--container))/2 + var(--space-4)));
+  font-size:13px;line-height:1.8;
+  border-top:4px double var(--ink);
 }
 footer a{color:var(--ink-muted);text-underline-offset:3px}
 .tc-footer-grid{
@@ -291,7 +316,7 @@ td.tc-disputed{background:var(--disputed-bg);color:var(--disputed-ink)}
 /* ─── Buttons ────────────────────────────────────────────────────── */
 .btn,button{
   display:inline-block;background:var(--accent);color:var(--on-accent);
-  padding:var(--space-3) var(--space-5);border:0;border-radius:4px;
+  padding:var(--space-3) var(--space-5);border:0;border-radius:0;
   font:inherit;font-weight:800;line-height:1.2;text-decoration:none;cursor:pointer;
 }
 .btn:hover,button:hover{background:var(--accent-hover)}
@@ -301,7 +326,7 @@ td.tc-disputed{background:var(--disputed-bg);color:var(--disputed-ink)}
 #tc-comments input,#tc-comments textarea{
   width:100%;max-width:480px;padding:var(--space-3);
   background:var(--surface-200);color:var(--ink);
-  border:1px solid var(--control-border);border-radius:var(--radius-sm);font:inherit;
+  border:1px solid var(--control-border);border-radius:0;font:inherit;
 }
 #tc-comments a{color:var(--link)}
 .tc-comment{padding:var(--space-3) 0;border-bottom:1px solid var(--line)}

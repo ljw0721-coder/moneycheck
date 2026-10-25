@@ -309,3 +309,18 @@ Per main 11:51: runtime code changes must pass a smoke against the ACTUAL blob r
 Cache qualification (main 11:51): max-age=0/must-revalidate does NOT retroactively invalidate already-fresh cached copies; those persist until their original max-age=600 expiry. Claim precisely: clients who fetch a .js after the header change revalidate on every later navigation; pre-change cached copies age out within their original ≤10 min.
 
 Worker-code provenance rule (main 11:51): never silently rewrite the other writer's future worker code. If live worker code changes without our commit (drift guard detects: code section minus BLOB differs), re-apply our js-cache block onto THEIR fresh code deliberately, reviewing their changes first — same fresh-baseline discipline as the CSS theme.
+
+## 2026-10-25 12:20 KST — 신문 1면(broadsheet) 테마: style.css 단독 변경 (main 푸시, 배포는 배포 담당 에이전트 요청)
+
+- 이유: 사용자 지시 "언론사 테마 리서치해서 디자인 시안 검토하고 반영해줘". 리서치(WaPo·Guardian·BBC·NYT·Nieman Lab 등 공통 패턴: 세리프 제목 + 산세리프 크롬, 헤어라인 단 구분, 그림자·둥근 모서리 없음) → 디자인 캔버스에 홈 3안(A 신문 1면 / B 통신사 속보 / C 디지털 매거진) + A 기사 시안 → A 채택.
+- A 채택 근거: aa6039e 뉴스 포털 테마(흰 종이·검정 룰·빨강 #c00)의 팔레트를 그대로 잇는 진화형이라 다른 작성자 테마를 뒤엎지 않음. B(남색·호박색)·C(크림 종이)는 TrendCheck 디자인 시스템 색으로 되돌리는 전면 교체라 보류.
+- 변경: style.css 만. HTML·i18n.js·광고·기사 파일 무변경 (홈은 외부 생성기가 재생성하므로 마크업 의존 없이 CSS 셀렉터만 사용).
+  - 마스트헤드: #lang-switch 를 위로(order:-1, 인라인 float 은 !important 로 해제), 워드마크 가운데 정렬 Noto Serif KR 900, nav 가운데 정렬 + 위 1px 룰 / 아래 4px 이중 룰.
+  - 제목 h1/h2 세리프(--font-serif 신규: Noto Serif KR/JP/TC + Noto Naskh Arabic). 홈 섹션 라벨(h2:has(+.grid))은 작은 빨강 라벨 + 3px 검정 룰.
+  - 카드 그리드: column-gap 48px, 단 사이 헤어라인(.card::before, 그리드 overflow:clip 으로 첫 단 왼쪽 룰 숨김), 카드 배경 투명. 첫 섹션 첫 카드 = 리드 기사(≥900px 에서 2×2, 34px).
+  - 기사: 첫 p.meta 를 빨강 키커로, 답 블록을 어두운 둥근 박스 → 연회색 바탕 + 위 3px 빨강 룰, "궁금한 답부터:" 는 빨강 굵은 글자(필 제거).
+  - 푸터 위 4px 이중 룰, 버튼·입력창 모서리 0, --ink-muted #666 → #595959 (#f5f5f5 위 대비 확보).
+- 검증: 로컬 정적 서버(사용자 PC, 미푸시 브랜치 chore/local-dev-env 의 scripts/dev-server.mjs)에서 홈·기사(a105) 라이트/다크, 375px 모바일 확인 — 가로 스크롤 없음(scrollWidth=clientWidth=375). node scripts/verify-ads.mjs → OK.
+- 주의: 배포 시 style.css 는 max-age=600 캐시 (11:42 항목 참고). 다른 작성자가 style.css 를 재생성하면 이 테마는 덮어써짐 — 그쪽 템플릿은 이 저장소 밖.
+- 시안 캔버스(비공개): https://claude.ai/artifact/NgrHnpwNVgJocQvQh943MH
+- 배포: 이 작업 환경(사용자 Windows PC)에는 CF 토큰·guard 실행 환경이 없어 업로드하지 않음. 배포 담당은 FRESH live 기준 + allowlist 에 style.css 1줄로 deploy_safe.py 실행 요청. 배포 전 live style.css sha256=e5941b8dcfc8 (= aa6039e) 확인함.
