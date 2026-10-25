@@ -435,3 +435,11 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 사유(main 14:02 편집 지침): 다른 사건의 사진(태풍 Sinlaku→薔琵 기사, 허리케인 Florence→Vance 기사, Como-Lecce→Como-Sassuolo 기사)은 OG 카드에서 실제 사건처럼 오인 가능. JSON-LD 크레딧은 독자에게 보이지 않아 오인 방지 불가. 본문 편집 금지 하에 '아카이브/일러스트' 가시 표기 방법이 없으므로 og-default 복원.
 - 조치: 3개 기사 og:image=og-default 복원 + JSON-LD image 제거 + images/og-{zh001,es006,es001}.jpg 삭제(DEL:). <title>·본문 불변. guard PASS + smoke PASS + upload success. 라이브 확인: 3개 og-default 복원·creditText 0건·이미지 404, 유지 3개(a106/en002/ja005) 정상.
 - 영구 규칙(향후 배치 적용): 기사별 이미지는 (1) 실제 사건 일치+소스 검증, 또는 (2) 특정 사건을 사칭할 수 없는 명백히 비특정 일러스트만. 라이선스 안전만으로는 불충분. 사건 특정 기사(스포츠 경기, 태풍/허리케인 등 개별 재난, 인물)에는 타 사건 사진 금지.
+
+## 2026-10-25 19:44 KST — 저녁 에디션 6개 로케일 발행
+- 트렌드: ko=블랙키위 이슈 키워드 3위 '침시술 심근 파열 사망'(1위 양홍원은 a101 게재済이라 차순위), en=Google US daily 1위 'jay-z blue ivy sofi concert', ja=Google JP 1위 '岩田将貴', zh=百度热搜 비고정 1위 '县委书记拒绝在张雪挑战直播插广告', es=Google MX 1위 'halloween', ar=Google SA 1위 'سوق الاسهم السعودي'.
+- 신규: a107(침시술 판결), en006(Jay-Z SoFi), ja006(日本シリーズ1戦), zh005(张雪 기네스), es007(Halloween 소비), ar006(تاسي 8주하락). 전부 article-shell.mjs 생성, 3출처·확인/미확인 분리·출처 링크. 이미지 없음(사건 특정 주제라 편집 규칙상 부합 이미지 미확보 — og-default 폴백).
+- 가드가 en003 충돌 차단(라이브에 타 작성자 en003-005 존재) → en006으로 리번호. 로케일 max+1 규칙 준수.
+- 피드: traffic_feeds.py를 candidate에 실행, feed 8종+news-sitemap 갱신(37 URL). 인덱스 7개는 reader-discovery가 신규 링크만 추가(삭제는 홈 최신 카드 로테이션 4건, additive 검증済).
+- 배포: fresh live(127파일)+allowlist(기사6+인덱스7+피드8) → guard PASS + smoke PASS + upload success. 라이브 검증: 6개 기사 200+제목, en003 원문 유지, 홈 카드 6개, 피드 반영.
+- 실HTTPS 링크복사 실측: 클라우드 브라우저로 라이브 a107 열어 '링크 복사' 클릭 → writeText .then() 실행되어 버튼 '복사됨' 전환 확인(실클립보드 쓰기 성공의 브라우저 증거), X/Threads/Facebook 인텐트 링크 소스상 인코딩 확인, 스크린샷 첨부(cloud-browser-20261025-104359.png).
