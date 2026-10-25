@@ -415,3 +415,12 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 배포: fresh live baseline(124파일) + 31개 교체, allowlist-meta31.txt(MOD: 31건, guard의 title-unchanged 규칙 통과) → guard PASS + smoke PASS + upload success. 라이브 검증: 7개 로케일 대표 기사 메타 확인, 제목·본문·rtl·댓글API·홈/피드/사이트맵/og-default 200 유지.
 - scripts/article-shell.mjs 신설(요청 항목 2·3): 신규 기사 셸 — 같은 로케일 기존 기사 --ref에서 header/footer/댓글/ad-slot 재사용, head 메타 기본 포함, 본문 하단 공유 버튼(X/Threads/Facebook/링크복사, 6개 로케일 라벨). ARTICLE-GUIDE.md §2-1에 필수화 명문화. bin/tpl-*.html 은 구 MoneyCheck 시절 stale 로컬 파일이라 파이프라인이 아님(미사용).
 - 이미지(항목 4)는 라이선스 소스+출처 표기 원칙만 가이드에 반영, 실제 기사별 이미지 적용은 단계적 후속 작업.
+
+## 2026-10-25 13:59 KST — per-article og:image 첫 배치 (a106, en002)
+- 요청 근거: 사용자 13:49 WhatsApp 항목4(기사별 이미지, 1200px+ 16:9, 출처 명시). Main 13:55/13:57 지시: 기존 31은 head-only, 출처 크레딧은 라이선스 면제와 무관하게 명시.
+- 이미지: a106=HeungSoon 'Autumn foliages' CC0 1.0 (https://commons.wikimedia.org/wiki/File:Autumn_foliages.jpg), en002=NASA Goddard 'Harvest Moon' PD (https://commons.wikimedia.org/wiki/File:Harvest_Moon_at_NASA_Goddard_(9839294025).jpg). 1600x900 센터크롭, /images/og-*.jpg 신규 파일 2개.
+- head 변경(본문 무수정): og:image 교체 + JSON-LD NewsArticle.image를 ImageObject(creditText/creator/license/acquireLicensePage)로 추가. <title> 불변, </head> 이후 본문 바이트 동일 확인.
+- 배포: 신선 live 베이스라인(124파일, meta31 반영 확인) + allowlist-og2.txt(신규 2 + MOD: 2). 1차 시도 guard FAIL(MAIN/LIVE CONFLICT — push 먼저 해서 main≠live), bc74fe3 스냅샷으로 재시도 → guard PASS, smoke PASS, REAL UPLOAD success.
+- 라이브 검증: 이미지 200(298971B/310287B), og:image·creditText 라이브 확인, 본문 parity diff = head 2줄만 변경.
+- 학습: MOD: 배포는 push 전에 하거나, push 후라면 --offline-main 은 live와 일치하는 커밋(변경분 부모)을 써야 MAIN/LIVE CONFLICT를 피함.
+- article-shell.mjs: --image-url/--image-credit/--image-alt 추가(신규 기사는 본문 figure+크레딧, og:image 오버라이드). 커밋 afd7b94(og배치), 58943f9(shell).
