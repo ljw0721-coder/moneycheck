@@ -349,3 +349,10 @@ User: "신문 테마니까 기본을 라이트로 두고, 직접 바꿀 수 있�
 - Click-verified live (real click tool): dark-mode browser default = white bg, no storage; moon click → stored dark + navy bg + button flips to sun; article a102 stays dark (cross-page persistence); sun click → light + storage cleared; reload stays light; mobile 390 light default with toggle visible, overflow 0.
 - Cache note: i18n.js instant (max-age=0 revalidation); style.css selector change needs ≤10 min for cached clients (max-age=600).
 - Known limit: dark-choice users may see a brief light flash before the deferred script applies the stored theme (no inline head script to avoid editing every HTML file).
+
+## 2026-10-25 12:12 — standing mapping change: zh evening edition targets mainland China
+
+User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국을 대상으로 작성해 이점 수정 변경해" — applies from tonight's edition onward, standing.
+- Old mapping: zh = Google daily #1 Taiwan. New: zh = mainland China. Google has no mainland trend data — verified honest substitute: Baidu 百度热搜 realtime board, official JSON endpoint https://top.baidu.com/api/board?platform=wise&tab=realtime (fetch-verified working 12:12). Pick first ORGANIC item (index 1); the isTop:true item is a pinned placement, not organic rank — never treat it as the trend #1. Weibo hot search fetch failed (CRAWL_EMPTY_CONTENT) — not used.
+- Audience language: Simplified Chinese (consistent with the site's zh → zh-CN lang attribute). Previous zh articles were Traditional/Taiwan-targeted — no retroactive edits (and never overwrite morning writer's articles).
+- Carried durably: 19:00 KST evening-edition wake prompt updated (wakeschedule-01M5P884X3CT10T8H26KR9HRVZ). Rules-todo mapping line belongs to main's durable todo (reported for update).
