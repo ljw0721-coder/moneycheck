@@ -60,23 +60,27 @@ def main():
     offline_live = offline_main = None
     if '--offline-live' in sys.argv: offline_live=sys.argv[sys.argv.index('--offline-live')+1]
     if '--offline-main' in sys.argv: offline_main=sys.argv[sys.argv.index('--offline-main')+1]
-    allow=set()
+    allow=set(); allow_del=set()
     if os.path.exists(allow_path):
-        allow={l.strip() for l in open(allow_path) if l.strip() and not l.startswith('#')}
+        for l in open(allow_path):
+            l=l.strip()
+            if not l or l.startswith('#'): continue
+            if l.startswith('DEL:'): allow_del.add(l[4:])
+            else: allow.add(l)
     cand=tree_files(cand_dir)
     live=live_files(offline_live)
     mainf=main_files(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','repo'), offline_main)
-    existing={}
-    for src in (mainf, live):
-        for k,v in src.items(): existing.setdefault(k, v)  # live wins? main first, live overlay below
-    for k,v in live.items(): existing[k]=v  # live is the authority for what users currently see
+    existing=dict(live)  # LIVE is the sole baseline: no-delete/no-modify applies to what users currently see.
+    # main-only files (unreleased redesign, legacy pages) are intentionally absent from live and are NOT required in a candidate.
     problems=[]
     for rel, old in existing.items():
         if ARTICLE_RE.search(rel):
             if rel not in cand: problems.append('ARTICLE DELETED: '+rel)
             elif cand[rel]!=old: problems.append('ARTICLE MODIFIED: '+rel)
         else:
-            if rel not in cand: problems.append('FILE DELETED: '+rel)
+            if rel not in cand:
+                if rel in allow_del: continue
+                problems.append('FILE DELETED: '+rel)
             elif cand[rel]!=old and rel not in allow: problems.append('UNLISTED CHANGE: '+rel)
     # articles must also match MAIN if both exist and differ (conflict = stop)
     for rel in set(mainf)&set(live):

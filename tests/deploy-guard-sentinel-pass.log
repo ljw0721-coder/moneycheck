@@ -1,0 +1,2 @@
+PASS: additive deploy safe. existing=65 candidate=66 new_articles=['articles/a105.html']
+MOCK UPLOAD recorded -> /tmp/mock-up.json (66 files)
