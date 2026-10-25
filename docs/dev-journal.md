@@ -424,3 +424,9 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 라이브 검증: 이미지 200(298971B/310287B), og:image·creditText 라이브 확인, 본문 parity diff = head 2줄만 변경.
 - 학습: MOD: 배포는 push 전에 하거나, push 후라면 --offline-main 은 live와 일치하는 커밋(변경분 부모)을 써야 MAIN/LIVE CONFLICT를 피함.
 - article-shell.mjs: --image-url/--image-credit/--image-alt 추가(신규 기사는 본문 figure+크레딧, og:image 오버라이드). 커밋 afd7b94(og배치), 58943f9(shell).
+
+## 2026-10-25 14:02 KST — og:image 배치2 (ja005, zh001, es006, es001)
+- 소스(전부 Wikimedia Commons, CC0/PD만): ja005=Peter 111 'Momiji Daigoji2' PD; zh001=CSU/CIRA & JMA/JAXA Himawari 'Sinlaku super typhoon 2026-04-13' PD; es006=Alexander Gerst/ESA 'Staring Down Hurricane Florence' PD; es001=Fra Casa 'Como-Lecce Serie A 2024-25' CC0.
+- 1600x900 크롭, 실픽셀 확인(모미지/태풍위성/허리케인 눈/시니갈리아 야간경기). head-only 패치(og:image+JSON-LD ImageObject credit), <title>·본문 불변(패처 자체검증 + 라이브 diff).
+- 배포: deploy-before-push 순서. fresh live(126파일, 배치1 반영 확인) + offline-main=origin/main(3418712, 기사셋=live와 동일함을 사전 diff로 확인) → guard PASS + smoke PASS + upload success. 라이브: 이미지 4개 200, og:image·creditText 4개 기사 확인.
+- a105(KBO) 등 CC0/PD 미확보 주제는 Unsplash/Pexels grounded 검색으로 후속.
