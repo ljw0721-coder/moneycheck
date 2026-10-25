@@ -356,3 +356,14 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - Old mapping: zh = Google daily #1 Taiwan. New: zh = mainland China. Google has no mainland trend data — verified honest substitute: Baidu 百度热搜 realtime board, official JSON endpoint https://top.baidu.com/api/board?platform=wise&tab=realtime (fetch-verified working 12:12). Pick the first entry that is NOT pinned (select by board semantics: absence of isTop:true, never by fixed array position — index 1 is not guaranteed); isTop:true items are pinned placements, not organic rank. Weibo hot search fetch failed (CRAWL_EMPTY_CONTENT) — not used.
 - Audience language: Simplified Chinese (consistent with the site's zh → zh-CN lang attribute). Previous zh articles were Traditional/Taiwan-targeted — no retroactive edits (and never overwrite morning writer's articles).
 - Carried durably: 19:00 KST evening-edition wake prompt updated (wakeschedule-01M5P884X3CT10T8H26KR9HRVZ). Rules-todo mapping line belongs to main's durable todo (reported for update).
+
+## 2026-10-25 12:28 — AdSense 실제 상태 (콘솔 직접 확인, 유저 로그인)
+
+콘솔(pub-3867118796714043) 사이트 탭 확인:
+- trendcheck.today (10/24 18:20 등록): 승인 상태 "준비 중" — 사이트 소유권 확인 ✓, 리뷰 요청됨 ✓. 남은 게이트는 Google 리뷰 자체(클릭/제출 가능한 사용자 액션 없음).
+- 정책 센터: 위반 없음.
+- Ads.txt 상태 "찾을 수 없음": 우리 ads.txt는 라이브 정상(google.com, pub-3867118796714043, DIRECT, f08c47fec0942fa0; 주석 라인은 스펙상 합법) — Google ads.txt 크롤러 지연 문제로, 재크롤 시 해소. robots.txt 전체 허용 + sitemap 명시 확인.
+- 라이브 정합성: ca-pub 메타(홈+/ko/), adsbygoogle.js 로드, ads.js pub ID 모두 콘솔 계정과 일치.
+- nuvystra.com은 "검토 필요"+ads.txt 없음(구 도메인) — 삭제는 사용자 결정 사항으로 보고만.
+
+트래픽: 현재 병목은 발행량이 아니라 인덱싱(기사별 GSC/Naver index 미확정). 10/27 GSC 팔로업 웨이크에서 per-URL 상태 확인 예정. 내부링크(최신글/카테고리//ko/ 집계), hreflang, sitemap 자동 포함, 일 12편(6+6) 발행 리듬은 완비.
