@@ -285,7 +285,7 @@ export default {
     const types = { html: "text/html;charset=utf-8", css: "text/css", js: "text/javascript", txt: "text/plain;charset=utf-8", xml: "application/xml", md: "text/markdown;charset=utf-8" };
     const hdrs = { "content-type": types[ext] || "application/octet-stream", "cache-control": "public,max-age=600" };
     if (ext === "js") {
-      let h = 5381; for (let i = 0; i < v.length; i++) h = ((h << 5) + h + v.charCodeAt(i)) >>> 0;
+      let h = 5381; for (let i = 0; i < v.length; i++) h = ((h << 5) + h + v[i]) >>> 0;
       hdrs["cache-control"] = "public,max-age=0,must-revalidate";
       hdrs["etag"] = '"tc-' + v.length + "-" + h.toString(36) + '"';
       if (req.headers.get("if-none-match") === hdrs["etag"]) return new Response(null, { status: 304, headers: hdrs });

@@ -292,3 +292,7 @@ Stale-JS class fix: style.css/i18n.js ship with cache-control public,max-age=600
 Correction to 11:42 entry wording: the OG/Twitter meta absence live is asserted ONLY as live==origin/main (tree byte-identical). No author or intent attributed beyond verified commits.
 
 Limit (stated before, still true): worker code is not part of the shared repo tree the other writer's generator deploys from; their next deploy from their own worker copy may revert this header behavior (site keeps working, JS just returns to max-age=600). Our deploy entrypoint re-applies it.
+
+## 2026-10-25 11:50 — hotfix: JS etag hash must be byte-level (Uint8Array), brief live JS 500
+
+The first cache-validation deploy (11:49:20) used v.charCodeAt(i) — but the blob loader stores file bytes as Uint8Array, so every .js request threw TypeError → live 500 on i18n.js/tc.js/ads.js. Caught within seconds via post-deploy curl matrix; hotfix (byte-index hash v[i]) deployed 11:49:47; all js 200 by 11:49:53 (~30s partial outage, HTML/CSS unaffected). Lesson recorded: node --check is syntax-only — the worker's static path needs a runtime smoke check (curl matrix for .js/.css/.html) immediately after ANY worker-code deploy, before declaring done. Post-hotfix verification: i18n.js 200 x3 + serves patched content; If-None-Match matching etag → 304; stale etag → 200; style.css and HTML still max-age=600 with no etag (unchanged).
