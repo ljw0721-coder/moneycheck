@@ -161,3 +161,9 @@
 - AR ar002 https://trendcheck.today/ar/articles/ar002.html — Google Trends SA 1위 "ليونيل ميسي". 출처: MLSSoccer.com 공식, AP, eremnews(70점/31경기, 마이애미 74점 기록, 메시 교체 출전).
 - 공존 기사: a102(다른 작성자, 저스틴 비버 내한) https://trendcheck.today/articles/a102.html — 근거 미검증 랭킹 주장 제거·보도 기반 화제 근거로 교정(2026-10-25 (4) 항목). 스토리는 뉴시스·한국경제·코리아헤럴드·코스모폴리탄으로 교차 확인.
 - PR 상태: #10·#11 merged=true(API 확인). #9는 리뷰된 트리가 main에 통합됐으나 GitHub 상 closed-unmerged로 남음(head==main ff 도달, 재열 권한 없음) — merged로 주장하지 않음.
+
+## 2026-10-25 (6) 검색엔진 노출 진단 + 기술 수정
+- 진단: robots.txt 정상(Allow /)이나 Sitemap 지시어가 상대경로 → 절대 URL로 수정. sitemap.xml 유효(52→57 URL), 오늘자 en002/ja002/zh002/es002/ar002 누락 추가. ko 페이지·a101·a102에 canonical 부재 → 추가(www/에이펙스 중복 신호 정리). noindex·X-Robots-Tag 없음, 전 페이지 200.
+- Google: 도메인 속성 DNS 인증 유지, site: 쿼리에 topic-news.html 1건만 색인(10-24, 스니펫은 구버전). 차단 설정이 아니라 신규 도메인의 크롤/색인 대기 상태. sitemap 갱신으로 신규 기사 발견 경로 확보.
+- Naver: 현재 라이브·main 어디에도 소유확인 meta/file이 없음(10-24 18:47 사용자 확인 당시 태그가 있었다면 이후 스테일 템플릿 재배포로 소실 가능). 콘솔 재로그인은 antibot으로 불가 — 소유확인 meta 값 또는 Search Advisor 상태 스크린샷이 최소 필요 입력.
+- 배포: 선택적 BLOB 교체(12파일: robots/sitemap/canonical 대상만), 라우터 보존, post-verify 통과. PR #14는 트리 통합됐으나 GitHub closed-unmerged(#9와 동일 quirk, merged 주장 안 함).
