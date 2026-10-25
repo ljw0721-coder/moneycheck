@@ -210,3 +210,9 @@
 ## 2026-10-25 소스 링크 클릭 가능화 + admin SEO 차단
 - main 10:51 지시 2건. (1) 모바일 390px 가로 스크롤: 소스 URL이 무개행 장문 텍스트라 문서 폭 초과. 로케일 기사 14건의 출처 블록 내 생 URL 45개를 <a href style="word-break:break-all"> 앵커로 변환(독자가 탭해 열람 가능, 좁은 범위 인라인 스타일, 전역 디자인 변경 없음). ko 기사는 기존 <a> 레이블 방식으로 해당 없음.
 - (2) 사용자 스크린샷 제보: 구글 trendcheck.today 검색에 "TrendCheck 관리" 노출. 원인: /admin.html이 sitemap.xml에 포함돼 색인됨(noindex 없음). 조치: admin.html에 <meta name="robots" content="noindex,nofollow"> 추가 + 사이트맵에서 admin.html 제거(74→73 URL). robots.txt는 차단하지 않음(차단 시 noindex를 크롤러가 못 봄). 재수집 시점은 구글 결정, 단축 요청 수단은 현재 없음(보고만).
+
+## 2026-10-25 백필 기사 크롤 가능 링크 (트래픽/색인 대응)
+- 배경: GSC에서 a106 등 신규 기사가 "Google에 알려지지 않은 URL"로 확인. 홈 정적 카드 6장(a102+로케일 002)만 링크돼 있고 토픽 페이지는 a103 1건뿐이라 백필 17편은 사이트맵 외 발견 경로가 없었음(메인 11:00 지시: 안전한 추가형 독자 링크 구현, 기존 카드/토픽 보존, no-overwrite 유지).
+- 조치: scripts/apply-backfill-links.mjs 신설(멱등, 마커 가드, 추가 전용). ko+5개 로케일 홈 6곳의 </main> 앞에 "더 보기" 카드 섹션 삽입: a104-106, en003-004, ja003-005, zh003-004, es003-006, ar003-005 (총 17). 기존 카드/레이아웃/CSS 무변경, 제목·날짜는 기사 파일에서 추출. OPERATING-AGREEMENT에 재생성 후 실행 규칙 추가(apply-site-verify.mjs 패턴).
+- 배포: allowlist-backfill-links.txt(비기사 6파일), 가드 PASS, 라이브 curl+브라우저 픽셀 검증(ko/en 홈 섹션 렌더 정상).
+- 참고: v5→v6 라이브 차이는 본인 10:52 SEO 배포분(sitemap/admin noindex)뿐, 외부 드리프트 없음 확인.
