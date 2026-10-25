@@ -43,18 +43,21 @@ function evaluateAdSlot(el){
       el.style.display = ins.querySelector('iframe') ? '' : 'none'; // ad-status 없는 드문 경우: 프레임 존재로 판별
       return;
     }
-    return; // 아직 응답 전: 건드리지 않음
+    el.style.display='none'; return; // 응답 전에도 접힌 상태 유지: 충전 확정 시 observer가 즉시 다시 표시
   }
   if(el.querySelector('iframe')){ el.style.display=''; return; } // 타 네트워크(Adsterra/AdFit/Dable) 실제 렌더
   if(!el.firstChild) el.style.display='none';
 }
 function watchAdSlots(){
   document.querySelectorAll('.ad-slot').forEach(el=>{
+    if(el._tcAdWatched) return; el._tcAdWatched=true;
     new MutationObserver(()=>evaluateAdSlot(el)).observe(el,{childList:true,subtree:true,attributes:true,attributeFilter:['data-adsbygoogle-status','data-ad-status']});
   });
 }
 function evaluateAllAdSlots(){ document.querySelectorAll('.ad-slot').forEach(evaluateAdSlot); }
-window.addEventListener('load',()=>{ watchAdSlots(); setTimeout(evaluateAllAdSlots,3500); setTimeout(evaluateAllAdSlots,8000); });
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',()=>{watchAdSlots();evaluateAllAdSlots();});}
+else{ watchAdSlots(); evaluateAllAdSlots(); }
+window.addEventListener('load',()=>{ watchAdSlots(); evaluateAllAdSlots(); setTimeout(evaluateAllAdSlots,3500); setTimeout(evaluateAllAdSlots,8000); });
 document.addEventListener('DOMContentLoaded',()=>{
   const hasAdsense = NET.adsense.startsWith("pub-");
   if(hasAdsense){const s=loadScript('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+NET.adsense);s.crossOrigin='anonymous';}
