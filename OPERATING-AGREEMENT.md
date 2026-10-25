@@ -11,6 +11,8 @@ This repo has multiple writers (including automation agents). These rules keep u
 - 푸시·배포 전 필수 검사: `node scripts/verify-ads.mjs` — placeholder ID 나 실제 ID 누락이 하나라도 있으면 실패하며, 그 상태로 푸시/배포 금지. Before every push/deploy run `node scripts/verify-ads.mjs`; a FAIL means do not push or deploy.
 - The approved ad config lives ONLY in `ads.config.json` (`ca-pub-3867118796714043`). `ads.txt`, the IDs in `ads.js`, and the homepage AdSense snippets are GENERATED. After any template/page regeneration, run `node scripts/apply-ads.mjs` (idempotent). Never blank or revert the publisher ID.
 
+- 홈/목차(index) 페이지를 재생성했다면 `node scripts/apply-backfill-links.mjs .` 도 마지막에 실행 — 2026-10-25 백필 기사 17편의 크롤 가능한 독자 링크를 멱등 복원 (기존 카드·토픽 보존, 추가만). If home/index pages were regenerated, also run apply-backfill-links.mjs to restore crawlable reader links to the 2026-10-25 backfill articles (idempotent, additive only).
+
 ## 2. 기사 작성 기준 / Article standard
 - 일일 트렌드 기사는 **`ARTICLE-GUIDE.md`** 의 리서치→구조→품질 체크 절차를 따른다. 리서치 없이 쓴 글, 출처 없는 사실, 번역문 업로드 금지.
 - Daily trend articles must follow ARTICLE-GUIDE.md (research, structure, sources). No unresearched posts, no unsourced facts, no translations.
