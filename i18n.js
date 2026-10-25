@@ -1,5 +1,8 @@
 // TrendCheck i18n — 6 languages: ko / en / ja / zh / es / ar (ar = RTL)
 // Fixed template strings are translated in-page; language homepages live at /en/ /ja/ /zh/ /es/ /ar/
+// Theme: default is LIGHT (user 2026-10-25: newspaper theme, manual switch).
+// Stored choice applies before paint as early as this deferred script runs.
+try{ if(localStorage.getItem('tc-theme')==='dark') document.documentElement.dataset.theme='dark'; }catch(e){}
 const I18N = {
 en:{"정책·세금": "Policies & Taxes", "금융·보험": "Finance & Insurance", "집·차": "Home & Car", "건강·교육": "Health & Education", "창업·생활": "Startup & Living", "개인정보처리방침": "Privacy Policy", "소개·문의": "About & Contact", "자주 묻는 질문": "Frequently Asked Questions", "신청하기 전에, 돈 되는 정보부터 확인하세요": "Before you apply, check the money information first", "카테고리": "Categories", "트렌드체크 — 돈 되는 정보 총정리": "TrendCheck — Practical Money Guide", "1. 나도 해당될까? 신청 전 3분 체크": "1. Am I eligible? A 3-minute check before applying", "2. 금액은 어떻게 정해지나": "2. How is the amount decided?", "3. 신청 순서, 이렇게 진행하세요": "3. How to apply, step by step", "4. 언제 들어오고, 떨어지면 어떻게 하나": "4. When will it arrive, and what if it's rejected?", "많이 찾는 주제": "Popular topics"},
 ja:{"정책·세금": "政策・税金", "금융·보험": "金融・保険", "집·차": "住まい・車", "건강·교육": "健康・教育", "창업·생활": "起業・生活", "개인정보처리방침": "プライバシーポリシー", "소개·문의": "紹介・お問い合わせ", "자주 묻는 질문": "よくある質問", "신청하기 전에, 돈 되는 정보부터 확인하세요": "申請する前に、お金に関する情報を確認しましょう", "카테고리": "カテゴリ", "트렌드체크 — 돈 되는 정보 총정리": "マネーチェック — お金の情報まとめ", "1. 나도 해당될까? 신청 전 3분 체크": "1. 自分も対象？申請前の3分チェック", "2. 금액은 어떻게 정해지나": "2. 金額はどう決まる？", "3. 신청 순서, 이렇게 진행하세요": "3. 申請の流れはこう進めます", "4. 언제 들어오고, 떨어지면 어떻게 하나": "4. いつ入る？落ちたらどうする？", "많이 찾는 주제": "人気のトピック"},
@@ -31,6 +34,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     };
     box.appendChild(b);
   });
+  // Manual theme switch (default light; choice remembered in localStorage)
+  const tb=document.createElement('button');
+  tb.type='button';
+  tb.style.cssText='margin-left:6px;padding:4px 10px;border-radius:20px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;font-size:12px';
+  const syncT=()=>{const d=document.documentElement.dataset.theme==='dark';tb.textContent=d?'\u2600\uFE0F':'\uD83C\uDF19';tb.setAttribute('aria-pressed',d?'true':'false');tb.setAttribute('aria-label',d?'\uB77C\uC774\uD2B8 \uBAA8\uB4DC\uB85C \uC804\uD658':'\uB2E4\uD06C \uBAA8\uB4DC\uB85C \uC804\uD658');};
+  tb.onclick=()=>{const d=document.documentElement.dataset.theme==='dark';if(d){document.documentElement.removeAttribute('data-theme');try{localStorage.removeItem('tc-theme')}catch(e){}}else{document.documentElement.dataset.theme='dark';try{localStorage.setItem('tc-theme','dark')}catch(e){}}syncT();};
+  syncT();
+  box.appendChild(tb);
   const m=location.pathname.match(/^\/(en|ja|zh|es|ar)(\/|$)/);
   if(m) applyLang(m[1]);
 });

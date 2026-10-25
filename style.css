@@ -36,7 +36,8 @@
   /* broadsheet theme: serif headlines (per-script below), sans body/chrome */
   --font-serif:"Noto Serif KR","Noto Serif JP","Noto Serif TC","Noto Naskh Arabic",Georgia,serif;
 }
-@media (prefers-color-scheme:dark){:root{
+:root[data-theme=dark]{
+  color-scheme:dark;
   --surface-100:#0b1020;--surface-200:#141b30;--surface-300:#070a15;
   --surface-inverse:#1a1a1a;--line:#2a3352;--control-border:#6c76a0;
   --ink:#f2f1ec;--ink-muted:#a3accb;--ink-inverse:#f2f1ec;
@@ -46,7 +47,7 @@
   --disputed-bg:rgba(220,38,38,.15);--disputed-ink:#fca5a5;
   --shadow-card:none;
   --shadow-elevated:none;
-}}
+}
 
 /* ─── Reset ──────────────────────────────────────────────────────── */
 *{box-sizing:border-box}
