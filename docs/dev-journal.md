@@ -236,3 +236,12 @@
 - Deploy toolbox layout fix: canonical entrypoint is ~/moneycheck/deploy/deploy_safe.py (guard at ../guard, repo at ../repo); synced the discovery-updater version + apply-reader-discovery.mjs there. repo/guard left empty as before.
 - Guard PASS → REAL UPLOAD success 11:23. Verified live: curl (section present, OG tags intact, locale homes untouched), desktop + mobile 390px pixels (no overflow), EN language button routes to /en/ which lists only /en/articles/*.
 - Merged to main via local merge push (PR creation 403'd by token scope; branch home-all-countries-latest kept on origin).
+
+## 2026-10-25 11:28 KST — KO-only /ko/ view; Korean language routing gap closed (main 11:25)
+- Main checkpoint: 한국어 button must select a KO-only view distinct from the aggregate root; home/logo returns aggregate. Fixed within the requested arrangement.
+- /ko/index.html (new): Korean-only home — 오늘의 트렌드 한국 card + auto "최신 글" (all Korean articles, newest-first, marker-bounded rebuild every deploy, anchors: before 주제별 보기 → </main>, fail-closed). Canonical /ko/.
+- i18n.js: 한국어 → /ko/ (was '/', now the all-countries aggregate). Other locales unchanged ('/'+code+'/').
+- sitemap.xml 75 URLs (+/ko/). Deployed via live-baseline candidate (fresh fetch, no other-writer drift since 11:23), guard PASS 108→109 files, allowlisted: ko/index.html, i18n.js, sitemap.xml, index.html, scripts/apply-reader-discovery.mjs.
+- Dark-style baseline evidence (main 11:25): backups worker-20261025-pre-seo.mjs and -pre-links.mjs have style.css 1307B light (sha 6a70dbae); fresh live fetched 11:22 BEFORE our 11:23 deploy already had style.css 17291B dark (sha 021a30c0, byte-identical to repo main). Our deploys changed only allowlisted files (guard PASS), style.css never among them. Dark landed via the other line's live-only OG deploy between the pre-links backup and 11:22. No rollback performed; their live state preserved.
+- Click tests (fresh, this deploy): 한국어 → /ko/ (Korean-only, 6 latest cards, zero foreign article links; mobile 390px no overflow); logo → / (aggregate, 18 cards, all 6 countries); EN → /en/, 日本語 → /ja/ (locale-only). ZH/ES/AR buttons share the same generated code path.
+- GH PR note corrected: gh+PAT createPullRequest is 403 (token scope), but the connected github integration (handle ljw0721-coder) with create-pull-request action remains the verified PR route; direct push used for these two merges.
