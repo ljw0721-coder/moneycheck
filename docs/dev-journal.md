@@ -222,3 +222,9 @@
 - (2) 재생성 안전성: apply-backfill-links.mjs(하드코딩 17) → apply-reader-discovery.mjs로 일반화. 로케일 기사 전체를 스캔해 홈 미링크 기사를 자동 포함(향후 저녁 기사 a107+도 자동), 자체 마커 블록만 제거 후 재삽입하는 멱등 구조(스캔 전 자체 블록 선제거 — 첫 버전의 블록 내 링크가 스캔을 억제하던 flip-flop 버그 수정, 3연속 실행 동일 결과 확인). ko 홈은 a103도 홈 미링크라 함께 보강(추가형, 타 작성자 콘텐츠 무변경). 카운트는 cat 페이지 기준 동기화.
 - 배포 진입점 통합: scripts/deploy_safe.py 선단에 updater 실행 내장(실패 시 업로드 중단, fail-closed) — 이 진입점을 통한 모든 배포가 자기치유. 아침 라인의 홈 "생성" 엔트리포인트는 공유 레포에 없음(scripts/, docs, 루트 확인; 그들은 daily-publish 커밋으로 결과만 반영) — 이 점은 보고.
 - 배포 11:05 KST(allowlist-backfill-links.txt 6파일, 가드 PASS, v7 베이스라인 바이트 비교). 라이브 curl로 en/ja/ar 카운트·ko 섹션 v2·a103 링크 확인.
+
+## 2026-10-25 en005 News & Society 빈 카테고리 보충 (EN cat-a)
+- 배경: 전체 6x5 카테고리 공백 재조사(메인 11:06) — ko 토픽 5종 충족(a101-106), ja/zh/es/ar 전 카테고리 1+, 유일 공백은 EN News & Society(cat-a 0건).
+- 조치: en005 "Explosion and fire at Quaker Oats plant in Cedar Rapids" 신규 작성. 선정 근거는 트렌드 순위 아님을 명시(en004 컨벤션). 핵심 사실(폭발·화재·부상자 없음)은 Cedar Rapids Fire Department 공식 발표(AP/KCRG/Gazette 인용)로 게이트 충족, 출처 3개 독립(AP·KCRG·The Gazette). 원인·피해 규모·생산 영향은 미확인으로 표기.
+- cat-a.html 카드 추가 + (1), 사이트맵 74로, 홈 섹션/카운트는 apply-reader-discovery가 동기화. 배포 가드 PASS(new_articles=en005), 라이브 curl 검증.
+- Naver 상태: 소유확인 메타 라이브 유지. searchadvisor 콘솔·sitecheck 모두 로그인 요구, 브라우저 프로필 세션·볼트 항목 없어 콘솔 상태 확인 불가(보고). Naver 검색 "trendcheck.today" 결과 없음 확인(11:09).
