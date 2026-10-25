@@ -167,3 +167,7 @@
 - Google: 도메인 속성 DNS 인증 유지, site: 쿼리에 topic-news.html 1건만 색인(10-24, 스니펫은 구버전). 차단 설정이 아니라 신규 도메인의 크롤/색인 대기 상태. sitemap 갱신으로 신규 기사 발견 경로 확보.
 - Naver: 현재 라이브·main 어디에도 소유확인 meta/file이 없음(10-24 18:47 사용자 확인 당시 태그가 있었다면 이후 스테일 템플릿 재배포로 소실 가능). 콘솔 재로그인은 antibot으로 불가 — 소유확인 meta 값 또는 Search Advisor 상태 스크린샷이 최소 필요 입력.
 - 배포: 선택적 BLOB 교체(12파일: robots/sitemap/canonical 대상만), 라우터 보존, post-verify 통과. PR #14는 트리 통합됐으나 GitHub closed-unmerged(#9와 동일 quirk, merged 주장 안 함).
+
+## 2026-10-25 (7) Naver 소유확인 태그 복원
+- 태그(사용자 제공 10-24 18:39, 18:45 소유확인 완료)가 현재 main/live index.html 어디에도 없음을 확인. 원인: apply-site-verify.mjs는 존재하나 재생성 후 수동 실행에 의존(문서 수준 강제) — 다른 라인이 10-25 08:51 태그 없는 템플릿으로 index.html 재생성하면서 소실. AdSense 메타는 그들 템플릿에 포함돼 생존, Naver 태그는 미포함으로 탈락.
+- 조치: main index.html에 태그 복원(apply-site-verify.mjs 실행), 라이브 구 마크업 index.html에도 동일 태그 수동 삽입. 내 drift-guard 웨이크 트리거에 naver 태그 부재 감시 추가(2시간 주기 자동 탐지). 근본 내구성은 공유 템플릿 소스에 태그를 포함하는 것 — 다른 라인 환경의 템플릿은 내 통제 밖이라, 감지+복원 경로가 현재 최선.
