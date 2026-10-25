@@ -57,3 +57,4 @@
 - 2026-10-24 ads.js collapseUnfilledSlots (status done/unfilled+iframe 없음 → 숨김). a101 출처 URL 4건. 브랜치 fix/adslot-collapse-sources.
 - 2026-10-25: a101 맺음 문단 중복 제거 (fix/a101-dedupe)
 - 2026-10-25: 라이브 선별 반영 상태 정합성 기록 (fix/journal-live-reconcile)
+| 2026-10-25 | 일일 발행 2일차: 6개 언어 기사(a102, en002, ja002, zh002, es002, ar002) + 홈/언어별 index·카테고리 갱신, 선택적 라이브 배포 | 완료 |
