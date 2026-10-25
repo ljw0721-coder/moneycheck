@@ -16,6 +16,13 @@ def main():
     if '--offline-live' in a: extra += ['--offline-live', a[a.index('--offline-live')+1]]
     if '--offline-main' in a: extra += ['--offline-main', a[a.index('--offline-main')+1]]
     guard = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'guard', 'deploy_guard.py')
+    # 0) reader-discovery self-heal: idempotent, additive-only; abort on failure
+    upd = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'apply-reader-discovery.mjs')
+    r0 = subprocess.run(['node', upd, tree], capture_output=True, text=True)
+    sys.stdout.write(r0.stdout); sys.stderr.write(r0.stderr)
+    if r0.returncode != 0:
+        print('DEPLOY ABORTED: reader-discovery updater failed. No upload attempted.', file=sys.stderr)
+        return 2
     # 1) GUARD FIRST - abort before any upload work
     r = subprocess.run([sys.executable, guard, tree, allow] + extra, capture_output=True, text=True)
     sys.stdout.write(r.stdout); sys.stderr.write(r.stderr)
