@@ -7,7 +7,7 @@ zh:{"정책·세금": "政策与税务", "금융·보험": "金融与保险", "�
 es:{"정책·세금": "Políticas e impuestos", "금융·보험": "Finanzas y seguros", "집·차": "Hogar y coche", "건강·교육": "Salud y educación", "창업·생활": "Emprendimiento y vida", "개인정보처리방침": "Política de privacidad", "소개·문의": "Acerca de y contacto", "자주 묻는 질문": "Preguntas frecuentes", "신청하기 전에, 돈 되는 정보부터 확인하세요": "Antes de solicitar, revisa la información que afecta a tu bolsillo", "카테고리": "Categorías", "트렌드체크 — 돈 되는 정보 총정리": "TrendCheck — Guía práctica de dinero", "1. 나도 해당될까? 신청 전 3분 체크": "1. ¿Yo también califico? Revisión de 3 minutos antes de solicitar", "2. 금액은 어떻게 정해지나": "2. ¿Cómo se determina el importe?", "3. 신청 순서, 이렇게 진행하세요": "3. Pasos para solicitar", "4. 언제 들어오고, 떨어지면 어떻게 하나": "4. ¿Cuándo llega y qué pasa si me rechazan?", "많이 찾는 주제": "Temas populares"},
 ar:{"정책·세금": "السياسات والضرائب", "금융·보험": "التمويل والتأمين", "집·차": "السكن والسيارات", "건강·교육": "الصحة والتعليم", "창업·생활": "ريادة الأعمال والحياة", "개인정보처리방침": "سياسة الخصوصية", "소개·문의": "من نحن واتصل بنا", "자주 묻는 질문": "الأسئلة الشائعة", "신청하기 전에, 돈 되는 정보부터 확인하세요": "قبل التقديم، تحقق من المعلومات المالية أولاً", "카테고리": "الفئات", "트렌드체크 — 돈 되는 정보 총정리": "TrendCheck — دليل المعلومات المالية", "1. 나도 해당될까? 신청 전 3분 체크": "١. هل أنا مؤهل؟ فحص ٣ دقائق قبل التقديم", "2. 금액은 어떻게 정해지나": "٢. كيف يُحدَّد المبلغ؟", "3. 신청 순서, 이렇게 진행하세요": "٣. خطوات التقديم", "4. 언제 들어오고, 떨어지면 어떻게 하나": "٤. متى يصل؟ وماذا لو رُفض الطلب؟", "많이 찾는 주제": "مواضيع شائعة"},
 };
-const LANGS=[["ko","한국어"],["en","EN"],["ja","日本語"],["zh","中文"],["es","Español"],["ar","العربية"]];
+const LANGS=[["all","전체"],["ko","한국어"],["en","EN"],["ja","日本語"],["zh","中文"],["es","Español"],["ar","العربية"]];
 function applyLang(lang){
   document.documentElement.lang = lang==="zh"?"zh-CN":lang;
   document.documentElement.dir = lang==="ar"?"rtl":"ltr";
@@ -19,12 +19,15 @@ function applyLang(lang){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   const box=document.getElementById('lang-switch'); if(!box) return;
-  const cur=localStorage.getItem('mc-lang')||'ko';
+  // Active state follows the ACTUAL PATH (user 2026-10-25: aggregate root must not
+  // show 한국어 as selected): exact '/' = 전체, /ko//en//ja//zh//es//ar/ prefix = that
+  // language, anything else = none. No localStorage default.
+  const pm=location.pathname.match(/^\/(ko|en|ja|zh|es|ar)(\/|$)/);
+  const cur = pm ? pm[1] : (location.pathname==='/' ? 'all' : '');
   LANGS.forEach(([code,label])=>{
     const b=document.createElement('button'); b.textContent=label; b.style.cssText='margin-left:6px;padding:4px 10px;border-radius:20px;border:1px solid #fff;background:transparent;color:#fff;cursor:pointer;font-size:12px'+(code===cur?';background:#fca311;color:#14213d;font-weight:800':'');
     b.onclick=()=>{
-      localStorage.setItem('mc-lang',code);
-      location.href = code==='ko'?'/ko/':'/'+code+'/';
+      location.href = code==='all'?'/':(code==='ko'?'/ko/':'/'+code+'/');
     };
     box.appendChild(b);
   });
