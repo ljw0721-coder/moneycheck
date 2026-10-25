@@ -177,3 +177,12 @@
 - 테스트 증거: (음) 09:50 스테이지 스냅샷을 후보로 검사 → ARTICLE MODIFIED x002 5종 + a103 등 정확히 차단(09:58 스냅샷 리플레이를 막았을 게이트). (양) 현재 라이브 + 신규 기사 1건 추가 후보 → PASS (additive deploy safe).
 - 적용: 빈 카테고리 보강·저녁 에디션 등 모든 배포 전 필수 게이트. 다른 라인 환경의 강제는 불가 — 우리 쪽 덮어쓰기 방지 게이트이며, 그쪽 drift는 감지·보고만.
 - 저녁 에디션 확정(사용자 10:09:51 "아침저녁으로 너 저녁이랑 그쪽 아침이랑 각각"): 그쪽=아침, 이 라인=저녁 각각 신규 6개. 네임스페이스 분리(로케일 max+1), 아침 콘텐츠 보존.
+
+## 2026-10-25 backfill batch 2 + deploy entrypoint (agent)
+- Published articles/a105.html (스포츠: 삼성-KIA PO 1차전 프리뷰, KBO 공식 일정 + MT 2026-10-24 교차확인, 경기 전 작성 명시) and articles/a106.html (생활: 산림청 2026 단풍절정 예측지도, 예측 프레이밍 유지, forest.go.kr 보도자료 + knpn + kemnews 교차확인).
+- Category pages: topic-sports/topic-life placeholder replaced with cards; topic-econ/topic-news contradictory placeholder removed (cards already existed).
+- sitemap.xml: a105/a106 추가 (60 URLs).
+- scripts/deploy_safe.py 추가: 배포 엔트리포인트가 가드를 내부 호출하고 FAIL 시 업로드 전 nonzero 종료 (shell && 의존 제거). DEPLOY_SAFE_MOCK_UPLOAD_FILE로 업로드를 모킹한 센티넬 테스트 2건 통과 (tests/deploy-guard-sentinel-*.log): 가드 FAIL 시 업로드 없음 / 가드 PASS 시 정상 경로.
+- scripts/deploy_guard.py: DEL: 허용목록 지원 추가, 삭제·변경 강제 기준을 live 현재 상태로 한정 (main-only 파일은 미배포 상태로 정상 취급).
+- a104 보강 게시(이전 커밋 #18) 저널 누락분을 여기에 함께 기록.
+- Incident 기록: 10:05~10:14 빌드가 main의 다크 리디자인 style.css(17KB)와 루트 cat-*.html 레거시를 라이브에 올림. 10:17 라이트 style.css(1307B) 복원 + cat-*.html 제거 배포로 원복. 라이브/메인 리디자인 분리는 의도된 상태로 운영.
