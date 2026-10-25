@@ -206,3 +206,7 @@
 ## 2026-10-25 es005 2차 수선 — 핵심사실 게이트 충족 (main 10:47 지시)
 - Proceso 가이드(05-10)로 CDMX 일요 공연 3건 독립 교차확인(Romeo Santos·Prince Royce Palacio de los Deportes 25·26, TINI Arena CDMX 25, Transmetal Lunario 25). PLAYERS of Life(21-10)로 Guadalajara 2건(Ángeles del Infierno Rock Fest 18:00, Bad Gyal) 독립 교차확인. Confirmado/No confirmado 문구와 Fuentes(4개) 갱신. MOD allowlist 배포 가드 PASS.
 - 픽셀 검증: zh004 데스크톱 상·하단 + 모바일(390x844), es005 Fuentes, en003 Sources 4건 + support@ 푸터 확인.
+
+## 2026-10-25 소스 링크 클릭 가능화 + admin SEO 차단
+- main 10:51 지시 2건. (1) 모바일 390px 가로 스크롤: 소스 URL이 무개행 장문 텍스트라 문서 폭 초과. 로케일 기사 14건의 출처 블록 내 생 URL 45개를 <a href style="word-break:break-all"> 앵커로 변환(독자가 탭해 열람 가능, 좁은 범위 인라인 스타일, 전역 디자인 변경 없음). ko 기사는 기존 <a> 레이블 방식으로 해당 없음.
+- (2) 사용자 스크린샷 제보: 구글 trendcheck.today 검색에 "TrendCheck 관리" 노출. 원인: /admin.html이 sitemap.xml에 포함돼 색인됨(noindex 없음). 조치: admin.html에 <meta name="robots" content="noindex,nofollow"> 추가 + 사이트맵에서 admin.html 제거(74→73 URL). robots.txt는 차단하지 않음(차단 시 noindex를 크롤러가 못 봄). 재수집 시점은 구글 결정, 단축 요청 수단은 현재 없음(보고만).
