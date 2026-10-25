@@ -202,3 +202,7 @@
 - zh004 핵심사실 교정: 10/24場 태풍 취소(台北小巨蛋 10/23 20:30 공지) 반영 — 기존 기사가 10/24 첫 공연 개최로 잘못 서술. 환불 안내(寬宏 (07)780-9900/khamtw@gmail.com), 10/25 18:00 정상 개최, 8組 라인업·櫻井翔 진행 확인으로 수정. 주제·URL·제목 유지.
 - 푸터 교정: trend@nuvystra.com → support@trendcheck.today, 자사 작성 기사 10건(en002-004, ja002, zh002, es002, ar002-005) + 이미 배포된 비기사 10건. 원인: 기사 생성 시 기존 로케일 페이지를 베이스로 쓰며 구 푸터 상속.
 - 가드 확장: deploy_guard.py에 MOD:<path> 허용(열거된 파일만, <title> 불변 시에만, 삭제 불가, 미열거 변경 FAIL-CLOSED). 음성 테스트 통과. 배포: allowlist-compliance.txt, 가드 PASS, 실업로드 성공, 배포 후 라이브 81파일 후보와 바이트 일치 확인.
+
+## 2026-10-25 es005 2차 수선 — 핵심사실 게이트 충족 (main 10:47 지시)
+- Proceso 가이드(05-10)로 CDMX 일요 공연 3건 독립 교차확인(Romeo Santos·Prince Royce Palacio de los Deportes 25·26, TINI Arena CDMX 25, Transmetal Lunario 25). PLAYERS of Life(21-10)로 Guadalajara 2건(Ángeles del Infierno Rock Fest 18:00, Bad Gyal) 독립 교차확인. Confirmado/No confirmado 문구와 Fuentes(4개) 갱신. MOD allowlist 배포 가드 PASS.
+- 픽셀 검증: zh004 데스크톱 상·하단 + 모바일(390x844), es005 Fuentes, en003 Sources 4건 + support@ 푸터 확인.
