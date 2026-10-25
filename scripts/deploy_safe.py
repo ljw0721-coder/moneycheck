@@ -29,6 +29,14 @@ def main():
     if r.returncode != 0:
         print('DEPLOY ABORTED: guard failed (exit %d). No upload attempted.' % r.returncode, file=sys.stderr)
         return r.returncode if r.returncode else 2
+    # 1.5) pre-upload runtime smoke on the staged base worker (real BLOB ->
+    # Uint8Array path, js etag/304 contract, css cache preserved). Aborts on fail.
+    smoke = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'worker_smoke.mjs')
+    rs = subprocess.run(['node', smoke, base], capture_output=True, text=True)
+    sys.stdout.write(rs.stdout); sys.stderr.write(rs.stderr)
+    if rs.returncode != 0:
+        print('DEPLOY ABORTED: worker smoke failed (exit %d). No upload attempted.' % rs.returncode, file=sys.stderr)
+        return rs.returncode if rs.returncode else 2
     # 2) build blob from candidate tree
     parts=[]; n=0
     for dp,dn,nn in os.walk(tree):

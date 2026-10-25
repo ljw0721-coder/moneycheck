@@ -296,3 +296,16 @@ Limit (stated before, still true): worker code is not part of the shared repo tr
 ## 2026-10-25 11:50 — hotfix: JS etag hash must be byte-level (Uint8Array), brief live JS 500
 
 The first cache-validation deploy (11:49:20) used v.charCodeAt(i) — but the blob loader stores file bytes as Uint8Array, so every .js request threw TypeError → live 500 on i18n.js/tc.js/ads.js. Caught within seconds via post-deploy curl matrix; hotfix (byte-index hash v[i]) deployed 11:49:47; all js 200 by 11:49:53 (~30s partial outage, HTML/CSS unaffected). Lesson recorded: node --check is syntax-only — the worker's static path needs a runtime smoke check (curl matrix for .js/.css/.html) immediately after ANY worker-code deploy, before declaring done. Post-hotfix verification: i18n.js 200 x3 + serves patched content; If-None-Match matching etag → 304; stale etag → 200; style.css and HTML still max-age=600 with no etag (unchanged).
+
+## 2026-10-25 11:52 — standing quality gate: pre-upload worker runtime smoke
+
+Per main 11:51: runtime code changes must pass a smoke against the ACTUAL blob representation before upload, not node --check + post-deploy catch.
+
+- New scripts/worker_smoke.mjs (+ synced copy at ~/moneycheck/deploy/): imports the staged worker module in node (real BLOB → Uint8Array file values), exercises 6 representative paths (.html/.css/.js/.txt/.xml) for status+content-type+body, asserts the js cache contract (max-age=0, etag present, If-None-Match→304, stale etag→200), asserts style.css keeps max-age=600 (shared caching behavior preserved).
+- Wired into deploy_safe.py step 1.5 (after guard PASS, before blob build/upload); nonzero → abort, no upload. Both copies edited.
+- Tests: positive end-to-end via mock upload PASS; negative sentinel (today's charCodeAt-on-Uint8Array bug reinserted) → SMOKE FAIL with the exact TypeError, entrypoint exit 1, no upload. Today's outage would have been caught pre-upload.
+- Known cosmetic: python stdout block-buffering can print the abort message before earlier stdout lines when redirected; ordering only, behavior correct.
+
+Cache qualification (main 11:51): max-age=0/must-revalidate does NOT retroactively invalidate already-fresh cached copies; those persist until their original max-age=600 expiry. Claim precisely: clients who fetch a .js after the header change revalidate on every later navigation; pre-change cached copies age out within their original ≤10 min.
+
+Worker-code provenance rule (main 11:51): never silently rewrite the other writer's future worker code. If live worker code changes without our commit (drift guard detects: code section minus BLOB differs), re-apply our js-cache block onto THEIR fresh code deliberately, reviewing their changes first — same fresh-baseline discipline as the CSS theme.
