@@ -216,3 +216,9 @@
 - 조치: scripts/apply-backfill-links.mjs 신설(멱등, 마커 가드, 추가 전용). ko+5개 로케일 홈 6곳의 </main> 앞에 "더 보기" 카드 섹션 삽입: a104-106, en003-004, ja003-005, zh003-004, es003-006, ar003-005 (총 17). 기존 카드/레이아웃/CSS 무변경, 제목·날짜는 기사 파일에서 추출. OPERATING-AGREEMENT에 재생성 후 실행 규칙 추가(apply-site-verify.mjs 패턴).
 - 배포: allowlist-backfill-links.txt(비기사 6파일), 가드 PASS, 라이브 curl+브라우저 픽셀 검증(ko/en 홈 섹션 렌더 정상).
 - 참고: v5→v6 라이브 차이는 본인 10:52 SEO 배포분(sitemap/admin noindex)뿐, 외부 드리프트 없음 확인.
+
+## 2026-10-25 reader-discovery 일반화 + 카테고리 카운트 동기화
+- 메인 11:03 지적 2건. (1) 카운트 불일치: 로케일 홈 카테고리 카드가 cat-*.html(정답 소스, 백필 반영됨)과 어긋남 — 예: en Entertainment (0)→(1). 5개 로케일 홈의 카운트를 cat 페이지 h1 기준으로 동기화. ko 홈은 카운트 카드 없음(topic 링크 방식).
+- (2) 재생성 안전성: apply-backfill-links.mjs(하드코딩 17) → apply-reader-discovery.mjs로 일반화. 로케일 기사 전체를 스캔해 홈 미링크 기사를 자동 포함(향후 저녁 기사 a107+도 자동), 자체 마커 블록만 제거 후 재삽입하는 멱등 구조(스캔 전 자체 블록 선제거 — 첫 버전의 블록 내 링크가 스캔을 억제하던 flip-flop 버그 수정, 3연속 실행 동일 결과 확인). ko 홈은 a103도 홈 미링크라 함께 보강(추가형, 타 작성자 콘텐츠 무변경). 카운트는 cat 페이지 기준 동기화.
+- 배포 진입점 통합: scripts/deploy_safe.py 선단에 updater 실행 내장(실패 시 업로드 중단, fail-closed) — 이 진입점을 통한 모든 배포가 자기치유. 아침 라인의 홈 "생성" 엔트리포인트는 공유 레포에 없음(scripts/, docs, 루트 확인; 그들은 daily-publish 커밋으로 결과만 반영) — 이 점은 보고.
+- 배포 11:05 KST(allowlist-backfill-links.txt 6파일, 가드 PASS, v7 베이스라인 바이트 비교). 라이브 curl로 en/ja/ar 카운트·ko 섹션 v2·a103 링크 확인.
