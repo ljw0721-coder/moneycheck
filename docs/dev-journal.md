@@ -384,3 +384,9 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - Dable: 기사 100개+ + 최소 트래픽 요건(teamdable.github.io publisher 가이드) → 현재 미달, 중기 옵션.
 - Coupang Partners: 링크형(스크립트 없음), 가입 시 약관 동의 → 사용자 결정.
 - 신규 가입/약관/지출/Adsterra 재활성 없음 (상태 문의에 대한 답변 준비일 뿐).
+
+### 12:34 보강 — 공식 원문 verbatim + 실측
+- AdPost 유의사항 원문 확인(adpost.naver.com): 내부 미디어 조건부 등록 / 외부 웹사이트는 "제휴를 통해" 가입 가능 — 독립 사이트 표준 셀프서비스 경로 없음(가능성 전면 부정 아님).
+- AdFit 운영정책 원문: "폐쇄형 구조…회원 가입 및 계정 생성은 회사가 사전에 승인하거나 초대한 경우에 한하여" — 신청 가능·승인제.
+- Dable 가이드 원문: "more than 100 articles" + 최소 트래픽(수치 미공개). 라이브 실측 31개(ko6/en5/ja5/zh4/es6/ar5) → 미달 실측.
+- Adsterra 발송키 vault 요청 request_N7GVT7TXHGO3C7TY4RKKP6YL53LQEOCR 재확인: 동일 ID 활성·미승인(기존 전달 링크 유효, 새 URL 불요).
