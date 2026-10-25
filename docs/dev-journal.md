@@ -430,3 +430,8 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 1600x900 크롭, 실픽셀 확인(모미지/태풍위성/허리케인 눈/시니갈리아 야간경기). head-only 패치(og:image+JSON-LD ImageObject credit), <title>·본문 불변(패처 자체검증 + 라이브 diff).
 - 배포: deploy-before-push 순서. fresh live(126파일, 배치1 반영 확인) + offline-main=origin/main(3418712, 기사셋=live와 동일함을 사전 diff로 확인) → guard PASS + smoke PASS + upload success. 라이브: 이미지 4개 200, og:image·creditText 4개 기사 확인.
 - a105(KBO) 등 CC0/PD 미확보 주제는 Unsplash/Pexels grounded 검색으로 후속.
+
+## 2026-10-25 14:03 KST — og:image 교정 배포 (zh001/es006/es001 되돌림)
+- 사유(main 14:02 편집 지침): 다른 사건의 사진(태풍 Sinlaku→薔琵 기사, 허리케인 Florence→Vance 기사, Como-Lecce→Como-Sassuolo 기사)은 OG 카드에서 실제 사건처럼 오인 가능. JSON-LD 크레딧은 독자에게 보이지 않아 오인 방지 불가. 본문 편집 금지 하에 '아카이브/일러스트' 가시 표기 방법이 없으므로 og-default 복원.
+- 조치: 3개 기사 og:image=og-default 복원 + JSON-LD image 제거 + images/og-{zh001,es006,es001}.jpg 삭제(DEL:). <title>·본문 불변. guard PASS + smoke PASS + upload success. 라이브 확인: 3개 og-default 복원·creditText 0건·이미지 404, 유지 3개(a106/en002/ja005) 정상.
+- 영구 규칙(향후 배치 적용): 기사별 이미지는 (1) 실제 사건 일치+소스 검증, 또는 (2) 특정 사건을 사칭할 수 없는 명백히 비특정 일러스트만. 라이선스 안전만으로는 불충분. 사건 특정 기사(스포츠 경기, 태풍/허리케인 등 개별 재난, 인물)에는 타 사건 사진 금지.

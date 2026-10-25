@@ -19,7 +19,7 @@ This file is the writing workflow every writer in this repo (including automatio
 
 
 ## 2-1. HTML head·공유 버튼 (사용자 지시 2026-10-25)
-모든 신규 기사는 head에 아래를 기본 포함한다: NewsArticle JSON-LD(제목·발행일·언어·저자/발행인 TrendCheck·canonical), <meta name="robots" content="max-image-preview:large">, OG 태그(og:title·og:description·og:type=article·og:url·og:image=og-default.png·og:site_name=TrendCheck·article:published_time). 본문 하단에 공유 버튼(X/Threads/Facebook/링크복사). 생성은 `node scripts/article-shell.mjs`(로케일별 기존 기사를 --ref로 사용)을 쓴다. 이미지는 라이선스 안전 소스(Unsplash/Pexels/Wikimedia)+출처 표기, 없으면 og-default 폴백, 무단 전재 금지.
+모든 신규 기사는 head에 아래를 기본 포함한다: NewsArticle JSON-LD(제목·발행일·언어·저자/발행인 TrendCheck·canonical), <meta name="robots" content="max-image-preview:large">, OG 태그(og:title·og:description·og:type=article·og:url·og:image=og-default.png·og:site_name=TrendCheck·article:published_time). 본문 하단에 공유 버튼(X/Threads/Facebook/링크복사). 생성은 `node scripts/article-shell.mjs`(로케일별 기존 기사를 --ref로 사용)을 쓴다. 이미지는 라이선스 안전 소스(Unsplash/Pexels/Wikimedia)+출처 표기(라이선스 면제와 무관하게 필수), 없으면 og-default 폴백, 무단 전재 금지. 편집 규칙(2026-10-25): 실제 사건과 일치하는 검증된 이미지이거나, 특정 사건을 사칭할 수 없는 명백히 비특정 일러스트만 사용한다. 다른 경기·다른 태풍 등 타 사건 사진을 사건 기사에 쓰지 않는다.
 
 ## 3. 언어·품질 / Language & quality
 - 해당 언어로 직접 쓴 오리지널 글. 다른 언어판 기사의 번역 금지.
