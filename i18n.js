@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const b=document.createElement('button'); b.textContent=label; b.style.cssText='margin-left:6px;padding:4px 10px;border-radius:20px;border:1px solid #fff;background:transparent;color:#fff;cursor:pointer;font-size:12px'+(code===cur?';background:#fca311;color:#14213d;font-weight:800':'');
     b.onclick=()=>{
       localStorage.setItem('mc-lang',code);
-      location.href = code==='ko'?'/':'/'+code+'/';
+      location.href = code==='ko'?'/ko/':'/'+code+'/';
     };
     box.appendChild(b);
   });

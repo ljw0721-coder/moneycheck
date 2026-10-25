@@ -117,5 +117,37 @@ const AGG_PER_LOCALE = 3;
   }
 }
 
+
+// (3b) /ko/ home: Korean-only "최신 글" (user 2026-10-25: language click shows
+// only that country, including Korean; root stays the all-countries aggregate).
+// Same marker-bounded additive rebuild, Korean articles only, newest-first.
+{
+  const hp = path.join(root, 'ko', 'index.html');
+  if (!fs.existsSync(hp)) { console.error('MISSING PAGE ko/index.html (ko-latest)'); fail = true; }
+  else {
+    let html = fs.readFileSync(hp, 'utf8');
+    html = html.replace(AGG_BLOCK, '');
+    const adir = path.join(root, 'articles');
+    const items = fs.existsSync(adir) ? fs.readdirSync(adir).filter(f => f.endsWith('.html')).map(f => {
+      const src2 = fs.readFileSync(path.join(adir, f), 'utf8');
+      return {
+        href: `/articles/${f}`,
+        title: esc((src2.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim()),
+        date: (src2.match(/20\d\d-\d\d-\d\d/) || [''])[0],
+        file: f,
+      };
+    }).sort((a, b) => (b.date.localeCompare(a.date)) || (b.file.localeCompare(a.file))) : [];
+    const cards = items.slice(0, 12).map(it => `<div class="card"><a href="${it.href}">${it.title}</a><p class="meta">${it.date}</p></div>`);
+    if (cards.length) {
+      const block = `${AGG_NEW_MARK}<section class="tc-home-latest"><h2>최신 글</h2><div class="grid">${cards.join('')}</div></section>\n`;
+      let i = html.indexOf('<h2>주제별 보기</h2>');
+      let anchor = 'before 주제별 보기';
+      if (i === -1) { i = html.indexOf('</main>'); anchor = 'before </main>'; }
+      if (i === -1) { console.error('NO ANCHOR IN ko/index.html (ko-latest)'); fail = true; }
+      else { html = html.slice(0, i) + block + html.slice(i); fs.writeFileSync(hp, html); console.log(`ko/index.html: ${cards.length} Korean latest cards (${anchor})`); }
+    }
+  }
+}
+
 if (fail) { console.error('FAILED - no partial trust, fix inputs'); process.exit(1); }
 console.log('done');
