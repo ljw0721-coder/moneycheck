@@ -186,3 +186,12 @@
 - scripts/deploy_guard.py: DEL: 허용목록 지원 추가, 삭제·변경 강제 기준을 live 현재 상태로 한정 (main-only 파일은 미배포 상태로 정상 취급).
 - a104 보강 게시(이전 커밋 #18) 저널 누락분을 여기에 함께 기록.
 - Incident 기록: 10:05~10:14 빌드가 main의 다크 리디자인 style.css(17KB)와 루트 cat-*.html 레거시를 라이브에 올림. 10:17 라이트 style.css(1307B) 복원 + cat-*.html 제거 배포로 원복. 라이브/메인 리디자인 분리는 의도된 상태로 운영.
+
+## 2026-10-25 카테고리 백필 배치 3-7 (빈 카테고리 17개 전량 완료)
+- 사용자 지시(10:18 음성): 모든 국가의 모든 빈 카테고리에 기사 1편씩, 번역 복제 금지·현지어 네이티브 작성, 가상 트렌드 순위 금지. 17슬롯 전량 조사·작성·배포 완료.
+- 배치3 (en): en003(Economy & Tech, AI 투자 우려/월가), en004(Entertainment). 카드 en/cat-b·cat-d 반영.
+- 배치4 (ja/zh): ja003(経済・テクノロジー), ja004(エンタメ), ja005(ライフスタイル, 紅葉 - 기상청 날짜 있는 전망 프레이밍); zh003(経済与科技, 台股/台積電), zh004(娯楽, MUSIC EXPO LIVE 2026 in TAIPEI).
+- 배치5-6 (es): es003(Noticias y sociedad, Taddei/INE - 의혹 프레이밍 유지), es004(Economía y tecnología, BMV/페소), es005(Entretenimiento, 콘서트 - 단일소스 항목은 기사 내 명시), es006(Estilo de vida, Frente frío 3/huracán Vance).
+- 배치7 (ar): ar003(أخبار ومجتمع), ar004(اقتصاد وتقنية), ar005(منوعات). 소스: Al-Jazirah, SPA, Al-Watan, Okaz.
+- 각 배치 deploy_safe.py 경유 가드 PASS(순증가, 삭제·덮어쓰기 없음) 후 실배포. 라이브 파일 수 64→81. 사이트맵 60→74 URL.
+- 사실표/근거: notes/backfill-research.md (17슬롯 인벤토리·소스·주의사항). 검증: 전 기사 데스크톱+모바일 전체화면 픽셀 확인, 카테고리 페이지 카드·카운트 확인.
