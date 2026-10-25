@@ -338,3 +338,14 @@ THEME BASELINE is now 204d336 (broadsheet). Never deploy or regenerate style.css
 ## 2026-10-25 12:07 — scope rule: explicit deploy allowlists are ceilings, not floors
 
 Main 12:06 correction: the user's explicit "allowlist style.css 한 줄" was NARROWER than commit 204d336 (style.css + docs/dev-journal.md). Deploying the whole commit widened the approved scope without resolving it first; avoiding repo↔live journal skew does not authorize widening an explicit allowlist. Rule: an explicit user/parent allowlist is a ceiling — if the commit contains more than the approved paths, STOP and resolve scope (deploy only approved paths, or ask) before upload. The 12:04 docs/dev-journal.md addition is reported, non-sensitive, no rollback requested.
+
+## 2026-10-25 12:11 — default light + manual theme toggle (user request 12:09)
+
+User: "신문 테마니까 기본을 라이트로 두고, 직접 바꿀 수 있는 스위치를 넣어줘" (+ prior offer: remember selection).
+- style.css: dark tokens now apply ONLY to :root[data-theme=dark] (prefers-color-scheme media query removed; every token value unchanged; color-scheme:dark added inside the block). style.css remains 204d336 broadsheet — selector mechanism change only.
+- i18n.js: applies stored localStorage 'tc-theme' dark at script top (deferred, pre-paint in practice); adds moon/sun toggle button to the header language row (same inherit/currentColor style as lang buttons, aria-pressed + Korean aria-label). Toggle sets/removes data-theme + stores/clears choice.
+- Behavior: default LIGHT on every device (dark-mode devices no longer auto-dark); dark only via explicit choice, remembered across pages/reloads; choosing light again clears storage (back to default).
+- PR #31 merged, deployed via guard PASS + smoke PASS from fresh live baseline (109 files; css was d854c9947751; worker etag block intact). allowlist: style.css, i18n.js (user's request covered both).
+- Click-verified live (real click tool): dark-mode browser default = white bg, no storage; moon click → stored dark + navy bg + button flips to sun; article a102 stays dark (cross-page persistence); sun click → light + storage cleared; reload stays light; mobile 390 light default with toggle visible, overflow 0.
+- Cache note: i18n.js instant (max-age=0 revalidation); style.css selector change needs ≤10 min for cached clients (max-age=600).
+- Known limit: dark-choice users may see a brief light flash before the deferred script applies the stored theme (no inline head script to avoid editing every HTML file).
