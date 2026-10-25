@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://trendcheck.today/</loc></url>
-<url><loc>https://trendcheck.today/ko/</loc></url>
 <url><loc>https://trendcheck.today/topic-news.html</loc></url>
 <url><loc>https://trendcheck.today/topic-econ.html</loc></url>
 <url><loc>https://trendcheck.today/topic-sports.html</loc></url>
@@ -9,9 +8,15 @@
 <url><loc>https://trendcheck.today/topic-life.html</loc></url>
 <url><loc>https://trendcheck.today/privacy.html</loc></url>
 <url><loc>https://trendcheck.today/about.html</loc></url>
-
+<url><loc>https://trendcheck.today/admin.html</loc></url>
 <url><loc>https://trendcheck.today/articles/a101.html</loc></url>
 <url><loc>https://trendcheck.today/articles/a102.html</loc></url>
+<url><loc>https://trendcheck.today/articles/a103.html</loc></url>
+<url><loc>https://trendcheck.today/articles/a104.html</loc></url>
+<url><loc>https://trendcheck.today/articles/a105.html</loc></url>
+<url><loc>https://trendcheck.today/articles/a106.html</loc></url>
+<url><loc>https://trendcheck.today/articles/a107.html</loc></url>
+<url><loc>https://trendcheck.today/articles/a108.html</loc></url>
 <url><loc>https://trendcheck.today/en/</loc></url>
 <url><loc>https://trendcheck.today/en/privacy.html</loc></url>
 <url><loc>https://trendcheck.today/en/cat-a.html</loc></url>
@@ -21,6 +26,10 @@
 <url><loc>https://trendcheck.today/en/cat-e.html</loc></url>
 <url><loc>https://trendcheck.today/en/articles/en001.html</loc></url>
 <url><loc>https://trendcheck.today/en/articles/en002.html</loc></url>
+<url><loc>https://trendcheck.today/en/articles/en003.html</loc></url>
+<url><loc>https://trendcheck.today/en/articles/en004.html</loc></url>
+<url><loc>https://trendcheck.today/en/articles/en005.html</loc></url>
+<url><loc>https://trendcheck.today/en/articles/en006.html</loc></url>
 <url><loc>https://trendcheck.today/ja/</loc></url>
 <url><loc>https://trendcheck.today/ja/privacy.html</loc></url>
 <url><loc>https://trendcheck.today/ja/cat-a.html</loc></url>
@@ -30,6 +39,10 @@
 <url><loc>https://trendcheck.today/ja/cat-e.html</loc></url>
 <url><loc>https://trendcheck.today/ja/articles/ja001.html</loc></url>
 <url><loc>https://trendcheck.today/ja/articles/ja002.html</loc></url>
+<url><loc>https://trendcheck.today/ja/articles/ja003.html</loc></url>
+<url><loc>https://trendcheck.today/ja/articles/ja004.html</loc></url>
+<url><loc>https://trendcheck.today/ja/articles/ja005.html</loc></url>
+<url><loc>https://trendcheck.today/ja/articles/ja006.html</loc></url>
 <url><loc>https://trendcheck.today/zh/</loc></url>
 <url><loc>https://trendcheck.today/zh/privacy.html</loc></url>
 <url><loc>https://trendcheck.today/zh/cat-a.html</loc></url>
@@ -39,6 +52,9 @@
 <url><loc>https://trendcheck.today/zh/cat-e.html</loc></url>
 <url><loc>https://trendcheck.today/zh/articles/zh001.html</loc></url>
 <url><loc>https://trendcheck.today/zh/articles/zh002.html</loc></url>
+<url><loc>https://trendcheck.today/zh/articles/zh003.html</loc></url>
+<url><loc>https://trendcheck.today/zh/articles/zh004.html</loc></url>
+<url><loc>https://trendcheck.today/zh/articles/zh005.html</loc></url>
 <url><loc>https://trendcheck.today/es/</loc></url>
 <url><loc>https://trendcheck.today/es/privacy.html</loc></url>
 <url><loc>https://trendcheck.today/es/cat-a.html</loc></url>
@@ -48,6 +64,11 @@
 <url><loc>https://trendcheck.today/es/cat-e.html</loc></url>
 <url><loc>https://trendcheck.today/es/articles/es001.html</loc></url>
 <url><loc>https://trendcheck.today/es/articles/es002.html</loc></url>
+<url><loc>https://trendcheck.today/es/articles/es003.html</loc></url>
+<url><loc>https://trendcheck.today/es/articles/es004.html</loc></url>
+<url><loc>https://trendcheck.today/es/articles/es005.html</loc></url>
+<url><loc>https://trendcheck.today/es/articles/es006.html</loc></url>
+<url><loc>https://trendcheck.today/es/articles/es007.html</loc></url>
 <url><loc>https://trendcheck.today/ar/</loc></url>
 <url><loc>https://trendcheck.today/ar/privacy.html</loc></url>
 <url><loc>https://trendcheck.today/ar/cat-a.html</loc></url>
@@ -57,6 +78,8 @@
 <url><loc>https://trendcheck.today/ar/cat-e.html</loc></url>
 <url><loc>https://trendcheck.today/ar/articles/ar001.html</loc></url>
 <url><loc>https://trendcheck.today/ar/articles/ar002.html</loc></url>
-  <url><loc>https://trendcheck.today/articles/a103.html</loc><lastmod>2026-10-25</lastmod></url>
-  <url><loc>https://trendcheck.today/articles/a104.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/articles/a105.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/articles/a106.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/en/articles/en003.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/en/articles/en004.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/en/articles/en005.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/ja/articles/ja003.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/ja/articles/ja004.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/ja/articles/ja005.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/zh/articles/zh003.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/zh/articles/zh004.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/es/articles/es003.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/es/articles/es004.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/es/articles/es005.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/es/articles/es006.html</loc><lastmod>2026-10-25</lastmod></url>
-<url><loc>https://trendcheck.today/ar/articles/ar003.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/ar/articles/ar004.html</loc><lastmod>2026-10-25</lastmod></url><url><loc>https://trendcheck.today/ar/articles/ar005.html</loc><lastmod>2026-10-25</lastmod></url></urlset>
+<url><loc>https://trendcheck.today/ar/articles/ar003.html</loc></url>
+<url><loc>https://trendcheck.today/ar/articles/ar004.html</loc></url>
+<url><loc>https://trendcheck.today/ar/articles/ar005.html</loc></url>
+<url><loc>https://trendcheck.today/ar/articles/ar006.html</loc></url>
+</urlset>
