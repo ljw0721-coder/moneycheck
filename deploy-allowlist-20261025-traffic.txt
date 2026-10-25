@@ -1,0 +1,15 @@
+# traffic automation operation 2026-10-25 (user: registration + automation):
+# additive only. No existing article modified or deleted (guard rule 1).
+# New files: news sitemap + RSS feeds + default OG image.
+# Modified non-article file: robots.txt (news sitemap line added).
+news-sitemap.xml
+feed.xml
+feed-ko.xml
+feed-en.xml
+feed-ja.xml
+feed-zh.xml
+feed-es.xml
+feed-ar.xml
+og-default.png
+robots.txt
+deploy-allowlist-20261025-traffic.txt
