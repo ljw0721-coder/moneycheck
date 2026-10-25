@@ -1,0 +1,20 @@
+# compliance repairs 2026-10-25 (main decision 10:42:59): source additions to our own backfill/daily articles + footer contact corrections; titles/topics unchanged
+MOD:articles/a105.html
+MOD:en/articles/en002.html
+MOD:en/articles/en003.html
+MOD:en/articles/en004.html
+MOD:ja/articles/ja002.html
+MOD:ja/articles/ja003.html
+MOD:ja/articles/ja004.html
+MOD:ja/articles/ja005.html
+MOD:zh/articles/zh002.html
+MOD:zh/articles/zh003.html
+MOD:zh/articles/zh004.html
+MOD:es/articles/es002.html
+MOD:es/articles/es004.html
+MOD:es/articles/es005.html
+MOD:es/articles/es006.html
+MOD:ar/articles/ar002.html
+MOD:ar/articles/ar003.html
+MOD:ar/articles/ar004.html
+MOD:ar/articles/ar005.html

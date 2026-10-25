@@ -15,7 +15,7 @@ def main():
     extra=[]
     if '--offline-live' in a: extra += ['--offline-live', a[a.index('--offline-live')+1]]
     if '--offline-main' in a: extra += ['--offline-main', a[a.index('--offline-main')+1]]
-    guard = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'deploy_guard.py')
+    guard = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'guard', 'deploy_guard.py')
     # 1) GUARD FIRST - abort before any upload work
     r = subprocess.run([sys.executable, guard, tree, allow] + extra, capture_output=True, text=True)
     sys.stdout.write(r.stdout); sys.stderr.write(r.stderr)

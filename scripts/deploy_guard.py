@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """TrendCheck fail-closed deploy guard (user constraint 2026-10-25 10:10:09: 덮어쓰기하지마).
 Verifies a candidate deploy tree against CURRENT live worker content and CURRENT origin/main:
-  1. No existing article file (articles/**, <locale>/articles/**) is modified or deleted.
+  1. No existing article file (articles/**, <locale>/articles/**) is modified or deleted,
+     EXCEPT files explicitly listed as MOD:<path> in the operation's allowlist (approved
+     compliance corrections to our own authored articles, main decision 2026-10-25 10:42:59):
+     modification allowed only if the <title> (topic) is unchanged; deletion never allowed.
   2. Non-article files may differ ONLY if listed in the operation's allowlist file.
   3. Candidate must be a superset of (live union main) servable files.
 Exit 0 = safe additive deploy. Exit 1 = FAIL-CLOSED with reasons.
@@ -60,12 +63,13 @@ def main():
     offline_live = offline_main = None
     if '--offline-live' in sys.argv: offline_live=sys.argv[sys.argv.index('--offline-live')+1]
     if '--offline-main' in sys.argv: offline_main=sys.argv[sys.argv.index('--offline-main')+1]
-    allow=set(); allow_del=set()
+    allow=set(); allow_del=set(); allow_mod=set()
     if os.path.exists(allow_path):
         for l in open(allow_path):
             l=l.strip()
             if not l or l.startswith('#'): continue
             if l.startswith('DEL:'): allow_del.add(l[4:])
+            elif l.startswith('MOD:'): allow_mod.add(l[4:])
             else: allow.add(l)
     cand=tree_files(cand_dir)
     live=live_files(offline_live)
@@ -76,7 +80,14 @@ def main():
     for rel, old in existing.items():
         if ARTICLE_RE.search(rel):
             if rel not in cand: problems.append('ARTICLE DELETED: '+rel)
-            elif cand[rel]!=old: problems.append('ARTICLE MODIFIED: '+rel)
+            elif cand[rel]!=old:
+                if rel in allow_mod:
+                    def title(b):
+                        m=re.search(rb'<title>(.*?)</title>', b, re.S)
+                        return m.group(1).strip() if m else b''
+                    if title(cand[rel])!=title(old):
+                        problems.append('TOPIC REPLACED (title changed) in MOD-listed article: '+rel)
+                else: problems.append('ARTICLE MODIFIED: '+rel)
         else:
             if rel not in cand:
                 if rel in allow_del: continue
