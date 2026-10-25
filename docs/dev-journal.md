@@ -393,3 +393,9 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 
 ## 2026-10-25 12:51 — Adsterra 광고 차단 요청 메일 발송
 - hello@trendcheck.today (CF Email Sending) → support@adsterra.com. 승인 초안 verbatim. success/queued, message_id iJ1Qqwr7AHh67zgf4wjSPofT1cMVGtobt9Zf. vault sandbox 승인(Always allow) 후 즉시 발송. 차단 확인 회신 전 Adsterra off 유지. 회신은 hello@→Gmail 포워딩 경로.
+
+## 2026-10-25 13:02 — 광고 네트워크 신청 작업 중간 상태
+- Adsterra: 발송 완료(12:51). Monetag: 미로그인 — 이메일 경로는 Monetag 자체 reCAPTCHA quota 초과 결함, Google SSO는 사용자 챌린지(21) 통과+동의 완료했으나 클라우드 브라우저 세션이 플로우 중 2회 교체되어 세션 미성립. guidance 기록. publishers.propellerads.com → publishers.monetag.com 301(플랫폼 통합, 겸용).
+- AdFit 제휴제안 폼: 필드 매핑·입력 절차 확립(제출 없음, 세션 교체로 입력 2회 소실). 사용자 지시 반영: 사업자유형=개인, 연락처=hello@trendcheck.today. 미해결: 담당자 이름(개인명 불가, 역할명 미승인), 전화(이메일-only 검증 예정), UV/PV 구간(실측 24h UV 3.19k 봇 포함, 월 데이터 없음 — 사용자 확인 항목).
+- 트래픽 실측(CF 대시보드 24h): UV 3.19k / visits 2.34k / requests 7.4k (봇·운영 포함).
+- Coupang Partners: 미착수.
