@@ -373,3 +373,14 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - ads.txt discrepancy OPEN: live 200 + console "찾을 수 없음" — crawler-lag is a hypothesis, not established cause. Re-check console ads.txt status at the 10/27 GSC follow-up (same checkpoint batch).
 - Indexing bottleneck NOT proven: per-URL index state UNKNOWN + no Performance data → cannot claim indexing is THE traffic constraint. Traffic recommendations wait for actual GSC query/referral data; no volume guarantees.
 - nuvystra.com stays listed (no unrelated account changes).
+
+## 2026-10-25 12:33 — 광고 네트워크 현황 정리 (사용자 문의 "네이버랑 다른쪽 광고는?")
+
+- Naver AdPost: 내부 미디어(블로그/밴드) 전용 + 외부사이트는 제휴(파트너십) 경로만 (adpost.naver.com 유의사항, help.naver.com/service/30005/contents/17695). 독립 사이트 개인 가입 불가 → 해당 없음. Search Advisor 등록은 검색 노출이지 광고와 무관.
+- AdSense pub-3867118796714043: 심사 중 (12:28 보고 유지).
+- Adsterra: 10/24 도박광고(MELBET)로 비활성(ads.js NET 빈칸). 차단 요청 메일 미발송 — Cloudflare 발송키 vault 승인 10/24 23:22부터 보류(사용자 액션).
+- Monetag/PropellerAds: vault에 퍼블리셔 로그인 존재하나 사이트 연결 이력 없음(repo/라이브 무흔적). 팝/푸시 성격 → 사용자 승인 정책("검증된 광고 적게")과 충돌 소지, 추천 안 함.
+- Kakao AdFit: 폐쇄형(사전 승인/초대 후 계정 생성, adfit.kakao.com 운영정책), 매체 심사 영업일 1-2일. 신청=가입+약관 동의 → 사용자 결정 필요.
+- Dable: 기사 100개+ + 최소 트래픽 요건(teamdable.github.io publisher 가이드) → 현재 미달, 중기 옵션.
+- Coupang Partners: 링크형(스크립트 없음), 가입 시 약관 동의 → 사용자 결정.
+- 신규 가입/약관/지출/Adsterra 재활성 없음 (상태 문의에 대한 답변 준비일 뿐).
