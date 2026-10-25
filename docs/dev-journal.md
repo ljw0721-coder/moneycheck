@@ -407,3 +407,4 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - AdFit 제휴제안 제출 완료(13:14): with.kakao.com/proposition?type=service&page=adfit. 확인 페이지 proposition/complete "제안 등록완료", 제안등록 번호는 등록 이메일(hello@)로 발송 안내. UV 1만 이하/PV 10만 이하 + 관측기간(2026-10-19~25, PV 3.19천·방문 2.35천, UV 미실측) 명시 공개. 담당자 '트렌드체크 운영팀', 개인, PH 지점 번호, hello@. dkaptcha 1회 통과.
 - gmail 구독 갱신(waketrigger-01M5RMA4TWVNT1694TDGGE48SD): AdSense 결과 / Adsterra 회신 / Kakao 제안등록 번호 / 도메인 발신 배달 알림 커버.
 - send-domain-mail.mjs mock-transport 테스트 4종 통과: (1) 원본 성공→사본 1건(수신자·[발신 사본] 제목·원본 message_id/본문/queued 메타 포함) exit0, (2) 원본 실패→사본 없음·레코드 없음 exit1, (3) 사본 실패→원본 중복 없이 durable 레코드+retry 경로 출력 exit1, (4) --retry-copy → 사본만 재발송·이미 발송 시 0호출 멱등. 토큰 문자열 출력·레코드 미포함 확인. mail-log/ 는 gitignore(본문 프라이버시).
+- 광고 네트워크 차단 상태 durable 기록: docs/ad-networks-status.md (재개 신호 기반, 재시도 타이머 없음). 프라이버시 점검: PH 지점 번호 실수치는 git 이력·추적 파일에 존재하지 않음 확인(git log -S + 전체 grep), AdFit 신청서 원문에만 존재.
