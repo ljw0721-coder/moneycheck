@@ -324,3 +324,13 @@ Worker-code provenance rule (main 11:51): never silently rewrite the other write
 - 주의: 배포 시 style.css 는 max-age=600 캐시 (11:42 항목 참고). 다른 작성자가 style.css 를 재생성하면 이 테마는 덮어써짐 — 그쪽 템플릿은 이 저장소 밖.
 - 시안 캔버스(비공개): https://claude.ai/artifact/NgrHnpwNVgJocQvQh943MH
 - 배포: 이 작업 환경(사용자 Windows PC)에는 CF 토큰·guard 실행 환경이 없어 업로드하지 않음. 배포 담당은 FRESH live 기준 + allowlist 에 style.css 1줄로 deploy_safe.py 실행 요청. 배포 전 live style.css sha256=e5941b8dcfc8 (= aa6039e) 확인함.
+
+## 2026-10-25 12:05 — broadsheet theme 204d336 deployed (user-requested), new theme baseline
+
+User-relayed request (12:03): deploy 204d336. Claims verified against origin/main before acting: commit 204d336 on top of our 1f327d8, files = style.css (95 lines changed) + docs/dev-journal.md (15) ONLY; style.css 18976B sha256 d854c9947751 (matched relayed values); live pre-value e5941b8dcfc8 (matched). Live worker code still carried our js etag/revalidation block (untouched).
+
+Deploy: fresh live baseline (109 files), candidate = live + {style.css, docs/dev-journal.md}, allowlist those two paths, deploy_safe.py → guard PASS, worker_smoke PASS (first real run of the new pre-upload gate), upload OK. Live /style.css verified d854c9947751 18976B; i18n.js headers (etag, max-age=0) intact.
+
+Visual matrix (browser, fresh CSS fetch): home dark, home light (temporary token override, restored), home mobile 390 light, article a102 dark + light — all correct: centered serif masthead, lang row on top with red active button and visible inactive buttons both modes, nav hairline/double-rule, red section kicker, 2x2 lead story with column rules, article kicker + grey answer panel with red top rule. No horizontal overflow (scrollWidth-clientWidth=0).
+
+THEME BASELINE is now 204d336 (broadsheet). Never deploy or regenerate style.css from aa6039e/1307B/17291B or any earlier version; start from this version. Other writer's stated continuation rule matches.
