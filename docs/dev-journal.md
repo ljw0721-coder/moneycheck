@@ -145,3 +145,13 @@
 - a102(다른 작성자, 저스틴 비버 내한): 기사 본문의 블랙키위/네이버 급상승 근거 문장 2곳 제거·재작성(검증 불가 랭킹 주장). 스토리 자체는 뉴시스(10-22)·한국경제·코리아헤럴드·코스모폴리탄(10-23) 확인으로 유지. 시그널 소급 주장 없음.
 - rebase 실수 정정: 직전 리베이스에서 articles/a102.html을 내 기사로 잘못 덮어 main에서 상대 비버 기사가 소실됐던 것을 2ddce89 버전으로 복원 후 위 수정 적용. (라이브 a102는 상대 원본이 그대로라 영향 없었음.)
 - tc.js: 비밀번호 찾기 안내 문구의 trend@nuvystra.com 7건(6개 언어+기본)을 support@trendcheck.today로 교체. 문의처 표기만 변경, 인증 로직·식별자 무 변경.
+
+## 2026-10-25 (5) 발행 기록 — 2일차 6개 언어 기사 최종 URL·트렌드 캡처
+- KO a103 https://trendcheck.today/articles/a103.html — 시그널(signal.bz) 실시간 검색어 2026-10-25 09:00 KST 캡처 1위 '김정은 중국방문'. 출처: 연합뉴스 AKR20261024035153504·AKR20261024050552083, 동아일보 134901396, BBC코리아 cq0ld9y8yp2jo, AP 2459fe49.
+- EN en002 https://trendcheck.today/en/articles/en002.html — Google Trends 일일 RSS US pubDate 2026-10-24 17:00 -0700 1위 "who is singing the national anthem tonight". 출처: MLB 공식 보도자료, AP(Game1 3-2).
+- JA ja002 https://trendcheck.today/ja/articles/ja002.html — Google Trends JP 동일 pubDate 1위 宮崎 地震(2위 鹿児島 地震). 출처: 기상청 공식 list.json+상세 20261025085944(日向灘 M5.3, 25일 08:59, 최대 진도3, 쓰나미 우려 없음), 에히메신문 09:01 속보.
+- ZH zh002 https://trendcheck.today/zh/articles/zh002.html — Google Trends TW 1위 獨行俠 對 馬刺. 출처: NBA.com, AP, Yahoo TW.
+- ES es002 https://trendcheck.today/es/articles/es002.html — Google Trends MX 1위 "liga mx femenil". 출처: 24morelos, morelos.gob.mx(10-24 19:00 Estadio Centenario Cuernavaca).
+- AR ar002 https://trendcheck.today/ar/articles/ar002.html — Google Trends SA 1위 "ليونيل ميسي". 출처: MLSSoccer.com 공식, AP, eremnews(70점/31경기, 마이애미 74점 기록, 메시 교체 출전).
+- 공존 기사: a102(다른 작성자, 저스틴 비버 내한) https://trendcheck.today/articles/a102.html — 근거 미검증 랭킹 주장 제거·보도 기반 화제 근거로 교정(2026-10-25 (4) 항목). 스토리는 뉴시스·한국경제·코리아헤럴드·코스모폴리탄으로 교차 확인.
+- PR 상태: #10·#11 merged=true(API 확인). #9는 리뷰된 트리가 main에 통합됐으나 GitHub 상 closed-unmerged로 남음(head==main ff 도달, 재열 권한 없음) — merged로 주장하지 않음.
