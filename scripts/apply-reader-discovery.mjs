@@ -149,5 +149,37 @@ const AGG_PER_LOCALE = 3;
   }
 }
 
+
+// (4) Home hreflang cluster + self-canonicals (user 2026-10-25 11:31: Google
+// should treat the aggregate root as the default landing, Korean portals the
+// Korean home). Legitimate signals only: x-default + per-language alternates +
+// self-canonicals. No cloaking, no redirects. Marker-bounded, additive, rebuilt
+// every deploy so morning-line home regeneration cannot silently drop them.
+const HL_BLOCK = /<!-- tc-hreflang v\d -->(?:<link rel="(?:alternate|canonical)"[^>]*>\n?)+/;
+const HL_HOMES = [
+  { file: 'index.html', url: 'https://trendcheck.today/', lang: 'x-default' },
+  { file: 'ko/index.html', url: 'https://trendcheck.today/ko/', lang: 'ko' },
+  { file: 'en/index.html', url: 'https://trendcheck.today/en/', lang: 'en' },
+  { file: 'ja/index.html', url: 'https://trendcheck.today/ja/', lang: 'ja' },
+  { file: 'zh/index.html', url: 'https://trendcheck.today/zh/', lang: 'zh' },
+  { file: 'es/index.html', url: 'https://trendcheck.today/es/', lang: 'es' },
+  { file: 'ar/index.html', url: 'https://trendcheck.today/ar/', lang: 'ar' },
+];
+for (const h of HL_HOMES) {
+  const hp = path.join(root, h.file);
+  if (!fs.existsSync(hp)) { console.error('MISSING PAGE ' + h.file + ' (hreflang)'); fail = true; continue; }
+  let html = fs.readFileSync(hp, 'utf8');
+  html = html.replace(HL_BLOCK, '');
+  const lines = [];
+  if (!/rel="canonical"/.test(html)) lines.push(`<link rel="canonical" href="${h.url}">`);
+  for (const a of HL_HOMES) lines.push(`<link rel="alternate" hreflang="${a.lang}" href="${a.url}">`);
+  const block = '<!-- tc-hreflang v1 -->' + lines.join('\n') + '\n';
+  const i = html.indexOf('</head>');
+  if (i === -1) { console.error('NO </head> IN ' + h.file); fail = true; continue; }
+  html = html.slice(0, i) + block + html.slice(i);
+  fs.writeFileSync(hp, html);
+  console.log(`${h.file}: hreflang cluster (${lines.length} links)`);
+}
+
 if (fail) { console.error('FAILED - no partial trust, fix inputs'); process.exit(1); }
 console.log('done');
