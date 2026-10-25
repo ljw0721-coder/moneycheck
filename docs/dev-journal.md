@@ -443,3 +443,8 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 피드: traffic_feeds.py를 candidate에 실행, feed 8종+news-sitemap 갱신(37 URL). 인덱스 7개는 reader-discovery가 신규 링크만 추가(삭제는 홈 최신 카드 로테이션 4건, additive 검증済).
 - 배포: fresh live(127파일)+allowlist(기사6+인덱스7+피드8) → guard PASS + smoke PASS + upload success. 라이브 검증: 6개 기사 200+제목, en003 원문 유지, 홈 카드 6개, 피드 반영.
 - 실HTTPS 링크복사 실측: 클라우드 브라우저로 라이브 a107 열어 '링크 복사' 클릭 → writeText .then() 실행되어 버튼 '복사됨' 전환 확인(실클립보드 쓰기 성공의 브라우저 증거), X/Threads/Facebook 인텐트 링크 소스상 인코딩 확인, 스크린샷 첨부(cloud-browser-20261025-104359.png).
+
+## 2026-10-25 19:48 KST — 규정 준수 교정 (main 감사 대응)
+- es007 출처 3번째 독립 매체 추가: anews/Notipress(2026-10-15)가 Tiendanube 수치(+50%/-33%, 1,935페소, +12%, pan de muerto +27%) 독립 보도 확인 → 본문 corroboration 문구 + Fuentes 추가. 배포: fresh live(133파일) + allowlist MOD:es007 + offline-main=857b598(라이브 바이트 일치) → guard PASS + smoke PASS + upload success.
+- en003 복구(리포 전용): f2fc48b가 타 작성자 en003(AI funding)을 실수로 덮어쓰고 36de1c9가 en006으로 rename해 main에서 en003 소실 → bc74fe3 버전(라이브와 바이트 일치 확인)으로 복원 커밋. 라이브 en003은 무변경.
+- ko 트렌드 선정 사슬 기록: 블랙키위 19:38 KST 1위 양홍원(a101 중복→스킵, 규정상 명시 근거 없는 판단), 2위 현아·용준형(2026-10-25 보도 부재→리서치 게이트 미통과), 3위 침시술 선정.
