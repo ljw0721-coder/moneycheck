@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const pm=location.pathname.match(/^\/(ko|en|ja|zh|es|ar)(\/|$)/);
   const cur = pm ? pm[1] : (location.pathname==='/' ? 'all' : '');
   LANGS.forEach(([code,label])=>{
-    const b=document.createElement('button'); b.textContent=label; b.style.cssText='margin-left:6px;padding:4px 10px;border-radius:20px;border:1px solid #fff;background:transparent;color:#fff;cursor:pointer;font-size:12px'+(code===cur?';background:#fca311;color:#14213d;font-weight:800':'');
+    const b=document.createElement('button'); b.textContent=label; b.style.cssText='margin-left:6px;padding:4px 10px;border-radius:20px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;font-size:12px'+(code===cur?';background:#c00;border-color:#c00;color:#fff;font-weight:800':'');
     b.onclick=()=>{
       location.href = code==='all'?'/':(code==='ko'?'/ko/':'/'+code+'/');
     };
