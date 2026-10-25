@@ -282,3 +282,13 @@ Found while verifying aa6039e: the new theme makes the header WHITE in light mod
 Fix (ours, scoped to our header component; style.css untouched): i18n.js buttons now use color:inherit + border:1px solid currentColor (adapts to header ink in both modes); active = #c00 bg + #fff text (theme accent). Commit 3b14817, pushed main, deployed via guard (PASS, additive, existing=109 candidate=109; updater idempotent no-op since live==repo). Live i18n.js verified serving patched content.
 
 Verification limits: cloud browser profile is dark-mode only (no light emulation available in this tool surface) — light-mode visibility verified by CSS cascade reasoning (header color = var(--ink) = #111 in light; buttons inherit; active #c00+#fff visible on white). Dark-mode pixel check after cache refresh.
+
+## 2026-10-25 11:49 — JS cache validation in worker (stale-JS fix) + light pixels verified
+
+Light-mode pixels: VERIFIED via controlled temporary client-side token override on the live page (read-only, restored after). Desktop + mobile 390px: white header, 전체 active red #c00 white text, inactive buttons #111 text+border — all visible, no overflow. (Cloud browser has no prefers-color-scheme emulation; override copied the light :root tokens inline, then page reloaded.)
+
+Stale-JS class fix: style.css/i18n.js ship with cache-control public,max-age=600; today's theme deploy + button fix each needed up to 10 min to reach returning readers, and verification hit stale cache twice (observed, not hypothetical). Change (worker code, js responses only): cache-control public,max-age=0,must-revalidate + per-content etag ("tc-<len>-<djb2>"), If-None-Match → 304. css/html/xml/txt caching untouched (max-age=600) — other writer's theme asset behavior preserved. Diff: 8 lines in the static-file response path; syntax-checked. Durable source: guard/worker-src.mjs (BLOB stripped; the live worker script is the deployed artifact, built by deploy_safe.py from this code + candidate tree blob).
+
+Correction to 11:42 entry wording: the OG/Twitter meta absence live is asserted ONLY as live==origin/main (tree byte-identical). No author or intent attributed beyond verified commits.
+
+Limit (stated before, still true): worker code is not part of the shared repo tree the other writer's generator deploys from; their next deploy from their own worker copy may revert this header behavior (site keeps working, JS just returns to max-age=600). Our deploy entrypoint re-applies it.
