@@ -390,3 +390,6 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - AdFit 운영정책 원문: "폐쇄형 구조…회원 가입 및 계정 생성은 회사가 사전에 승인하거나 초대한 경우에 한하여" — 신청 가능·승인제.
 - Dable 가이드 원문: "more than 100 articles" + 최소 트래픽(수치 미공개). 라이브 실측 31개(ko6/en5/ja5/zh4/es6/ar5) → 미달 실측.
 - Adsterra 발송키 vault 요청 request_N7GVT7TXHGO3C7TY4RKKP6YL53LQEOCR 재확인: 동일 ID 활성·미승인(기존 전달 링크 유효, 새 URL 불요).
+
+## 2026-10-25 12:51 — Adsterra 광고 차단 요청 메일 발송
+- hello@trendcheck.today (CF Email Sending) → support@adsterra.com. 승인 초안 verbatim. success/queued, message_id iJ1Qqwr7AHh67zgf4wjSPofT1cMVGtobt9Zf. vault sandbox 승인(Always allow) 후 즉시 발송. 차단 확인 회신 전 Adsterra off 유지. 회신은 hello@→Gmail 포워딩 경로.
