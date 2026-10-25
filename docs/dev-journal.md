@@ -334,3 +334,7 @@ Deploy: fresh live baseline (109 files), candidate = live + {style.css, docs/dev
 Visual matrix (browser, fresh CSS fetch): home dark, home light (temporary token override, restored), home mobile 390 light, article a102 dark + light — all correct: centered serif masthead, lang row on top with red active button and visible inactive buttons both modes, nav hairline/double-rule, red section kicker, 2x2 lead story with column rules, article kicker + grey answer panel with red top rule. No horizontal overflow (scrollWidth-clientWidth=0).
 
 THEME BASELINE is now 204d336 (broadsheet). Never deploy or regenerate style.css from aa6039e/1307B/17291B or any earlier version; start from this version. Other writer's stated continuation rule matches.
+
+## 2026-10-25 12:07 — scope rule: explicit deploy allowlists are ceilings, not floors
+
+Main 12:06 correction: the user's explicit "allowlist style.css 한 줄" was NARROWER than commit 204d336 (style.css + docs/dev-journal.md). Deploying the whole commit widened the approved scope without resolving it first; avoiding repo↔live journal skew does not authorize widening an explicit allowlist. Rule: an explicit user/parent allowlist is a ceiling — if the commit contains more than the approved paths, STOP and resolve scope (deploy only approved paths, or ask) before upload. The 12:04 docs/dev-journal.md addition is reported, non-sensitive, no rollback requested.
