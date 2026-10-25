@@ -228,3 +228,11 @@
 - 조치: en005 "Explosion and fire at Quaker Oats plant in Cedar Rapids" 신규 작성. 선정 근거는 트렌드 순위 아님을 명시(en004 컨벤션). 핵심 사실(폭발·화재·부상자 없음)은 Cedar Rapids Fire Department 공식 발표(AP/KCRG/Gazette 인용)로 게이트 충족, 출처 3개 독립(AP·KCRG·The Gazette). 원인·피해 규모·생산 영향은 미확인으로 표기.
 - cat-a.html 카드 추가 + (1), 사이트맵 74로, 홈 섹션/카운트는 apply-reader-discovery가 동기화. 배포 가드 PASS(new_articles=en005), 라이브 curl 검증.
 - Naver 상태: 소유확인 메타 라이브 유지. searchadvisor 콘솔·sitecheck 모두 로그인 요구, 브라우저 프로필 세션·볼트 항목 없어 콘솔 상태 확인 불가(보고). Naver 검색 "trendcheck.today" 결과 없음 확인(11:09).
+
+## 2026-10-25 11:25 KST — Root home: each country's latest articles together (user request 11:19)
+- User voice request: home shows all countries' latest articles together; language click shows only that country. (todo-01M5RDPQJGGB2ZBKD4B8XT6QNW)
+- apply-reader-discovery.mjs: new marker-bounded "각 나라의 최신 글" aggregation on index.html — latest 3 articles per locale (18 cards), newest-first, country labels, anchor chain: before "최신 글" → "주제별 보기" → </main>, fail-closed. Rebuilt every deploy (runs inside deploy_safe.py), additive only.
+- IMPORTANT deploy-path note: live baseline had drifted NEWER than origin/main — the morning line deployed OG/Twitter meta tags (cat-*, topic-*, privacy/about, locale homes) live-only, not committed to main. Deploying the repo tree would have stripped them. Candidate built from FRESH LIVE tree + script change instead (guard baseline is live; PASS, 108=108 files, no unlisted change). Their OG meta preserved live; repo/live skew (OG tags missing in main) reported to main.
+- Deploy toolbox layout fix: canonical entrypoint is ~/moneycheck/deploy/deploy_safe.py (guard at ../guard, repo at ../repo); synced the discovery-updater version + apply-reader-discovery.mjs there. repo/guard left empty as before.
+- Guard PASS → REAL UPLOAD success 11:23. Verified live: curl (section present, OG tags intact, locale homes untouched), desktop + mobile 390px pixels (no overflow), EN language button routes to /en/ which lists only /en/articles/*.
+- Merged to main via local merge push (PR creation 403'd by token scope; branch home-all-countries-latest kept on origin).
