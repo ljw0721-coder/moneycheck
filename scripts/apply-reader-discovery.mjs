@@ -65,5 +65,57 @@ for (const loc of LOCALES) {
   fs.writeFileSync(hp, html);
   console.log(`${loc.home}: ${cards.length} extra article links${loc.counted ? ', counts synced' : ''}`);
 }
+
+// (3) Root home aggregation: "each country's latest articles, together".
+// Rebuilt every run from all locales' article files: latest 3 per locale,
+// merged and sorted newest-first with country labels. Marker-bounded and
+// strictly additive; never touches manual or other-writer sections.
+const AGG_MARK = /<!-- tc-home-latest v\d -->/;
+const AGG_BLOCK = /<!-- tc-home-latest v\d --><section class="tc-home-latest">[\s\S]*?<\/section>\n?/;
+const AGG_NEW_MARK = '<!-- tc-home-latest v1 -->';
+const AGG_LOCALES = [
+  { dir: '', label: '한국' },
+  { dir: 'en', label: '미국' },
+  { dir: 'ja', label: '일본' },
+  { dir: 'zh', label: '대만' },
+  { dir: 'es', label: '멕시코' },
+  { dir: 'ar', label: '사우디아라비아' },
+];
+const AGG_PER_LOCALE = 3;
+{
+  const hp = path.join(root, 'index.html');
+  if (!fs.existsSync(hp)) { console.error('MISSING PAGE index.html (aggregation)'); fail = true; }
+  else {
+    let html = fs.readFileSync(hp, 'utf8');
+    html = html.replace(AGG_BLOCK, '');
+    const picked = [];
+    AGG_LOCALES.forEach((loc, li) => {
+      const adir = path.join(root, loc.dir, 'articles');
+      if (!fs.existsSync(adir)) { console.error('MISSING DIR ' + adir); fail = true; return; }
+      const items = fs.readdirSync(adir).filter(f => f.endsWith('.html')).map(f => {
+        const src = fs.readFileSync(path.join(adir, f), 'utf8');
+        return {
+          href: `/${loc.dir ? loc.dir + '/' : ''}articles/${f}`,
+          title: esc((src.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim()),
+          date: (src.match(/20\d\d-\d\d-\d\d/) || [''])[0],
+          file: f, li, label: loc.label,
+        };
+      }).sort((a, b) => (b.date.localeCompare(a.date)) || (b.file.localeCompare(a.file)));
+      picked.push(...items.slice(0, AGG_PER_LOCALE));
+    });
+    picked.sort((a, b) => (b.date.localeCompare(a.date)) || (a.li - b.li) || (b.file.localeCompare(a.file)));
+    const cards = picked.map(it => `<div class="card"><a href="${it.href}">${it.title}</a><p class="meta">${esc(it.label)} · ${it.date}</p></div>`);
+    if (cards.length) {
+      const block = `${AGG_NEW_MARK}<section class="tc-home-latest"><h2>각 나라의 최신 글</h2><div class="grid">${cards.join('')}</div></section>\n`;
+      let i = html.indexOf('<h2>최신 글</h2>');
+      let anchor = 'before 최신 글';
+      if (i === -1) { i = html.indexOf('<h2>주제별 보기</h2>'); anchor = 'before 주제별 보기'; }
+      if (i === -1) { i = html.indexOf('</main>'); anchor = 'before </main>'; }
+      if (i === -1) { console.error('NO ANCHOR IN index.html (aggregation)'); fail = true; }
+      else { html = html.slice(0, i) + block + html.slice(i); fs.writeFileSync(hp, html); console.log(`index.html: aggregated ${cards.length} latest cards across ${AGG_LOCALES.length} locales (${anchor})`); }
+    }
+  }
+}
+
 if (fail) { console.error('FAILED - no partial trust, fix inputs'); process.exit(1); }
 console.log('done');
