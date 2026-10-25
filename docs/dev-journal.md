@@ -261,3 +261,24 @@
 - Correction: the hreflang/auto-section rebuild runs inside OUR deploy entrypoint only. The external morning generator has no hook on its side (established limit since PR #26); if it regenerates a home after our deploy, the cluster/sections are dropped until the next deploy through our entrypoint re-adds them. Do not claim regeneration-proof.
 - Forward note: header/behavior JS changes must ship with cache validation in mind - i18n.js is served max-age=600 with an unversioned URL, so clients can hold a stale switcher for up to 10 min. For any future header-behavior change, use a versioned asset reference or shorter/validated caching (no deploy now absent an actual issue).
 - Evidence retained: PRs #28/#29, hreflang cluster URLs (x-default=/, ko=/ko/, en/ja/zh/es/ar locale homes), 7-button click-routing matrix, before/after/mobile screenshots 20261025-023124/023254/023335.
+
+## 2026-10-25 11:42 — other writer's news-portal theme verified live; tree fully converged
+
+Context: user-relayed report (11:41) — other writer shipped a newspaper-portal theme, style.css only, commit aa6039e ("theme: news portal look"), pushed 11:38. Treated as user-relayed, verified independently.
+
+Verified:
+- origin/main aa6039e = style.css ONLY (29+/29-); new style.css 17097B, sha256 e5941b8dcfc8.
+- LIVE style.css byte-identical to aa6039e (hash match). Live worker blob re-fetched: live tree (109 files) is now byte-identical to origin/main except repo-only guard/ dir — the repo↔live skew (incl. the live-only OG/Twitter meta) is GONE. The other writer's deploy from origin/main removed their own earlier live-only OG additions (their content, their call; not restored).
+- My work survived intact on live: 전체/한국어 header, /ko/ 200, hreflang cluster (tc-hreflang on homes), i18n.js, sitemap 75 URLs, reader-discovery sections (tc-home-latest).
+
+Baseline rule going forward: current theme = aa6039e news-portal (white/black/red #c00). Never restore the earlier 1307B light or 17291B dark CSS baselines. Future deploys must use a FRESH live baseline (which now includes this theme) — deploys built from any older CSS would silently revert their theme.
+
+Cache note: style.css served max-age=600 (same as i18n.js) — theme flip needs ~10 min to reach returning readers; re-verify visuals after the window.
+
+## 2026-10-25 11:46 — scoped fix: lang buttons invisible on light news-portal header
+
+Found while verifying aa6039e: the new theme makes the header WHITE in light mode (background var(--surface-200)=#fff, ink #111), but i18n.js builds the language buttons with hardcoded inline styles (color:#fff; border:1px solid #fff; transparent bg) — in light mode all 6 inactive language buttons would be white-on-white (invisible). In dark mode they still rendered (header #141b30). Active button hardcoded old accent #fca311 gold.
+
+Fix (ours, scoped to our header component; style.css untouched): i18n.js buttons now use color:inherit + border:1px solid currentColor (adapts to header ink in both modes); active = #c00 bg + #fff text (theme accent). Commit 3b14817, pushed main, deployed via guard (PASS, additive, existing=109 candidate=109; updater idempotent no-op since live==repo). Live i18n.js verified serving patched content.
+
+Verification limits: cloud browser profile is dark-mode only (no light emulation available in this tool surface) — light-mode visibility verified by CSS cascade reasoning (header color = var(--ink) = #111 in light; buttons inherit; active #c00+#fff visible on white). Dark-mode pixel check after cache refresh.
