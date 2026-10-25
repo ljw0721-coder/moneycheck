@@ -399,3 +399,10 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - AdFit 제휴제안 폼: 필드 매핑·입력 절차 확립(제출 없음, 세션 교체로 입력 2회 소실). 사용자 지시 반영: 사업자유형=개인, 연락처=hello@trendcheck.today. 미해결: 담당자 이름(개인명 불가, 역할명 미승인), 전화(이메일-only 검증 예정), UV/PV 구간(실측 24h UV 3.19k 봇 포함, 월 데이터 없음 — 사용자 확인 항목).
 - 트래픽 실측(CF 대시보드 24h): UV 3.19k / visits 2.34k / requests 7.4k (봇·운영 포함).
 - Coupang Partners: 미착수.
+
+## 2026-10-25 13:15 — 도메인 발신 사본 상시 규칙 구현 + Adsterra 메일 사본 발송 + AdFit 제출 완료
+- 사용자 지시(13:11 음성): 향후 도메인 발신마다 사본을 지메일로. (13:13) 아까 보낸 Adsterra 메일 사본도 요청.
+- 사본 발송 완료(13:15): hello@trendcheck.today → ljw0721@gmail.com, "[발신 사본] Adsterra 광고 카테고리 차단 요청", 원본 수신자·제목·발송시각·본문·queued 상태·원본 message_id 명시. CF API success/queued, 사본 message_id <VNFbnJDUNUtA22b0KCyJfX4C9HZNHmTi3XBt@trendcheck.today>.
+- 상시 메커니즘: scripts/send-domain-mail.mjs 신설 — 모든 도메인 발신의 유일 경로, 발신 시마다 사용자 Gmail에 [발신 사본] 자동 발송, 토큰은 vault 경로(env CF_EMAIL_TOKEN_FILE)로만 읽고 로그 미기록. OPERATING-AGREEMENT.md §5에 규칙 명문화.
+- AdFit 제휴제안 제출 완료(13:14): with.kakao.com/proposition?type=service&page=adfit. 확인 페이지 proposition/complete "제안 등록완료", 제안등록 번호는 등록 이메일(hello@)로 발송 안내. UV 1만 이하/PV 10만 이하 + 관측기간(2026-10-19~25, PV 3.19천·방문 2.35천, UV 미실측) 명시 공개. 담당자 '트렌드체크 운영팀', 개인, PH 지점 번호, hello@. dkaptcha 1회 통과.
+- gmail 구독 갱신(waketrigger-01M5RMA4TWVNT1694TDGGE48SD): AdSense 결과 / Adsterra 회신 / Kakao 제안등록 번호 / 도메인 발신 배달 알림 커버.

@@ -31,3 +31,9 @@ This repo has multiple writers (including automation agents). These rules keep u
 ## 4. 배포 / Deploy
 - Worker 의 D1 바인딩(DB, id a33efe21-ca91-4f78-8feb-5b5e79b9057b)과 API 코드는 반드시 유지. 아카이브(정적) 부분만 교체.
 - Keep the Worker's D1 binding and API code intact; replace only the static archive portion.
+
+## 5. 도메인 메일 발신 / Domain mail sending
+- hello@trendcheck.today 등 trendcheck.today 도메인에서의 모든 발신은 반드시 `node scripts/send-domain-mail.mjs` 를 통한다. CF Email Sending API 직접 호출 금지.
+- 사용자 상시 규칙(2026-10-25): 모든 도메인 발신은 사용자 Gmail(ljw0721@gmail.com)에 `[발신 사본]` 표시 사본이 자동 발송된다. 스크립트가 이를 강제한다.
+- 발신 토큰은 vault 에서만 읽고 로그·사본·저장소 어디에도 기록하지 않는다.
+- All trendcheck.today domain sends go through scripts/send-domain-mail.mjs only (never the CF API directly). Every send is automatically copied to the user's Gmail as a marked "[발신 사본]" (standing user rule, 2026-10-25). Tokens come from the vault and are never logged.
