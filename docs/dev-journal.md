@@ -448,3 +448,7 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - es007 출처 3번째 독립 매체 추가: anews/Notipress(2026-10-15)가 Tiendanube 수치(+50%/-33%, 1,935페소, +12%, pan de muerto +27%) 독립 보도 확인 → 본문 corroboration 문구 + Fuentes 추가. 배포: fresh live(133파일) + allowlist MOD:es007 + offline-main=857b598(라이브 바이트 일치) → guard PASS + smoke PASS + upload success.
 - en003 복구(리포 전용): f2fc48b가 타 작성자 en003(AI funding)을 실수로 덮어쓰고 36de1c9가 en006으로 rename해 main에서 en003 소실 → bc74fe3 버전(라이브와 바이트 일치 확인)으로 복원 커밋. 라이브 en003은 무변경.
 - ko 트렌드 선정 사슬 기록: 블랙키위 19:38 KST 1위 양홍원(a101 중복→스킵, 규정상 명시 근거 없는 판단), 2위 현아·용준형(2026-10-25 보도 부재→리서치 게이트 미통과), 3위 침시술 선정.
+
+## 2026-10-26 18:53 KST — Kakao AdFit 심사 거절 수신
+- 10/26 18:28 KST noreply@kakaocorp.com(msg 1a1778a23c634dd7): "종합 검토 결과 승인 요건을 충족하기 어려움", 세부 기준 개별 안내 불가. 발신전용.
+- docs/ad-networks-status.md AdFit 행 갱신. 재신청 시점/전략은 사용자 결정 사항으로 main에 보고.
