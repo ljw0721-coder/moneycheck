@@ -452,3 +452,10 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 ## 2026-10-26 18:53 KST — Kakao AdFit 심사 거절 수신
 - 10/26 18:28 KST noreply@kakaocorp.com(msg 1a1778a23c634dd7): "종합 검토 결과 승인 요건을 충족하기 어려움", 세부 기준 개별 안내 불가. 발신전용.
 - docs/ad-networks-status.md AdFit 행 갱신. 재신청 시점/전략은 사용자 결정 사항으로 main에 보고.
+
+## 2026-10-26 19:42 KST — 저녁 에디션 6개 로케일 발행
+- 트렌드: ko=시그널 실시간 1위 'KB국민은행 2091명 추가 확인'(19:37 KST 관측, 중복 아님), en=Google US 2위 'wwe crown jewel 2026'(1위 'amber alert'은 특정 사건 없는 일반 쿼리라 규칙상 차순위, 기사에 이유 명시), ja=Google JP 1위 'ショートスリーパー', zh=百度热搜 비고정 1위 '国防部：中国卫星看看中国台湾很正常', es=Google MX 1위 'clima cancun', ar=Google SA 1위 'سعر الدولار مقابل الجنيه'.
+- 신규: a109(KB 정보유출 119→2,210명), en008(WWE Crown Jewel Riyadh 11/7), ja008(堀大輔 謝罪·募集停止), zh007(吉林一号 台湾 画像), es009(Cancún 날씨), ar008(EGP 56 돌파 최저). 전부 셸 생성, 3+출처, 확인/미확인 분리, 선정 근거에 소스·순위·관측시각 명시. 이미지 없음(편집 규칙 부합분 미확보, og-default).
+- 번호: 라이브 로케일 max+1 확인 후 부여(a108→a109, en007→008, ja007→008, zh006→007, es008→009, ar007→008).
+- 배포: fresh live(143파일)+allowlist(기사6+인덱스7+피드8), offline-main=915a888(라이브와 바이트 일치) → guard PASS + smoke PASS + upload success. 라이브 검증: 6개 200·제목·lang·공유3종·피드 전부 반영, news-sitemap 49 URL.
+- 실HTTPS 링크복사 실측: 라이브 a109에서 클릭→'복사됨' 전환 확인, 스크린샷 첨부. (screenshot --json 모드는 save path null 반환, 텍스트 모드 사용해야 함 — 운영 메모)
