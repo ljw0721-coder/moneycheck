@@ -459,3 +459,12 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 번호: 라이브 로케일 max+1 확인 후 부여(a108→a109, en007→008, ja007→008, zh006→007, es008→009, ar007→008).
 - 배포: fresh live(143파일)+allowlist(기사6+인덱스7+피드8), offline-main=915a888(라이브와 바이트 일치) → guard PASS + smoke PASS + upload success. 라이브 검증: 6개 200·제목·lang·공유3종·피드 전부 반영, news-sitemap 49 URL.
 - 실HTTPS 링크복사 실측: 라이브 a109에서 클릭→'복사됨' 전환 확인, 스크린샷 첨부. (screenshot --json 모드는 save path null 반환, 텍스트 모드 사용해야 함 — 운영 메모)
+
+## 2026-10-27 저녁 에디션 (19:37 KST 관측)
+- 선정: ko=시그널 실시간 1위 '강남 구룡마을 화재 발생'(19:37 KST, 서드파티 집계·공식 순위 아님 명시). en=Google US 1위 connor bedard, ja=JP 1위 石井めぐみ議員, es=MX 1위 el niño, ar=SA 1위 sanju samson, zh=바이두 비고정 1위 人民日报刊文谈《万疆》永久免费授权.
+- 신규: a111, en010, ja010, zh009, es011, ar010 (라이브 max+1: a110/en009/ja009/zh008/es010/ar009 확인 후 부여).
+- 기사 규칙: 셸 생성, 각 3+ 출처(공식 1차 또는 독립 언론 2+), 확인/미확인 분리, 선정 근거에 소스·순위·관측시각 명시. 이미지는 편집 규칙 부합 없음(연합 독자제공 재판매금지 등) → 전원 og-default.
+- en010 참고: 당일 검색 급등의 단일 촉발 이벤트는 미확인으로 표기. '계약 연장 가격' 류 콘텐츠팜 기사는 7월 확정 계약 재탕이라 미확인 처리. 확인 핵심(수술 복귀·데뷔·첫골+Kane 기록 어시스트·10/25 경기)은 NHL.com/WaPo/ABC7/Yahoo로 검증.
+- 배포: fresh live(155 files) → candidate 161. offline-main=worktree@456ac1d (MAIN/LIVE 차이는 ko/index.html의 reader-discovery a110 카드 1건뿐, 비기사·도구 생성물이라 충돌 아님). guard PASS + smoke PASS + REAL UPLOAD.
+- 검증: 6개 기사 200·lang·title·canonical·공유버튼, 피드 7개+news-sitemap(6 URL 추가) 200, 홈 a111 링크. 실HTTPS 링크복사 실측 a111 통과(복사됨 flip, 스크린샷).
+- 커밋: ceecc4a (기사+피드+사이트맵+인덱스), 배포 후 push.
