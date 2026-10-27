@@ -181,5 +181,41 @@ for (const h of HL_HOMES) {
   console.log(`${h.file}: hreflang cluster (${lines.length} links)`);
 }
 
+
+// (3c) /ko/ home featured "오늘의 트렌드" card: rebuilt every run from the
+// newest Korean article so the featured card can never go stale again
+// (user bug report 2026-10-27: card stuck on 2026-10-25 while new articles
+// were published). Marker-bounded; first run wraps the legacy unmarked grid.
+{
+  const hp = path.join(root, 'ko', 'index.html');
+  if (!fs.existsSync(hp)) { console.error('MISSING PAGE ko/index.html (ko-featured)'); fail = true; }
+  else {
+    let html = fs.readFileSync(hp, 'utf8');
+    const adir = path.join(root, 'articles');
+    const items = fs.existsSync(adir) ? fs.readdirSync(adir).filter(f => f.endsWith('.html')).map(f => {
+      const src3 = fs.readFileSync(path.join(adir, f), 'utf8');
+      return {
+        href: `/articles/${f}`,
+        title: esc((src3.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim()),
+        date: (src3.match(/20\d\d-\d\d-\d\d/) || [''])[0],
+        file: f,
+      };
+    }).sort((a, b) => (b.date.localeCompare(a.date)) || (b.file.localeCompare(a.file))) : [];
+    const top = items[0];
+    if (!top) { console.error('NO KOREAN ARTICLES (ko-featured)'); fail = true; }
+    else {
+      const grid = `<!-- tc-home-featured v1 --><div class='grid'><div class="card"><a href="${top.href}">${top.title}</a><p class="meta">한국 · ${top.date} · 조회수 <span data-tc-views-path="${top.href.slice(1)}">0</span></p></div></div>`;
+      const re = /(<h2>오늘의 트렌드<\/h2>)(?:<!-- tc-home-featured v\d -->)?<div class='grid'>(?:<div class="card">[\s\S]*?<\/div>){1,20}<\/div>/;
+      const m = html.match(re);
+      if (!m) { console.error('NO FEATURED GRID IN ko/index.html'); fail = true; }
+      else {
+        const next = html.slice(0, m.index) + m[1] + grid + html.slice(m.index + m[0].length);
+        if (next !== html) { fs.writeFileSync(hp, next); console.log(`ko/index.html: featured card -> ${top.href} (${top.date})`); }
+        else console.log('ko/index.html: featured card already current');
+      }
+    }
+  }
+}
+
 if (fail) { console.error('FAILED - no partial trust, fix inputs'); process.exit(1); }
 console.log('done');

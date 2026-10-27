@@ -468,3 +468,4 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 배포: fresh live(155 files) → candidate 161. offline-main=worktree@456ac1d (MAIN/LIVE 차이는 ko/index.html의 reader-discovery a110 카드 1건뿐, 비기사·도구 생성물이라 충돌 아님). guard PASS + smoke PASS + REAL UPLOAD.
 - 검증: 6개 기사 200·lang·title·canonical·공유버튼, 피드 7개+news-sitemap(6 URL 추가) 200, 홈 a111 링크. 실HTTPS 링크복사 실측 a111 통과(복사됨 flip, 스크린샷).
 - 커밋: ceecc4a (기사+피드+사이트맵+인덱스), 배포 후 push.
+- /ko/ 홈 "오늘의 트렌드" 피처드 카드 고정 버그 수정(사용자 신고 10/27 20:29): 카드가 수동 하드코딩이라 10/25 a102에 고정. apply-reader-discovery.mjs에 (3c) tc-home-featured v1 마커 리빌드 추가(최신 한국어 기사로 매 배포 자동 갱신, deploy_safe.py가 배포마다 실행하므로 발행 연동). 즉시값 a111. 비 article 파일만 변경, 타 작성자 섹션/기사 무건드림.
