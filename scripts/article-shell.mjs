@@ -72,6 +72,7 @@ const html = `<!DOCTYPE html><html lang="${lang}" dir="${dir}"><head><meta chars
 <script type="application/ld+json">${jsonld}</script>
 </head><body>${header}<main><p class="meta">${esc(metaLine)}</p>
 <h1>${esc(title)}</h1>
+<p class="tc-views">${lang === 'ko' ? '조회수' : 'Views'} <span data-tc-views>0</span></p>
 ${imgUrl ? `<figure class="tc-hero" style="margin:16px 0"><img src="${esc(imgUrl)}" alt="${esc(imgAlt)}" width="1600" height="900" loading="lazy" style="max-width:100%;height:auto;border-radius:8px"><figcaption style="font-size:12px;color:#666;margin-top:4px">${esc(imgCredit)}</figcaption></figure>` : ''}
 ${body}
 ${share}
