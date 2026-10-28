@@ -481,3 +481,10 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 자기 점검에서 결함 발견·수정: article-shell.mjs가 meta+h1을 자체 생성하는데 body 파일에도 meta+h1을 넣어 6개 기사 모두 h1 중복·meta 중복으로 1차 배포됨. body에서 헤더 블록 제거 후 재생성, MOD allowlist(제목 불변)로 2차 배포(19:42): guard PASS(173→173, 수정 6건), smoke PASS, 업로드 성공. 라이브 검증: 6개 기사 h1=1·meta=2(카테고리+선정근거)·200·lang·canonical·공유·tc-views·피드·사이트맵·/ko/ 피처드 카드(a113) 모두 정상.
 - 링크복사 실측: 실HTTPS cloud browser로 a113의 '링크 복사' 클릭 → 버튼 '복사됨' 전환 확인, 스크린샷 증거(cloud-browser-20261028-104315.png).
 - 라이브/main 괴리 (배포 전 guard가 MAIN/LIVE CONFLICT로 차단, 진단 완료): 오늘 아침 라인 배포가 공유 파일 약 24개를 구버전 바이트로 베이크. 라이브=main의 부분집합(라이브에만 있는 파일 0건). 되돌아간 것: ① 한국어 크롬 네비 수정(ead8969, /→/ko/) — about/privacy/a101~a110 등, ② 18개 기사 조회수 백필 중 ja008 등 일부, ③ baked scripts(article-shell.mjs의 tc-views 생성, apply-reader-discovery.mjs의 (3c) 피처드 자동갱신), ④ docs/dev-journal.md 10/27 항목. 아침 라인 콘텐츠(a112/en011/ja011/zh010/es012/ar011·홈·피드)는 라이브=main 일치, 손상 없음. 오늘 아침 기사들은 tc-views 정상 포함. 조정(복구 배포)은 main 판단 사항으로 보고.
+
+## 2026-10-28 회귀 복구 배포 (19:44 KST, main 승인)
+- 배경: 아침 라인 배포가 공유 파일 24개를 구버전으로 베이크해 10/27 승인 수정분(한국어 크롬 /ko/ 네비, 18개 기사 조회수 백필, baked scripts의 tc-views·(3c) 피처드, 저널)이 라이브에서 회귀. 라이브 ⊂ main, 라이브 전용 파일 0건 확인 후 main 바이트로 복구.
+- 경로: candidate=fresh live tree(173) + 복구 24파일. allowlist: MOD:기사 20건(제목 불변 사전검증)+비기사 5건+홈/피드. guard PASS(173→173), smoke PASS, 업로드 성공.
+- 검증: about/privacy/a106 홈·로고→/ko/ (실브라우저 href 확인), a106·ja008 조회수 카운터 렌더(a106 실측 12), 복구 기사 전원 200·제목 불변, 라이브 worker BLOB 내 scripts 2건 신버전 확인(tc-views 생성·tc-home-featured (3c)). 시각 증거: cloud-browser-20261028-104517.png.
+- 부수 발견·수정: repo index.html에 a113 백필 카드 중복(aggregation+backfill 양쪽, 19:40 중단 런 산물) → 라이브 버전(aggregation만)으로 동기화 커밋. reader-discovery 백필 dedupe 미비는 관찰 기록만(스크립트 미변경).
+- 재발 방지: drift 가드 트리거에 회귀 마커 추가(a106 /ko/ 네비 부재, ja008 data-tc-views 부재). 근본 원인(아침 라인이 stale 스냅샷 포함 트리를 통째 배포)은 그쪽 배포 경로 문제 — deploy guard가 main/live conflict를 차단했음이 증명됨(19:40 내 배포 중단). 작성자 간 조정·외부 커뮤니케이션 필요 사항은 main에 보고.
