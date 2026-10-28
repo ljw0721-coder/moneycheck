@@ -21,6 +21,14 @@ This file is the writing workflow every writer in this repo (including automatio
 ## 2-1. HTML head·공유 버튼 (사용자 지시 2026-10-25)
 모든 신규 기사는 head에 아래를 기본 포함한다: NewsArticle JSON-LD(제목·발행일·언어·저자/발행인 TrendCheck·canonical), <meta name="robots" content="max-image-preview:large">, OG 태그(og:title·og:description·og:type=article·og:url·og:image=og-default.png·og:site_name=TrendCheck·article:published_time). 본문 하단에 공유 버튼(X/Threads/Facebook/링크복사). 생성은 `node scripts/article-shell.mjs`(로케일별 기존 기사를 --ref로 사용)을 쓴다. 이미지는 라이선스 안전 소스(Unsplash/Pexels/Wikimedia)+출처 표기(라이선스 면제와 무관하게 필수), 없으면 og-default 폴백, 무단 전재 금지. 편집 규칙(2026-10-25): 실제 사건과 일치하는 검증된 이미지이거나, 특정 사건을 사칭할 수 없는 명백히 비특정 일러스트만 사용한다. 다른 경기·다른 태풍 등 타 사건 사진을 사건 기사에 쓰지 않는다.
 
+### 이미지 권리 메타데이터 / Image rights metadata (2026-10-29)
+- 커스텀 이미지는 먼저 `data/image-rights.json`에 이미지 URL별 검증 기록을 추가한다: 원본 파일 페이지, 확인일, 권리 근거, 저작자, 기존 크레딧, 실제 이용 조건 URL. 단순히 Wikimedia/NASA에 있다는 사실만으로 권리를 추정하지 않는다.
+- `rightsStatus`: `cc0`, `public-domain`, `copyrighted`. CC0는 CC0 문서와 저작권 없음 고지, 퍼블릭 도메인은 공개 근거·적용 국가/범위와 상태 고지를 기록한다. 두 경우 `copyrightHolder`, 임의의 © 표시, 가상의 저작권자는 금지한다. 저작자와 크레딧은 그대로 유지한다.
+- 저작권이 유지되는 사진은 출처로 확인된 `copyrightHolder`와 그 권리자를 명시하는 정확한 `copyrightNotice`가 필요하다. 사이트 발행인·업로더를 저작권자로 자동 대입하지 않는다. 확인 불가 시 커스텀 이미지를 사용하지 않고 기존 og-default 폴백을 사용한다.
+- `license`는 해당 이미지의 실제 이용 조건 문서다. `acquireLicensePage`는 실제 취득/허락 안내가 확인된 경우에만 추가한다. 일반 CC0/퍼블릭 도메인 마크 페이지를 취득 페이지로 복사하지 않는다. 크롭 등 수정 내역도 기록한다.
+- 신규 생성: `node scripts/article-shell.mjs ... --image-url https://trendcheck.today/images/og-a106.jpg --image-alt '...'`. 출처/이용 조건 링크와 검증된 크레딧, ImageObject의 `contentUrl`·`copyrightNotice` 등이 함께 생성된다. `--image-credit`를 제공하면 검증 기록과 일치해야 한다. 별도 검증 기록은 `--image-rights-file`로 선택 가능하다.
+- 발행 전 `node scripts/verify-image-metadata.mjs` 필수. 권리 기록 누락, JSON-LD 문법 오류, 크레딧/권리 불일치, contentUrl 누락, 커스텀 이미지의 ImageObject 누락을 실패 처리한다. `deploy_safe.py`에도 업로드 전 검사가 내장된다. 기록 입력은 사람/작성자의 원본 검증을 대신하지 않는다.
+
 ## 3. 언어·품질 / Language & quality
 - 해당 언어로 직접 쓴 오리지널 글. 다른 언어판 기사의 번역 금지.
 - 클릭을 위한 과장·낚시 제목 금지. 제목은 확인된 사실만 담는다.
