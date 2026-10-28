@@ -58,3 +58,9 @@
 - 2026-10-25: a101 맺음 문단 중복 제거 (fix/a101-dedupe)
 - 2026-10-25: 라이브 선별 반영 상태 정합성 기록 (fix/journal-live-reconcile)
 | 2026-10-25 | 일일 발행 2일차: 6개 언어 기사(a102, en002, ja002, zh002, es002, ar002) + 홈/언어별 index·카테고리 갱신, 선택적 라이브 배포 | 완료 |
+
+[이미지 권리 구조화 데이터] 상태: 운영 배포·자체 검증 완료 / Search Console 확인 대기
+- 2026-10-29: a106(CC0), en002(NASA, 미국 퍼블릭 도메인), ja005(저작자 공개)에 실제 상태에 맞는 copyrightNotice/contentUrl/원본 근거 추가. 기존 크레딧·본문·제목·이미지 불변. 권리자 임의 생성 없음.
+- data/image-rights.json을 신규 셸·정적 검증·배포 전 검사에 공통 사용. 로컬 이미지 SHA-256 검증과 회귀 테스트 13개, GitHub Actions 검사 추가.
+- Cloudflare 콘텐츠 전용 배포 성공; D1·Google 로그인 비밀 바인딩 보존 확인. Google 라이브 테스트에서 3개 기사 모두 copyrightNotice 확인 및 유효 판정. 남은 이미지 경고는 선택사항 acquireLicensePage뿐(권리 취득이 필요 없는 공개 이미지이므로 미기재).
+- Search Console 계정이 현재 로그아웃 상태라 영향 URL 예시 목록 확인과 수정 결과 검증 요청은 인증 후 진행해야 함. 저장소에서 확인한 3개 기사와 Search Console 영향 URL은 별도 범위로 기록. 기존 canonical 수정은 반복하지 않음.
