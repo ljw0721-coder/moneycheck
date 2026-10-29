@@ -52,7 +52,7 @@ for (const loc of LOCALES) {
 
   // (2) category-card counts synced from cat pages
   if (loc.counted) {
-    for (const c of ['a', 'b', 'c', 'd', 'e']) {
+    for (const c of ['a', 'b', 'c', 'd', 'e', 'f', 'g']) {
       const cp = path.join(root, loc.dir, `cat-${c}.html`);
       if (!fs.existsSync(cp)) { console.error('MISSING CAT PAGE ' + cp); fail = true; continue; }
       const h1 = (fs.readFileSync(cp, 'utf8').match(/<h1>([^<]*)<\/h1>/) || [])[1] || '';
