@@ -3,6 +3,16 @@
 규칙: 이 레포의 모든 변경은 푸시할 때 이 파일에 항목을 남긴다 (사용자 상시 규칙 2026-09-29: "깃허브 변경을 할때는 다른 모델이 빨리 파악할 수 있도록 변경 사항을 항상 일지를 써서 log를 남길것"). 새 항목을 위에 추가.
 참고: 2026-10-24 이전 커밋들은 일지 없이 푸시됐다 (아래 2026-10-24 항목 중 일부도 사후 기록).
 
+## 2026-10-29 22:20 KST — 섹션 확장(크립토·거래소+뮤직) 및 내비 누락 수정 (저녁 작업 묶음, 사후 기록)
+
+아래 4개 커밋의 일지가 docs/journal.md에만 먼저 기록돼 있던 것을 상시 규칙 파일인 이 파일로 통합 사후 기록.
+
+- **c38f29d 섹션 확장**: 크립토·거래소(금융+가상자산 거래소·시장구조)+뮤직 섹션 6개 언어 오픈. ko=topic-crypto/topic-music, en/ja/zh/es/ar=cat-f/cat-g, 홈 내비+카테고리 카드 추가, reader-discovery a~g 카운트 동기(scripts/와 deploy/ 사본 모두). 첫 기사 12개(a116~a117, en015~016, ja015~016, zh014~015, es016~017, ar015~016) — 10/29 당일 트렌드, 소스 3+, 확인/미확인 분리. 배포 2회(1차 후 섹션 페이지 카드 누수를 실브라우저에서 발견·수정 재배포).
+- **6bddccd ko 주제별 그리드 중첩 수정**: 홈 주제별 보기에서 크립토/뮤직 카드가 뉴스·사회 카드 내부에 중첩(종료 div 위치). 라이브 구조+실브라우저(데스크톱/모바일) 검증.
+- **92b8241 ko+로케일 내비 탭 누락 수정(사용자 제보 22:13)**: ko 홈만 탭 확장돼 있었고 topic-crypto·기사·about·privacy·cat 페이지와 5개 언어 기사 80페이지 내비에 새 탭 없었음. 105페이지에 2탭 추가(로케일 라벨은 각 cat 페이지 내비 복제). 라이브 41개 샘플+픽셀 3장 검증.
+- **79e306e**: 위 배포 절차 기록(기사 수정은 배포→푸시 순; MAIN/LIVE 자기충돌 1회 처리).
+- 공통: 모든 배포 deploy_safe.py(fail-closed 가드+스모크) + fresh live baseline + allowlist. 기사 수정은 MOD: + 제목 불변. 상대(아침 작성자) 콘텐츠 무수정.
+
 ## 2026-10-29 — Recover image metadata after a concurrent stale publisher deployment
 - Final verification after the interrupted Search Console login found a later a114 publication had replaced the archive with stale files: all 3 copyrightNotice fields disappeared, and the image registry, verifier and new generator integration were absent. Latest main c7f6880 still retained PR #32; this was a deployment-source regression, not a missing GitHub fix.
 - Rebuilt the 174-file current live baseline from per-file SHA-256 evidence (173 matching repository/history files plus the exact live-only ko/index.html). Preserved every current article body/title/credit and the newly published a114, all feeds, indexes, image bytes and Worker API code. Reapplied only the 3 ImageObject repairs and 8 image-release/toolchain paths; no unrelated article/nav/counter drift was overwritten.
