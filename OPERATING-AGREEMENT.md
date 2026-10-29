@@ -3,6 +3,13 @@
 이 저장소는 여러 작성자(자동화 에이전트 포함)가 함께 쓴다. 아래 규칙은 서로의 작업을 덮어쓰지 않기 위한 약속이다.
 This repo has multiple writers (including automation agents). These rules keep us from overwriting each other.
 
+## 이미지 메타데이터 배포 필수 조건 / Image metadata release requirement (2026-10-29)
+- 새 기사만 추가하는 배포도 오래된 전체 아카이브를 업로드하지 않는다. 10/29 외부 발행 배포가 정상화된 3개 이미지 고지와 검증 도구를 되돌린 회귀가 실제 확인됐다.
+- 매 배포 직전 최신 origin/main의 `data/image-rights.json`, `scripts/image-metadata.mjs`, `scripts/article-shell.mjs`, `scripts/verify-image-metadata.mjs`, `scripts/apply-image-metadata.mjs`, `scripts/deploy_safe.py`를 사용한다. 저장소 밖의 배포 도구 사본을 사용하면 이 의존 파일도 함께 동기화한다.
+- 현재 라이브 아카이브에서 후보를 구성하고, 기존 기사 ImageObject가 이전 상태라면 최신 `apply-image-metadata.mjs`로 head의 이미지 권리 정보만 동기화한다. 기사 본문·제목·기존 크레딧·새 발행 기사·이미지 파일은 보존한다. CC0/퍼블릭 도메인에 저작권자를 만들지 않는다.
+- 후보에 권리 레지스트리와 검증 도구를 포함한 뒤 `node scripts/verify-image-metadata.mjs <candidate-dir> <candidate-dir>/data/image-rights.json`을 실행한다. 누락·불일치·이미지 해시 변경은 업로드 금지다. 실제 Worker 업로드 직전까지 검사한 후보와 바이트가 같은지 확인한다. 검증 없이 오래된 로컬 스냅샷을 배포하지 않는다.
+- 배포 후 라이브 BLOB의 a106/en002/ja005 copyrightNotice 및 신규 생성기의 buildImageObject 연동을 확인한다. 도구 파일이 사라지거나 고지가 없으면 배포 성공으로 보고하지 않는다. 이 지침과 저장소 검증은 이를 사용하지 않는 외부 실행환경을 기술적으로 통제하지 못하므로, 외부 경로의 실행 여부를 확인하지 않고 재발 방지가 보장된다고 주장하지 않는다.
+
 ## 1. 광고 설정의 단일 원천 / Single source of truth for ad config
 - 승인된 광고 설정은 **`ads.config.json`** 한 곳에만 있다. AdSense 게시자 ID `ca-pub-3867118796714043` 는 승인된 프로덕션 값이다.
 - `ads.txt`, `ads.js` 의 ID, 각 홈페이지 `<head>` 의 애드센스 스니펫은 **생성물**이다. 손으로 고치거나 템플릿에서 다시 만들지 말 것.
