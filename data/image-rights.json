@@ -1,0 +1,45 @@
+{
+  "https://trendcheck.today/images/og-a106.jpg": {
+    "rightsStatus": "cc0",
+    "sha256": "f7549bad4c86f94cdf3fdb0207ccb440f113504d28523dfc383d9f0cd630a757",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Autumn_foliages.jpg",
+    "verifiedOn": "2026-10-29",
+    "evidence": "The file-specific Commons licensing section identifies HeungSoon and the CC0 1.0 Universal dedication, including the Pixabay license review.",
+    "creator": { "@type": "Person", "name": "HeungSoon" },
+    "creditText": "HeungSoon, CC0 1.0, via Wikimedia Commons",
+    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "copyrightNotice": "CC0 1.0 Universal; no copyright reserved.",
+    "modifications": "Center-cropped and resized to 1600 x 900."
+  },
+  "https://trendcheck.today/images/og-en002.jpg": {
+    "rightsStatus": "public-domain",
+    "sha256": "26b96fb294f358fd717c115ccfa3c9bec9fb7b1aca72ef14691c5f60bc4e1f6d",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Harvest_Moon_at_NASA_Goddard_(9839294025).jpg",
+    "verifiedOn": "2026-10-29",
+    "evidence": "The original NASA Goddard Flickr record credits NASA/Goddard/Debbie Mccallum and links NASA's usage policy. NASA's policy states its own content is generally not subject to copyright in the United States. The existing publication uses this NASA public-domain basis, rather than claiming NASA owns copyright. Flickr also offers CC BY 2.0 as an alternative reuse route.",
+    "evidenceUrls": [
+      "https://www.flickr.com/photos/gsfc/9839294025/",
+      "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    ],
+    "creator": { "@type": "Organization", "name": "NASA Goddard Space Flight Center" },
+    "creditText": "NASA Goddard Space Flight Center, Public domain, via Wikimedia Commons",
+    "license": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "usageInfo": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "jurisdiction": "United States",
+    "copyrightNotice": "Public domain in the United States (NASA work); NASA media usage guidelines apply.",
+    "modifications": "Center-cropped and resized to 1600 x 900."
+  },
+  "https://trendcheck.today/images/og-ja005.jpg": {
+    "rightsStatus": "public-domain",
+    "sha256": "68f77cec71dcab30ff9e533f446d9cb38bd323a5df3019980409741b69bb78d4",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Momiji_Daigoji2.JPG",
+    "verifiedOn": "2026-10-29",
+    "evidence": "The file-specific Commons licensing section says Peter 111 released this work into the public domain worldwide, with an unconditional reuse grant where that release is not legally possible. This is an author release, not a CC0 dedication or an assertion that the Public Domain Mark itself is a license.",
+    "creator": { "@type": "Person", "name": "Peter 111" },
+    "creditText": "Peter 111, Public domain, via Wikimedia Commons",
+    "license": "https://commons.wikimedia.org/wiki/File:Momiji_Daigoji2.JPG#Licensing",
+    "jurisdiction": "Worldwide; author grants unconditional reuse where public-domain release is not possible",
+    "copyrightNotice": "Released into the public domain by the author; unconditional reuse grant where the release is not legally possible.",
+    "modifications": "Center-cropped and resized to 1600 x 900."
+  }
+}

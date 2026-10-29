@@ -15,7 +15,18 @@ def main():
     extra=[]
     if '--offline-live' in a: extra += ['--offline-live', a[a.index('--offline-live')+1]]
     if '--offline-main' in a: extra += ['--offline-main', a[a.index('--offline-main')+1]]
-    guard = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'guard', 'deploy_guard.py')
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Support both the repository layout and the existing split deploy toolbox.
+    guard = os.path.join(script_dir, 'deploy_guard.py')
+    if not os.path.exists(guard):
+        guard = os.path.join(script_dir, '..', 'guard', 'deploy_guard.py')
+    # Image rights must agree with the candidate archive, before any mutation/upload.
+    verifier = os.path.join(script_dir, 'verify-image-metadata.mjs')
+    ri = subprocess.run(['node', verifier, tree, os.path.join(tree, 'data', 'image-rights.json')], capture_output=True, text=True)
+    sys.stdout.write(ri.stdout); sys.stderr.write(ri.stderr)
+    if ri.returncode != 0:
+        print('DEPLOY ABORTED: image metadata validation failed. No upload attempted.', file=sys.stderr)
+        return 2
     # 0) reader-discovery self-heal: idempotent, additive-only; abort on failure
     upd = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'apply-reader-discovery.mjs')
     r0 = subprocess.run(['node', upd, tree], capture_output=True, text=True)
@@ -55,10 +66,11 @@ def main():
     token=open(os.environ.get('CF_TOKEN_FILE','/home/sandbox/.vault/daldal-cloudflare-migration-api-token-79ef3d/password')).read().strip()
     acct=os.environ.get('CF_ACCOUNT_ID','ebcfab6441facedbab9970d72eb928ea')
     script=os.environ.get('CF_WORKER_SCRIPT','moneycheck')
-    meta=json.dumps({"main_module":"worker.mjs","bindings":[{"database_id":"a33efe21-ca91-4f78-8feb-5b5e79b9057b","name":"DB","type":"d1"}]})
+    # Content-only upload preserves the current D1 and secret bindings/settings.
+    meta=json.dumps({"main_module":"worker.mjs"})
     b='----mcdeploy'
     body=('--%s\r\nContent-Disposition: form-data; name="metadata"\r\nContent-Type: application/json\r\n\r\n%s\r\n--%s\r\nContent-Disposition: form-data; name="worker.mjs"; filename="worker.mjs"\r\nContent-Type: application/javascript+module\r\n\r\n%s\r\n--%s--\r\n'%(b,meta,b,new,b))
-    req=urllib.request.Request("https://api.cloudflare.com/client/v4/accounts/%s/workers/scripts/%s"%(acct,script),data=body.encode(),method="PUT",headers={"Authorization":"Bearer "+token,"Content-Type":"multipart/form-data; boundary="+b})
+    req=urllib.request.Request("https://api.cloudflare.com/client/v4/accounts/%s/workers/scripts/%s/content"%(acct,script),data=body.encode(),method="PUT",headers={"Authorization":"Bearer "+token,"Content-Type":"multipart/form-data; boundary="+b})
     ok=json.load(urllib.request.urlopen(req)).get('success')
     print('REAL UPLOAD success:', ok)
     return 0 if ok else 3

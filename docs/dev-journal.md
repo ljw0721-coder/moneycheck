@@ -488,3 +488,10 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - 검증: about/privacy/a106 홈·로고→/ko/ (실브라우저 href 확인), a106·ja008 조회수 카운터 렌더(a106 실측 12), 복구 기사 전원 200·제목 불변, 라이브 worker BLOB 내 scripts 2건 신버전 확인(tc-views 생성·tc-home-featured (3c)). 시각 증거: cloud-browser-20261028-104517.png.
 - 부수 발견·수정: repo index.html에 a113 백필 카드 중복(aggregation+backfill 양쪽, 19:40 중단 런 산물) → 라이브 버전(aggregation만)으로 동기화 커밋. reader-discovery 백필 dedupe 미비는 관찰 기록만(스크립트 미변경).
 - 재발 방지: drift 가드 트리거에 회귀 마커 추가(a106 /ko/ 네비 부재, ja008 data-tc-views 부재). 근본 원인(아침 라인이 stale 스냅샷 포함 트리를 통째 배포)은 그쪽 배포 경로 문제 — deploy guard가 main/live conflict를 차단했음이 증명됨(19:40 내 배포 중단). 작성자 간 조정·외부 커뮤니케이션 필요 사항은 main에 보고.
+
+## 2026-10-29 09:38 KST 회귀 복구 #2 (merge 방식)
+- 10/29 아침 발행 배포 후 재발 확인: a101~a110·about·privacy /ko/ 네비 원복, 저녁 기사 9개 조회수 블록 유실, apply-reader-discovery (3c)·dev-journal 엔트리 원복.
+- fresh live(178 files) 전량 diff 후 3분류: ①복구 대상 24개(기사 20+about/privacy+journal+reader-discovery) ②아침 작성자 신규·최신(보존): a114, data/image-rights.json, scripts/image-metadata·apply-image-metadata·verify-image-metadata.mjs, 개선된 article-shell/deploy_safe, en002·ja005 이미지 고지 정규화, 가이드 2종, a114 반영 홈·피드·사이트맵·토픽 ③a106은 양쪽 수정 충돌 → merge(live 이미지 고지 유지 + /ko/ 네비만 복구).
+- 배포: guard PASS 178→178(신규 기사 0, additive), MOD 20개 제목 불변 확인, smoke PASS.
+- 검증: a106/a110/about/privacy 네비 /ko/ + a106·ja008·en008·zh007 조회수 블록 + a106·en002·ja005 copyrightNotice + a114 200·조회수·홈 피처드·news-sitemap 모두 실측 통과. a106 스크린샷(조회수 15 렌더).
+- repo 동기화: repo를 배포된 라이브 상태로 갱신(아침 측 live-only 도구·기사 포함) — 양측 스냅샷 불일치로 인한 상호 덮어쓰기 재발 방지 목적.
