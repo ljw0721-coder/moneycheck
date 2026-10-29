@@ -12,3 +12,4 @@
 - 수정: nav 내 생활 앵커 뒤에 2개 탭 삽입 — topic-crypto, about, privacy, cat-a~e, a101~a117 (25파일). 관리자 페이지는 nav 없음.
 - 같은 결함이 5개 언어 기사 페이지에도 있어 별도 배포로 수정 진행.
 - 배포: 4차(25파일, PASS+SMOKE+UPLOAD), 라이브 16페이지 클래스 전수 nav 확인 + 실브라우저 데스크톱/모바일.
+- 로케일 기사 내비: en/ja/zh/es/ar 기사 80개에 현지화 라벨로 cat-f/cat-g 탭 추가(각 언어 cat-a 내비 앵커 복제). 배포 시 MAIN/LIVE CONFLICT — 원인은 자기 수정을 배포 전 푸시한 것(충돌 집합=본인 후보 diff 임을 diff -rq로 확인 후 offline-main=라이브트리로 1회 배포). 절차 교정: 기사 수정은 배포→푸시 순서 유지.
