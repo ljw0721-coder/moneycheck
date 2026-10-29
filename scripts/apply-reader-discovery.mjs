@@ -137,7 +137,7 @@ const AGG_PER_LOCALE = 3;
         file: f,
       };
     }).sort((a, b) => (b.date.localeCompare(a.date)) || (b.file.localeCompare(a.file))) : [];
-    const cards = items.slice(0, 12).map(it => `<div class="card"><a href="${it.href}">${it.title}</a><p class="meta">${it.date}</p></div>`);
+    const cards = items.slice(0, 12).map(it => `<div class="card"><a href="${it.href}">${it.title}</a><p class="meta">${it.date} · 조회수 <span data-tc-views-path="${it.href.slice(1)}">0</span></p></div>`);
     if (cards.length) {
       const block = `${AGG_NEW_MARK}<section class="tc-home-latest"><h2>최신 글</h2><div class="grid">${cards.join('')}</div></section>\n`;
       let i = html.indexOf('<h2>주제별 보기</h2>');

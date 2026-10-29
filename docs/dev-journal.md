@@ -530,3 +530,9 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 - ko 기사 topic-news.html 카드 수동 추가(토픽 페이지는 생성기 없음).
 - 배포: fresh live(185 files) baseline, candidate 191. guard PASS(신규 기사 6, additive) + smoke PASS + REAL UPLOAD.
 - 검증: 6개 기사 200·lang·canonical·공유버튼, 피드 7개+news-sitemap(6 URL 추가) 200, /ko/ 피처드 a115, topic-news a115 카드. 실HTTPS 링크복사 실측 a115 통과(복사됨 flip, 스크린샷).
+
+## 2026-10-29 21:23 KST — /ko/ 홈 최신 글 카드 조회수 표기 수정 (사용자 신고 21:22)
+- 증상: /ko/ 홈 '최신 글' 카드에 날짜만 표기, 다른 언어 홈은 글별 조회수 표기. 실라이브 대조 확인(ko 최신글 카드 meta=날짜만, en 홈 카드=날짜+views span).
+- 원인: apply-reader-discovery.mjs (3b) ko 최신글 카드 템플릿이 날짜만 생성((3c) 피처드 카드는 조회수 span 포함, 다른 로케일 홈 생성 경로도 views span 포함). 기사 페이지 카운터 회귀와는 별개의 생성 누락.
+- 수정: (3b) 카드에 '날짜 · 조회수 <span data-tc-views-path>' 추가(피처드 카드와 동일 규칙). 스크립트+재생성된 ko/index.html만 배포(allowlist 2파일+문서, guard PASS 191→191).
+- 검증: 라이브 HTML 13개 data-tc-views-path(최신 12+피처드 1). 엣지 캐시(max-age=600)라 일부 엣지는 최대 10분 구버전 — 실브라우저 시각 확인은 캐시 만료 후.

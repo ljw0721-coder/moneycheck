@@ -64,3 +64,6 @@
 - data/image-rights.json을 신규 셸·정적 검증·배포 전 검사에 공통 사용. 로컬 이미지 SHA-256 검증과 회귀 테스트 13개, GitHub Actions 검사 추가.
 - Cloudflare 콘텐츠 전용 배포 성공; D1·Google 로그인 비밀 바인딩 보존 확인. Google 라이브 테스트에서 3개 기사 모두 copyrightNotice 확인 및 유효 판정. 남은 이미지 경고는 선택사항 acquireLicensePage뿐(권리 취득이 필요 없는 공개 이미지이므로 미기재).
 - Search Console 계정이 현재 로그아웃 상태라 영향 URL 예시 목록 확인과 수정 결과 검증 요청은 인증 후 진행해야 함. 저장소에서 확인한 3개 기사와 Search Console 영향 URL은 별도 범위로 기록. 기존 canonical 수정은 반복하지 않음.
+
+[/ko/ 홈 조회수 표기] 상태: 수정 배포 완료 / 캐시 만료 후 시각 확인
+- 2026-10-29: 사용자 신고(21:22)로 /ko/ 홈 최신 글 카드 조회수 미표기 확인. apply-reader-discovery.mjs (3b) 카드 템플릿에 조회수 span 추가 후 배포(191→191, ko/index.html+스크립트만). 다른 로케일 홈·기사 콘텐츠 변경 없음.
