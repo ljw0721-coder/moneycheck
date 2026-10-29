@@ -5,3 +5,10 @@
 - 수정: ko/index.html + index.html에서 뉴스 카드 </div> 위치 교정. 배포 3차(allowlist 2파일, offline-live=21:56 fresh baseline, PASS+SMOKE+UPLOAD).
 - 주의: 첫 배포 시도는 allowlist 파일이 && 체인 diff 종료코드로 미생성 → 가드 FAIL-CLOSED 정상 차단. 파이프라인 종료코드는 tail이 아니라 deploy 본체에서 확인.
 - 검증: 라이브 구조 태그 시퀀스 확인(7 sibling) + 실브라우저 데스크톱/모바일/RTL(ar cat-f) 스크린샷.
+## 2026-10-29 22:15 KST — ko 전 페이지 내비 섹션 탭 누락 수정 (유저 제보)
+
+- 증상: 유저 스크린샷 제보 — topic-crypto 등 ko 페이지 헤더 탭에 크립토·거래소/뮤직 없음(홈만 확장되어 있었음).
+- 원인: 섹션 확장 시 ko 홈 내비만 패치, topic 페이지 6개 중 5개+기사/기타 페이지는 미적용. article-shell.mjs는 --ref 기사의 셸을 복제하므로 내비는 참조 기사를 따름.
+- 수정: nav 내 생활 앵커 뒤에 2개 탭 삽입 — topic-crypto, about, privacy, cat-a~e, a101~a117 (25파일). 관리자 페이지는 nav 없음.
+- 같은 결함이 5개 언어 기사 페이지에도 있어 별도 배포로 수정 진행.
+- 배포: 4차(25파일, PASS+SMOKE+UPLOAD), 라이브 16페이지 클래스 전수 nav 확인 + 실브라우저 데스크톱/모바일.
