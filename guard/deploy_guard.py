@@ -5,6 +5,9 @@ Verifies a candidate deploy tree against CURRENT live worker content and CURRENT
      EXCEPT files explicitly listed as MOD:<path> in the operation's allowlist (approved
      compliance corrections to our own authored articles, main decision 2026-10-25 10:42:59):
      modification allowed only if the <title> (topic) is unchanged; deletion never allowed.
+     MODTITLE:<path> additionally permits a title change for that one article, only with the
+     user's explicit approval of the exact new title (recorded per operation; added 2026-10-30
+     for ja019 title factual correction, user approved 20:12 KST).
   2. Non-article files may differ ONLY if listed in the operation's allowlist file.
   3. Candidate must be a superset of (live union main) servable files.
 Exit 0 = safe additive deploy. Exit 1 = FAIL-CLOSED with reasons.
@@ -68,12 +71,13 @@ def main():
     offline_live = offline_main = None
     if '--offline-live' in sys.argv: offline_live=sys.argv[sys.argv.index('--offline-live')+1]
     if '--offline-main' in sys.argv: offline_main=sys.argv[sys.argv.index('--offline-main')+1]
-    allow=set(); allow_del=set(); allow_mod=set()
+    allow=set(); allow_del=set(); allow_mod=set(); allow_title=set()
     if os.path.exists(allow_path):
         for l in open(allow_path):
             l=l.strip()
             if not l or l.startswith('#'): continue
             if l.startswith('DEL:'): allow_del.add(l[4:])
+            elif l.startswith('MODTITLE:'): allow_mod.add(l[9:]); allow_title.add(l[9:])
             elif l.startswith('MOD:'): allow_mod.add(l[4:])
             else: allow.add(l)
     cand=tree_files(cand_dir)
@@ -90,7 +94,7 @@ def main():
                     def title(b):
                         m=re.search(rb'<title>(.*?)</title>', b, re.S)
                         return m.group(1).strip() if m else b''
-                    if title(cand[rel])!=title(old):
+                    if title(cand[rel])!=title(old) and rel not in allow_title:
                         problems.append('TOPIC REPLACED (title changed) in MOD-listed article: '+rel)
                 else: problems.append('ARTICLE MODIFIED: '+rel)
         else:

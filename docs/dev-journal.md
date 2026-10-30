@@ -574,3 +574,7 @@ User 12:09:36: "그리고 너는 저녁에 글 작성할때 중국어는 중국�
 
 ## 2026-10-30 가드 인프라 수정
 - CF API /workers/scripts/:name/content 엔드포인트 405 회귀 진단: /content 폐기, /content/v2로 이전됨(200 확인). deploy_guard.py live_files()를 v2→구 content→plain GET 순 폴백 체인으로 수정, 어느 경로든 BLOB 추출 실패 시 fail-closed 유지. 온라인 경로 guard PASS 재확인(cand2 대상).
+
+## 2026-10-30 ja019 제목 정정 (사용자 승인 20:12 KST)
+- 사용자가 WhatsApp으로 제목 정정 승인('응 고쳐', wamid.HBgMODIxMDI2ODk0NzE2FQIAEhggQUNDNzQ0MkUwNjYxQjA2MkY4QkNFOTAwNjcwRTA4QTIA, 20:00:17 제안에 대한 답장). ja019 <title>·h1·OG를 'バイナンスジャパンが暗号資産の出庫を一時停止(入庫・取引は正常): …'로 정정. ja/cat-f·ja/index·index 카드 문구 동기화.
+- 가드에 MODTITLE: 접두 추가(승인된 단일 기사 제목 정정만 허용, 이번 승인 건 주석 명기). 온라인 가드 경로(/content/v2)로 실배포 PASS·업로드 성공, 라이브 제목 확인.
