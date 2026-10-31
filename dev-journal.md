@@ -7,3 +7,4 @@
 - es: es023 Patrick Stewart 별세(1위 sports=잡쿼리 스킵) / es024 바이낸스 일요일 재개 / es025 Silvestre Dangond Hay amores
 - ar: ar022 BAN v WI 1st Test(170 목표) / ar023 바이낸스 34시간 내 재개 / ar024 أحمد سعد 앨범 부분 발매
 - 배포: deploy_safe.py guard PASS + smoke PASS + 실업로드 성공(246→264), 전 페이지 HTTP 200 검증
+- 후속 수정: ar022 본문 혼종어(century→خمسينية) MOD 배포, index.html 백필 섹션 정상화(신규 기사는 최신글 섹션 링크 유지)
