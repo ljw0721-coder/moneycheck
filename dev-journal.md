@@ -9,3 +9,4 @@
 - 배포: deploy_safe.py guard PASS + smoke PASS + 실업로드 성공(246→264), 전 페이지 HTTP 200 검증
 - 후속 수정: ar022 본문 혼종어(century→خمسينية) MOD 배포, index.html 백필 섹션 정상화(신규 기사는 최신글 섹션 링크 유지)
 - 재검증 후속: ja022 '적용 2경기 공식 제시 없음' 문구 오류 수정 — J리그 공식 출장정지 공지(10/29)가 J2 제14節(10/31)·제15節(11/3) 명시 확인, MOD 배포+출처 추가(제목 불변)
+- 홈 카드 제목 HTML 엔티티 이중이스케이프 수정: apply-reader-discovery.mjs에 엔티티 디코드 추가(deploy·repo 양쪽), index.html+zh/index.html 재생성 배포(zh021 카드 &quot;→"), zh013 카드 잔여분도 함께 정리

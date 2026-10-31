@@ -22,6 +22,7 @@ const LOCALES = [
 const MARK = /<!-- tc-backfill-links v\d -->/;
 const BLOCK = /<!-- tc-backfill-links v\d --><section class="tc-backfill">[\s\S]*?<\/section>\n?/;
 const NEW_MARK = '<!-- tc-backfill-links v2 -->';
+    const dec=s=>s.replace(/&quot;/g,'"').replace(/&#0?39;|&apos;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 let fail = false;
 
@@ -39,7 +40,7 @@ for (const loc of LOCALES) {
     const href = `/${loc.dir ? loc.dir + '/' : ''}articles/${f}`;
     if (html.includes(`href="${href}"`)) continue;
     const src = fs.readFileSync(path.join(adir, f), 'utf8');
-    const title = esc((src.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim());
+    const title = esc(dec((src.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim()));
     const date = (src.match(/20\d\d-\d\d-\d\d/) || [''])[0];
     cards.push(`<div class="card"><a href="${href}">${title}</a><p class="meta">${date}</p></div>`);
   }
@@ -96,7 +97,7 @@ const AGG_PER_LOCALE = 3;
         const src = fs.readFileSync(path.join(adir, f), 'utf8');
         return {
           href: `/${loc.dir ? loc.dir + '/' : ''}articles/${f}`,
-          title: esc((src.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim()),
+          title: esc(dec((src.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim())),
           date: (src.match(/20\d\d-\d\d-\d\d/) || [''])[0],
           file: f, li, label: loc.label,
         };
@@ -132,7 +133,7 @@ const AGG_PER_LOCALE = 3;
       const src2 = fs.readFileSync(path.join(adir, f), 'utf8');
       return {
         href: `/articles/${f}`,
-        title: esc((src2.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim()),
+        title: esc(dec((src2.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim())),
         date: (src2.match(/20\d\d-\d\d-\d\d/) || [''])[0],
         file: f,
       };
@@ -196,7 +197,7 @@ for (const h of HL_HOMES) {
       const src3 = fs.readFileSync(path.join(adir, f), 'utf8');
       return {
         href: `/articles/${f}`,
-        title: esc((src3.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim()),
+        title: esc(dec((src3.match(/<title>([^<]*)<\/title>/) || [, f])[1].trim())),
         date: (src3.match(/20\d\d-\d\d-\d\d/) || [''])[0],
         file: f,
       };
